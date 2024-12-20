@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from .serializer import UserSerializer
+from .serializers import UserSerializer
 from posts.serializers import PostSerializer
 from .models import User
 from posts.models import Post
