@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'comments',
     'tags',
     'Posttags',
+    'albums',
+    'commentlikes',
     
     
 ]

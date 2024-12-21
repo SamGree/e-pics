@@ -28,4 +28,6 @@ urlpatterns = [
     
     path('comments/', include('comments.urls')),
     
+    path('albums/', include('albums.urls')),
+    
 ]
