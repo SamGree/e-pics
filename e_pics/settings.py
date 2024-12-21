@@ -37,6 +37,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',  # Gitpod URL
+    #'https://drf-api-sam-c8393f26fa4b.herokuapp.com',  # Heroku URL
+]
+
 
 # Application definition
 
