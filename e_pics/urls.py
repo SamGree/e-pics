@@ -17,6 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # Admin panel for managing the Django application
     path('admin/', admin.site.urls),
+
+    # Routes for the blog application
+    path('posts/', include('posts.urls')),
+
+    # Routes for user management
     path('users/', include('users.urls')),
+    
+    path('comments/', include('comments.urls')),
+    
 ]
