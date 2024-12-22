@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Post
 from tags.models import Tag
-# from posttags.models import PostTag
+from posttags.models import PostTag
 from cloudinary.uploader import upload as cloudinary_upload, destroy as cloudinary_destroy
 from urllib.parse import  urljoin
 
