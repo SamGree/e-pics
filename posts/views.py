@@ -129,7 +129,7 @@ class SearchView(APIView):
         query = request.query_params.get('q', '').strip()
         
         if not query:
-            return Response({"message": "Unesite pojam za pretragu."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Enter a search term."}, status=status.HTTP_400_BAD_REQUEST)
         
         # Filter posts by title, author's username, or tags
         posts = Post.objects.filter(
