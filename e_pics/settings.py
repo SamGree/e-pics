@@ -17,7 +17,7 @@ if os.path.exists('env.py'):
     import env
 
 CLOUDINARY_STORAGE = {
-    'CLOUDNARY_URL': os.environ.get('CLOUDINARY_URL')
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -35,13 +35,20 @@ SECRET_KEY = 'django-insecure-_uf!7f2=$u&g-_(m&%!add+3g&_acycua0y_n_+6ysy33n6b%d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net']
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',  # Gitpod URL
-    #'https://drf-api-sam-c8393f26fa4b.herokuapp.com',  # Heroku URL
+ALLOWED_HOSTS = [
+    '8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',  # Gitpod URL
+    'my-e-pics-d3d3d941434e.herokuapp.com',  # Replace with your Heroku app name
+    'localhost'
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net", # Gitpod URL
+    'https://my-e-pics-d3d3d941434e.herokuapp.com', # Heroku URL
+    "http://localhost:3000",  
+    
+]
 
 # Application definition
 
@@ -73,13 +80,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'e_pics.urls'
@@ -150,7 +159,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Optional: Enable WhiteNoise compression
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
