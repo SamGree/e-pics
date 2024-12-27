@@ -11,6 +11,7 @@ from albums.models import Album
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from cloudinary.uploader import destroy as cloudinary_destroy
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class IsAuthenticatedOrReadOnly(BasePermission):
     """
@@ -27,6 +28,8 @@ class PostListCreateView(APIView):
     API view for listing all posts or creating a new post.
     """
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    # parser_classes = [MultiPartParser, FormParser]
 
     def get(self, request):
         """
@@ -35,6 +38,7 @@ class PostListCreateView(APIView):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
     def post(self, request):
         """

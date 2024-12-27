@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import root_route
 
 urlpatterns = [
-    path('', root_route),
     # Admin panel for managing the Django application
     path('admin/', admin.site.urls),
 

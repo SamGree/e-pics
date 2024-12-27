@@ -41,6 +41,10 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
+                        'https://my-e-pics-d3d3d941434e.herokuapp.com']
+
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
@@ -177,6 +181,7 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication', # Token-based authentication
     ],
     'DEFAULT_PERMISSION_CLASSES': [
