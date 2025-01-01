@@ -38,11 +38,14 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',  # Gitpod URL
     'my-e-pics-d3d3d941434e.herokuapp.com',  # Replace with your Heroku app name
-    'localhost'
+    'localhost',
+    'last-epics-76629a697a31.herokuapp.com',  # Frontend Heroku app
 ]
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
-                        'https://my-e-pics-d3d3d941434e.herokuapp.com']
+                        'https://my-e-pics-d3d3d941434e.herokuapp.com',
+                        'https://last-epics-76629a697a31.herokuapp.com',  # Frontend Heroku app
+                        ]
 
 
 CORS_ALLOW_CREDENTIALS = True
@@ -50,6 +53,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net", # Gitpod URL
     'https://my-e-pics-d3d3d941434e.herokuapp.com', # Heroku URL
+    "https://last-epics-76629a697a31.herokuapp.com",  # Frontend URL
     "http://localhost:3000",  
     
 ]
@@ -82,6 +86,7 @@ INSTALLED_APPS = [
     'tags',  
     
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
