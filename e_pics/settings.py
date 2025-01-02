@@ -8,14 +8,32 @@ if os.path.exists('env.py'):
 # Paths and Environment Variables
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
     '8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
     'my-e-pics-d3d3d941434e.herokuapp.com',
-    'last-epics-76629a697a31.herokuapp.com',
     'localhost',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net",
+#     "https://my-e-pics-d3d3d941434e.herokuapp.com",
+#     "https://last-epics-76629a697a31.herokuapp.com",
+#     "http://localhost:3000",
+# ]
+
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+if 'CLIENT_ORIGIN_DEV' in os.environ:    
+    CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://.*\.codeinstitute-ide\.net$",]
+
+
+CLIENT_ORIGIN = os.getenv('CLIENT_ORIGIN')
+CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
@@ -56,6 +74,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'corsheaders',
+    
     'posts',
     'users',
     'comments',
@@ -118,17 +137,6 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ),
 }
-
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net",
-    "https://my-e-pics-d3d3d941434e.herokuapp.com",
-    "https://last-epics-76629a697a31.herokuapp.com",
-    "http://localhost:3000",
-]
-
-CLIENT_ORIGIN = os.getenv('CLIENT_ORIGIN')
-CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
 
 
 CORS_ALLOW_HEADERS = [
