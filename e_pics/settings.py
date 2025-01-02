@@ -126,6 +126,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://last-epics-76629a697a31.herokuapp.com",
     "http://localhost:3000",
 ]
+
+CLIENT_ORIGIN = os.getenv('CLIENT_ORIGIN')
+CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
+
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
