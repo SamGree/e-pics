@@ -16,6 +16,8 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+APPEND_SLASH = False
+
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOWED_ORIGINS = [
 #     "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net",
@@ -162,3 +164,6 @@ CORS_ALLOW_METHODS = (
 # Authentication and Default Model
 AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
