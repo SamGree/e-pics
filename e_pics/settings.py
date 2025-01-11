@@ -9,39 +9,24 @@ if os.path.exists('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEV = os.getenv('DEV', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    '8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
-    'my-e-pics-d3d3d941434e.herokuapp.com',
-    'localhost',
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 APPEND_SLASH = False
 
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOWED_ORIGINS = [
-#     "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net",
-#     "https://my-e-pics-d3d3d941434e.herokuapp.com",
-#     "https://last-epics-76629a697a31.herokuapp.com",
-#     "http://localhost:3000",
-# ]
 
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-if 'CLIENT_ORIGIN_DEV' in os.environ:    
-    CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://.*\.codeinstitute-ide\.net$",]
+if 'CLIENT_ORIGINS' in os.environ:
+    CORS_ALLOWED_ORIGINS = os.getenv('CLIENT_ORIGINS', '').split(',')
 
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
 
-CLIENT_ORIGIN = os.getenv('CLIENT_ORIGIN')
-CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
+if 'CORS_ALLOWED_ORIGIN_REGEX' in os.environ:
+    CORS_ALLOWED_ORIGIN_REGEXES = [os.getenv('CORS_ALLOWED_ORIGIN_REGEX')]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net',
-    'https://my-e-pics-d3d3d941434e.herokuapp.com',
-    'https://last-epics-76629a697a31.herokuapp.com',
-]
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
 # Database Configuration
 DATABASES = {
@@ -143,7 +128,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-if 'DEV' not in os.environ:
+if DEV:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
     ]
@@ -160,17 +145,14 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 CORS_ALLOW_METHODS = (
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
 )
 
 # Authentication and Default Model
 AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-

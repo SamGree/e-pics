@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User
 from cloudinary.uploader import upload as cloudinary_upload, destroy as cloudinary_destroy
+from django.conf import settings
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -21,7 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
     
     def get_profile_image(self, obj):
         if obj.profile_image:
-            return f"https://res.cloudinary.com/drmqd08fb/image/upload/{obj.profile_image}"
+            # Extract cloud name from CLOUDINARY_STORAGE (CLOUDINARY_URL)
+            cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
+            return f"https://res.cloudinary.com/{cloud_name}/{obj.profile_image}"
         return None
 
     def validate(self, attrs):
@@ -51,8 +54,9 @@ class UserSerializer(serializers.ModelSerializer):
         if profile_image:
             upload_result = cloudinary_upload(profile_image, resource_type="image")
             full_url = upload_result.get('secure_url')
-            
-            processed_url = full_url.replace("https://res.cloudinary.com/drmqd08fb/image/upload/", "")
+            # Extract cloud name from CLOUDINARY_STORAGE (CLOUDINARY_URL)
+            cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
+            processed_url = full_url.replace(f"https://res.cloudinary.com/{cloud_name}/", "")
             validated_data['profile_image'] = processed_url
 
         user = User.objects.create_user(
@@ -80,12 +84,13 @@ class UserSerializer(serializers.ModelSerializer):
 
             upload_result = cloudinary_upload(profile_image, resource_type="image")
             full_url = upload_result.get('secure_url')
-            processed_url = full_url.replace("https://res.cloudinary.com/drmqd08fb/image/upload/", "")
+            # Extract cloud name from CLOUDINARY_STORAGE (CLOUDINARY_URL)
+            cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
+            processed_url = full_url.replace(f"https://res.cloudinary.com/{cloud_name}/", "")
             instance.profile_image = processed_url
 
         instance.username = validated_data.get('username', instance.username)
         instance.bio = validated_data.get('bio', instance.bio)
         instance.save()
         return instance
-
 

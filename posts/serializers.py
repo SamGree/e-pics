@@ -3,7 +3,8 @@ from .models import Post
 from tags.models import Tag
 from posttags.models import PostTag
 from cloudinary.uploader import upload as cloudinary_upload, destroy as cloudinary_destroy
-from urllib.parse import  urljoin
+from urllib.parse import urljoin
+from django.conf import settings
 
 class PostSerializer(serializers.ModelSerializer):
     """
@@ -39,7 +40,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         if obj.image:
-            return f"https://res.cloudinary.com/drmqd08fb/image/upload/{obj.image}"
+            # Extract cloud name from CLOUDINARY_STORAGE (CLOUDINARY_URL)
+            cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
+            return f"https://res.cloudinary.com/{cloud_name}/{obj.image}"
         return None
     
     def get_is_liked(self, obj):
@@ -69,8 +72,13 @@ class PostSerializer(serializers.ModelSerializer):
         if image:
             upload_result = cloudinary_upload(image, resource_type="image")
             full_url = upload_result.get('secure_url')
+
+            # Extract cloud name dynamically from CLOUDINARY_STORAGE or CLOUDINARY_URL
+            cloudinary_url = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '')
+            parsed_url = urlparse(cloudinary_url)
+            cloud_name = parsed_url.path.lstrip('/')  # Extract cloud name from the URL
             
-            processed_url = full_url.replace("https://res.cloudinary.com/drmqd08fb/image/upload/", "")
+            processed_url = full_url.replace(f"https://res.cloudinary.com/{cloud_name}/", "")
             validated_data['image'] = processed_url
 
         # Create the post
@@ -98,7 +106,13 @@ class PostSerializer(serializers.ModelSerializer):
 
             upload_result = cloudinary_upload(image, resource_type="image")
             full_url = upload_result.get('secure_url')
-            processed_url = full_url.replace("https://res.cloudinary.com/drmqd08fb/image/upload/", "")
+
+            # Extract cloud name dynamically from CLOUDINARY_STORAGE or CLOUDINARY_URL
+            cloudinary_url = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '')
+            parsed_url = urlparse(cloudinary_url)
+            cloud_name = parsed_url.path.lstrip('/')  # Extract cloud name from the URL
+
+            processed_url = full_url.replace(f"https://res.cloudinary.com/{cloud_name}/", "")
             validated_data['image'] = processed_url
 
         instance.title = validated_data.get('title', instance.title)
