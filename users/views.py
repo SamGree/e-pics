@@ -27,6 +27,7 @@ class RegisterView(APIView):
         Validates and saves the user data provided in the request.
         """
         username = request.data.get('username', '').strip()
+        print("username: ", username)
         if ' ' in username:
             return Response({'error': 'Username cannot contain spaces.'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -104,7 +105,7 @@ class UserProfileDetailView(APIView):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
+        print("user: ", user)
         user_serializer = UserSerializer(user)
         posts = Post.objects.filter(user=user)
         post_serializer = PostSerializer(posts, many=True)

@@ -61,7 +61,7 @@ class PostSerializer(serializers.ModelSerializer):
         image upload via Cloudinary.
         """
         user = self.context['request'].user
-        tags = self.context['request'].data.getlist('tags[]', [])
+        tags = self.context['request'].data.get('tags[]', [])
         image = self.context['request'].FILES.get('image')
 
         # Validate that the uploaded file is an image
@@ -96,7 +96,7 @@ class PostSerializer(serializers.ModelSerializer):
         """
         Handle the update of a post, including tag management and image replacement.
         """
-        tags = self.context['request'].data.getlist('tags[]', [])
+        tags = self.context['request'].data.get('tags[]', [])
         image = self.context['request'].FILES.get('image')
 
         if image:

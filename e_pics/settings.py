@@ -8,23 +8,17 @@ if os.path.exists('env.py'):
 # Paths and Environment Variables
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 DEV = os.getenv('DEV', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 APPEND_SLASH = False
 
+# CORS Configuration
 CORS_ALLOW_CREDENTIALS = True
-
-if 'CLIENT_ORIGINS' in os.environ:
-    CORS_ALLOWED_ORIGINS = os.getenv('CLIENT_ORIGINS', '').split(',')
-
-if 'CLIENT_ORIGIN_DEV' in os.environ:
-    CLIENT_ORIGIN_DEV = os.getenv('CLIENT_ORIGIN_DEV')
-
-if 'CORS_ALLOWED_ORIGIN_REGEX' in os.environ:
-    CORS_ALLOWED_ORIGIN_REGEXES = [os.getenv('CORS_ALLOWED_ORIGIN_REGEX')]
+CORS_ALLOWED_ORIGINS = os.getenv('CLIENT_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGIN_REGEXES = [os.getenv('CORS_ALLOWED_ORIGIN_REGEX', '')]
 
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
@@ -76,11 +70,10 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Ensure this is before CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'allauth.account.middleware.AccountMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -108,7 +101,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'e_pics.wsgi.application'
 
-# REST Framework
+# REST Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -133,6 +126,7 @@ if DEV:
         'rest_framework.renderers.JSONRenderer',
     ]
 
+# CORS Headers
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -156,3 +150,25 @@ CORS_ALLOW_METHODS = (
 # Authentication and Default Model
 AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Password Validation
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Internationalization
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
