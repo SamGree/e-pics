@@ -6,7 +6,7 @@ from cloudinary.uploader import upload as cloudinary_upload, destroy as cloudina
 from urllib.parse import urljoin
 from django.conf import settings
 from urllib.parse import urlparse
-
+from cloudinary.utils import cloudinary_url
 
 class PostSerializer(serializers.ModelSerializer):
     """
@@ -59,12 +59,16 @@ class PostSerializer(serializers.ModelSerializer):
         return None
 
     def get_image(self, obj):
-        if obj.image:
-            # Extract cloud name from CLOUDINARY_STORAGE (CLOUDINARY_URL)
-            cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
-            return f"https://res.cloudinary.com/{cloud_name}/{obj.image}"
-        return None
-
+      """
+      Returns the image URL from the CloudinaryField.
+      """
+      if obj.image:
+            if hasattr(obj.image, "url"):
+                return obj.image.url
+            elif hasattr(obj.image, "public_id"):
+                url, options = cloudinary_url(obj.image.public_id, secure=True)
+                return url
+      return None
 
     def create(self, validated_data):
         """
