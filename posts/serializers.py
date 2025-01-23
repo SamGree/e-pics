@@ -5,6 +5,8 @@ from posttags.models import PostTag
 from cloudinary.uploader import upload as cloudinary_upload, destroy as cloudinary_destroy
 from urllib.parse import urljoin
 from django.conf import settings
+from urllib.parse import urlparse
+
 
 class PostSerializer(serializers.ModelSerializer):
     """
@@ -21,14 +23,32 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'description', 'image', 'download_count', 'created_at', 'author', 'author_image', 'comments_count', 'likes_count','is_liked', 'tags']
+        fields = [
+            'id', 'title', 'description', 'image', 'download_count',
+            'created_at', 'author', 'author_image', 'comments_count',
+            'likes_count', 'is_liked', 'tags'
+        ]
         read_only_fields = ['id', 'created_at', 'user', 'download_count', 'comments_count', 'likes_count']
         
     def get_comments_count(self, obj):
         return obj.comments.count()
-    
+
     def get_likes_count(self, obj):
-        return obj.post_likes.count()
+        count = obj.likes.count()
+        return count
+
+    def get_is_liked(self, obj):
+        """
+        Check if the logged-in user has liked the post.
+        """
+        request = self.context.get('request', None)
+        if request:
+            print(f"Request User: {request.user}, Post ID: {obj.id}")
+            if request.user.is_authenticated:
+                is_liked = obj.likes.filter(id=request.user.id).exists()
+                print(f"Is Liked: {is_liked}")
+                return is_liked
+        return False
 
     def get_tags(self, obj):
         return [post_tag.tag.name for post_tag in obj.post_tags.all()]
@@ -44,16 +64,7 @@ class PostSerializer(serializers.ModelSerializer):
             cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUDINARY_URL', '').split('@')[-1]
             return f"https://res.cloudinary.com/{cloud_name}/{obj.image}"
         return None
-    
-    def get_is_liked(self, obj):
-        """
-        Check if the logged-in user has liked the post.
-        """
-        request = self.context.get('request', None)
-        # print(f'')
-        if request and request.user.is_authenticated:
-            return obj.likes.filter(pk=request.user.pk).exists()
-        return False
+
 
     def create(self, validated_data):
         """

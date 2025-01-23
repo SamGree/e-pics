@@ -1,5 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from .models import Post
@@ -63,6 +65,7 @@ class PostDetailView(APIView):
         try:
             post = Post.objects.get(id=post_id)
             post_serializer = PostSerializer(post, context={'request': request})
+            print(post_serializer.data)
             comments = Comment.objects.filter(post=post)
             comment_serializer = CommentSerializer(comments, many=True, context={'request': request})
             
@@ -71,6 +74,7 @@ class PostDetailView(APIView):
                 album_serializer = AlbumSerializer(user_albums, many=True)
             else:
                 album_serializer = AlbumSerializer([], many=True)
+                print('Post Data:', post_serializer.data)
             return Response({
                 'post': post_serializer.data,
                 'comments': comment_serializer.data,
@@ -144,3 +148,5 @@ class SearchView(APIView):
         
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+

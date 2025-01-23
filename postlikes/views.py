@@ -1,4 +1,5 @@
 from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
 from posts.views import IsAuthenticatedOrReadOnly
 from rest_framework import status
 from .models import PostLike
@@ -7,28 +8,37 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from posts.serializers import PostSerializer
 
+
+
 class PostLikeView(APIView):
     """
     API view for liking or unliking a post.
     """
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, post_id):
-        """
-        Toggle like/unlike a specific post.
-        """
-        try:
-            post = Post.objects.get(id=post_id)
-            like, created = PostLike.objects.get_or_create(user=request.user, post=post)
-            if created:
-                post.likes.add(request.user)
-                return Response({'message': 'Post liked.'}, status=status.HTTP_201_CREATED)
-            else:
-                post.likes.remove(request.user)
-                like.delete()
-                return Response({'message': 'Like removed from post.'}, status=status.HTTP_200_OK)
-        except Post.DoesNotExist:
-            return Response({'error': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
-        
+        post = get_object_or_404(Post, id=post_id)
+
+        if request.user in post.likes.all():
+            # User unliked the post
+            post.likes.remove(request.user)
+            likes_count = post.likes.count()
+            return Response({
+                'message': 'Like removed from post.',
+                'likes_count': likes_count,
+                'is_liked': False,
+            }, status=status.HTTP_200_OK)
+        else:
+            # User liked the post
+            post.likes.add(request.user)
+            likes_count = post.likes.count()
+            return Response({
+                'message': 'Post liked.',
+                'likes_count': likes_count,
+                'is_liked': True,
+            }, status=status.HTTP_201_CREATED)
+
+
 class LikedPostsView(APIView):
     """
     API view for retrieving all posts liked by the authenticated user.
