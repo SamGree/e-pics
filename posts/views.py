@@ -118,6 +118,8 @@ class PostDownloadView(APIView):
     """
     API view for downloading a post's image and tracking download count.
     """
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, post_id):
         """
         Increment the download count and return the image URL.
