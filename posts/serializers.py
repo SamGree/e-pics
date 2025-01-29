@@ -76,7 +76,7 @@ class PostSerializer(serializers.ModelSerializer):
         image upload via Cloudinary.
         """
         user = self.context['request'].user
-        tags = self.context['request'].data.get('tags[]', [])
+        tags = self.context['request'].data.getlist('tags[]', [])
         image = self.context['request'].FILES.get('image')
 
         # Validate that the uploaded file is an image

@@ -104,9 +104,8 @@ class PostDetailView(APIView):
         """
         try:
             post = Post.objects.get(id=post_id, user=request.user)
-
-            public_id = post.image.public_id
-            cloudinary_destroy(public_id)
+            if post.image and hasattr(post.image, "public_id"):
+                cloudinary_destroy(post.image.public_id) 
 
             post.delete()
             return Response({'message': 'Post deleted successfully'}, status=status.HTTP_200_OK)
@@ -150,5 +149,3 @@ class SearchView(APIView):
         
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-

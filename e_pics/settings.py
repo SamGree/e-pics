@@ -8,8 +8,8 @@ if os.path.exists('env.py'):
 # Paths and Environment Variables
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
-#DEBUG = os.getenv('DEBUG', 'False') == 'True'
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+#DEBUG = False
 DEV = os.getenv('DEV', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
@@ -109,7 +109,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -122,10 +122,10 @@ REST_FRAMEWORK = {
     ),
 }
 
-# if DEV:
-#     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-#         'rest_framework.renderers.JSONRenderer',
-#     ]
+if DEV:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+         'rest_framework.renderers.JSONRenderer',
+    ]
 
 # CORS Headers
 CORS_ALLOW_HEADERS = [
