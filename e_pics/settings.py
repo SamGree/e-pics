@@ -16,6 +16,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 APPEND_SLASH = False
 
+
 # CORS Configuration
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = os.getenv('CLIENT_ORIGINS', '').split(',')
