@@ -17,11 +17,10 @@ class PostLikeView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, post_id):
-        # post = get_object_or_404(Post, id=post_id)
         try:
             post = Post.objects.get(id= post_id)
         except Post.DoesNotExist:
-            return Response({'message':'Post not fount!'})
+            return Response({'message':'Post not fount!'}, status= status.HTTP_404_NOT_FOUND)
 
         if request.user in post.likes.all():
             # User unliked the post

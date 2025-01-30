@@ -140,14 +140,14 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
-CORS_ALLOW_METHODS = (
+CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
     'OPTIONS',
     'PATCH',
     'POST',
     'PUT',
-)
+]
 
 # Authentication and Default Model
 AUTH_USER_MODEL = 'users.User'
