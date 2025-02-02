@@ -32,6 +32,8 @@ class PostLikeView(APIView):
                 'message': 'Like removed from post.',
                 'likes_count': likes_count,
                 'is_liked': False,
+                'post_id' : post_like.post_id,
+                'user_id' : post_like.user_id,
             }, status=status.HTTP_200_OK)
         else:
             # User liked the post 
@@ -43,6 +45,8 @@ class PostLikeView(APIView):
                 'message': 'Post liked.',
                 'likes_count': likes_count,
                 'is_liked': True,
+                'post_id' : post_like.post_id,
+                'user_id' : post_like.user_id,
             }, status=status.HTTP_201_CREATED)
 
 
