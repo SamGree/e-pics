@@ -15,7 +15,7 @@ djangorestframework-simplejwt==5.3.1
 gunicorn==23.0.0
 oauthlib==3.2.2
 pillow==11.0.0
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
 PyJWT==2.10.1
 python-decouple==3.8
 python3-openid==3.2.0
