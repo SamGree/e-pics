@@ -10,21 +10,9 @@ from .views import (
 )
 
 urlpatterns = [
-    path(
-        '<int:post_id>/post/',
-        CommentCreateView.as_view(),
-        name='create-comment'
-    ),  # Create a comment for a specific post
+    path('<int:post_id>/post/', CommentCreateView.as_view(), name='create-comment'),  # Create a comment for a specific post
 
-    path(
-        '<int:comment_id>/',
-        CommentDetailView.as_view(),
-        name='comment-detail'
-    ),  # Update or delete a specific comment
+    path('<int:comment_id>/', CommentDetailView.as_view(), name='comment-detail'),  # Update or delete a specific comment
 
-    path(
-        'post/<int:post_id>/',
-        PostCommentsView.as_view(),
-        name='post-comments'
-    )
+    path('post/<int:post_id>/', PostCommentsView.as_view(), name='post-comments'),
 ]
