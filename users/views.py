@@ -1,5 +1,5 @@
 """
-Views for user-related operations including registration, login, logout, 
+Views for user-related operations including registration, login, logout,
 profile retrieval, and profile updates.
 """
 
@@ -29,12 +29,15 @@ class RegisterView(APIView):
         username = request.data.get('username', '').strip()
         print("username: ", username)
         if ' ' in username:
-            return Response({'error': 'Username cannot contain spaces.'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        if User.objects.filter(username__iexact=username).exists():
-            return Response({'error': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Username cannot contain spaces.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = UserSerializer(data=request.data, context={'request': request})
+        if User.objects.filter(username__iexact=username).exists():
+            return Response({'error': 'Username already exists.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserSerializer(data=request.data, context={
+            'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -51,26 +54,31 @@ class LoginView(APIView):
     def post(self, request):
         """
         Handle user login.
-        Validates username and password, then generates or retrieves an auth token.
+        Validates username and password, then generates or retrieves an auth
+        token.
         """
         username = request.data.get('username', '').strip()
         password = request.data.get('password')
 
         if ' ' in username:
-            return Response({'error': 'Username cannot contain spaces.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Username cannot contain spaces.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
-            return Response({'error': 'Invalid username.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid username.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
         if not user.check_password(password):
-            return Response({'error': 'Invalid password.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid password.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
         # If username and password are correct
         token, _ = Token.objects.get_or_create(user=user)
         user_data = UserSerializer(user).data
-        return Response({'token': token.key, 'user': user_data}, status=status.HTTP_200_OK)
+        return Response({'token': token.key, 'user': user_data},
+                        status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):
@@ -80,6 +88,7 @@ class LogoutView(APIView):
     """
 
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         """
         Handle user logout.
@@ -88,10 +97,14 @@ class LogoutView(APIView):
         if request.user.is_authenticated:
             try:
                 request.user.auth_token.delete()
-                return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+                return Response({'message': 'Successfully logged out.'},
+                                status=status.HTTP_200_OK)
             except Exception as e:
-                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response({'error': 'User is not authenticated.'}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'error': str(e)},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': 'User is not authenticated.'},
+                        status=status.HTTP_401_UNAUTHORIZED)
+
 
 class UserProfileDetailView(APIView):
     """
@@ -104,7 +117,8 @@ class UserProfileDetailView(APIView):
         try:
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'User not found'},
+                            status=status.HTTP_404_NOT_FOUND)
         print("user: ", user)
         user_serializer = UserSerializer(user)
         posts = Post.objects.filter(user=user)
@@ -127,7 +141,8 @@ class UserProfileUpdateView(APIView):
         Handle PATCH request to partially update user profile.
         """
         user = request.user
-        serializer = UserSerializer(user, data=request.data, partial=True, context={'request': request})
+        serializer = UserSerializer(user, data=request.data, partial=True,
+                                    context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

@@ -27,13 +27,12 @@ urlpatterns = [
 
     # Routes for user management
     path('users/', include('users.urls')),
-    
+
     path('comments/', include('comments.urls')),
-    
+
     path('albums/', include('albums.urls')),
-    
+
     path('post-like/', include('postlikes.urls')),
-    
+
     path('comment-like/', include('commentlikes.urls')),
 ]
-

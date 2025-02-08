@@ -2,10 +2,10 @@
 
 ## Introduction and Project Goals
 
-- The API is hosted at E Pics back-end.
-  You can find the front-end code for this API on GitHub under last front-end, while the deployed version is available at last-epics.
+- The API is hosted at E-Pics back-end.
+  You can find the front-end code for this API on GitHub under (https://github.com/SamGree/last) while the deployed version is available at (https://last-epics-76629a697a31.herokuapp.com/).
   This platform provides all the necessary functionality for users to carry out CRUD operations on the front-end.
-  E Pics is a photo-sharing platform where users can upload and share images with others.
+  E-Pics is a photo-sharing platform where users can upload and share images with others.
   All uploaded photos are freely available for download, fostering a collaborative and sharing community.
   Users can create accounts to engage in various interactions, such as uploading and downloading images, liking, commenting, and saving images to albums within their profile.
 
