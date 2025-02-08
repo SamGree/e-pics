@@ -31,7 +31,7 @@ class CommentCreateView(APIView):
                 {'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class CommentDetailView(APIView):
+class CommentUpdateView(APIView):
     """
     API view for updating or deleting a specific comment.
     """
