@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from comments.models import Comment
-from posts.views import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
