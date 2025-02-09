@@ -75,3 +75,57 @@
   |password| CharField| Inherited from AbstractUser |Hashed for security|
   |profile_image|CloudinaryField| Custom Field |Stores profile image via Cloudinary|
   |bio|TextField| Custom Field|Optional user bio (blank=True, null=True)|
+
+---
+
+## Unit Tests
+
+- Tests for my Albums models.
+- [For img---]
+- Creates test instances of User, Post, and Album to use across multiple tests. test_album_creation: Verifies that an album is created with the correct name, user, and that created_at is not null. test_album_posts_relationship: Ensures the ManyToManyField relationship between Album and Post works correctly. test_album_string_representation: Checks that the str method returns the album name. test_related_name_for_user: Confirms that the related_name='albums' for the user field works, allowing access to all albums of a user. test_related_name_for_post: Ensures the related_name='albums' for the posts field works, allowing access to all albums a post belongs to.
+
+---
+
+- Tests for my commentlikes models.
+- [For img---]
+- Creates test instances for User, Post, and Comment, which are required for the CommentLike model tests. test_commentlike_creation: Validates that a CommentLike can be created with the correct user and comment. test_commentlike_unique_constraint: Ensures the database enforces the UniqueConstraint on user and comment fields to prevent duplicate likes. test_commentlike_related_name_for_user: Verifies that the related_name='comment_likes' on the user field works, allowing access to all likes by a user. test_commentlike_related_name_for_comment: Checks the related_name='comment_likes' on the comment field to ensure it works correctly. test_commentlike_str_representation: Confirms that the str method returns the expected string representation.
+
+---
+
+- Tests for my comments models.
+- [For img---]
+- Creates test instances for User, Post, and Comment, which are reused across tests. test_comment_creation: Verifies that a Comment can be created with the correct content, user, post, and created_at values. test_comment_related_name_for_post: Tests the related_name='comments' for the post field, ensuring you can access all comments on a post. test_comment_related_name_for_user: Tests the related_name='comments' for the user field, ensuring you can access all comments by a user. test_comment_str_representation: Ensures the str method returns the expected string format: "Comment by on ". test_comment_likes_relationship: Tests the many-to-many likes relationship, ensuring: Users can like a comment. The related_name='liked_comments' allows access to all comments a user has liked.
+
+---
+
+- Tests for my postlikes models.
+- [For img---]
+- Creates test instances of User, Post, and PostLike. test_postlike_creation: Ensures that a PostLike can be created and its fields (user, post, and created_at) are populated correctly. test_postlike_unique_constraint: Validates that the UniqueConstraint on user and post prevents duplicate likes by the same user for the same post. test_postlike_related_name_for_user: Ensures that the related_name='post_likes' for the user field works, allowing access to all likes by a user. test_postlike_related_name_for_post: Ensures that the related_name='post_likes' for the post field works, allowing access to all likes on a post. test_postlike_str_representation:
+  Checks that the str method of the PostLike model returns the expected string format: "username likes post title".
+
+---
+
+Tests for my posts app.
+
+- [---]
+- Post API Test Suite The PostAPITest class tests the API endpoints for managing posts, tags, and related features. It ensures proper functionality, authentication, and data integrity. Below are the key tests: List Posts: Verifies that the API retrieves a list of posts (GET /list-create-posts). Create Post: Tests creating a new post with tags (POST /list-create-posts). Retrieve Post: Ensures a specific post can be retrieved by ID (GET /detail-post/{post_id}). Update Post: Confirms a post owner can update their post (PATCH /detail-post/{post_id}). Delete Post: Verifies the owner can delete their post (DELETE /detail-post/{post_id}). Unauthenticated Access: Ensures unauthenticated users cannot create posts. Post Download: Tests downloading a post and increments the download count. Search Posts: Validates search functionality by title, username, or tags (GET /search). This test suite covers authentication, CRUD operations, and edge cases to ensure the API behaves as expected.
+
+---
+
+- Tests for my users app.
+- [---]
+- The User API Test Suite ensures that user authentication, registration, profile retrieval, updating, and logout functionalities work correctly. It follows the CRUD (Create, Read, Update, Delete) principles by testing different API endpoints. The test suite starts by setting up a test user and authentication token using Django's TestCase and APIClient(). This allows the simulation of authenticated requests. The test cases verify if users can successfully register, log in, log out, retrieve their profiles, and update their details. For user registration, the test checks if a new user can sign up with valid credentials and prevents duplicate username registration. The login test ensures that users can log in with correct credentials and receive an authentication token, while invalid credentials result in an error. The logout test verifies that authenticated users can log out and their session is invalidated. The test suite also includes profile-related operations. It ensures that authenticated users can retrieve their profile details and update their profile bio, while unauthenticated users are restricted from making profile updates.
+
+---
+
+## Deployment
+
+- E-pics is deployed on Heroku using Heroku PostgreSQL as the database
+
+1. Create a Heroku account and install the Heroku CLI.
+2. Log in to Heroku CLI (heroku login) and create a new Heroku app (heroku create).
+3. Set up Heroku PostgreSQL as the database (in settings Config Vars).
+4. Push your code to the Heroku remote (git push heroku master).
+5. Run migrations and set up the database (heroku run python manage.py migrate).
+6. Your E-pics application should now be deployed and accessible via the provided Heroku app URL.
+7. Your app should now be deployed and accessible via the provided Heroku URL.
