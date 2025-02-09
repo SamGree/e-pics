@@ -5,7 +5,8 @@ from posts.views import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CommentLike,Comment
+from .models import CommentLike, Comment
+
 
 class CommentLikeView(APIView):
     """
@@ -25,7 +26,8 @@ class CommentLikeView(APIView):
                     {'error': 'You cannot like your own comment.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            like, created = CommentLike.objects.get_or_create(user=request.user, comment=comment)
+            like, created = CommentLike.objects.get_or_create(
+                user=request.user, comment=comment)
 
             if created:
                 comment.likes.add(request.user)
@@ -47,4 +49,7 @@ class CommentLikeView(APIView):
                     'likes_count': likes_count,
                 }, status=status.HTTP_200_OK)
         except Comment.DoesNotExist:
-            return Response({'error': 'Comment not found.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {'error': 'Comment not found.'},
+                status=status.HTTP_404_NOT_FOUND
+                )

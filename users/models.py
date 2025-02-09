@@ -6,7 +6,7 @@ from cloudinary.models import CloudinaryField
 class User(AbstractUser):
     """
     Custom User model that extends the default AbstractUser model.
-    Includes additional fields for profile image, unique email, and user bio.
+    Includes additional fields for profile image, and user bio.
     """
     # Profile image stored using Cloudinary
     profile_image = CloudinaryField('profile_image', blank=True, null=True)

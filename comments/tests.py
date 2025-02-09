@@ -5,6 +5,7 @@ from comments.models import Comment
 
 User = get_user_model()
 
+
 class CommentModelTest(TestCase):
 
     def setUp(self):
@@ -12,10 +13,12 @@ class CommentModelTest(TestCase):
         Set up test data for Comment model tests.
         """
         # Create a test user
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user = User.objects.create_user(
+            username='testuser', password='testpassword')
 
         # Create a second test user
-        self.other_user = User.objects.create_user(username='otheruser', password='otherpassword')
+        self.other_user = User.objects.create_user(
+             username='otheruser', password='otherpassword')
 
         # Create a test post
         self.post = Post.objects.create(
@@ -71,4 +74,3 @@ class CommentModelTest(TestCase):
 
         # Check the related_name 'liked_comments' for the user
         self.assertIn(self.comment, self.other_user.liked_comments.all())
-

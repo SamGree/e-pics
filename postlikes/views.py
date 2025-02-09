@@ -9,7 +9,6 @@ from rest_framework.permissions import IsAuthenticated
 from posts.serializers import PostSerializer
 
 
-
 class PostLikeView(APIView):
     """
     API view for liking or unliking a post.
@@ -18,7 +17,7 @@ class PostLikeView(APIView):
 
     def post(self, request, post_id):
         try:
-            post = Post.objects.get(id= post_id)
+            post = Post.objects.get(id=post_id)
         except Post.DoesNotExist:
             return Response({'message':'Post not fount!'}, status= status.HTTP_404_NOT_FOUND)
 
