@@ -2,6 +2,7 @@
 
 ## Introduction and Project Goals
 
+<<<<<<< HEAD
 - The API is hosted at E-Pics back-end.
   You can find the front-end code for this API on GitHub under (https://github.com/SamGree/last) while the deployed version is available at (https://last-epics-76629a697a31.herokuapp.com/).
   This platform provides all the necessary functionality for users to carry out CRUD operations on the front-end.
@@ -13,6 +14,8 @@
 
 ---
 
+=======
+>>>>>>> parent of f29410e (Added info to readme file about Structured Table Representation of the models in the project)
 ### Albums App
 
 | Name       | KYE             | TYPE             | EXTRA                            |
@@ -86,6 +89,7 @@
   |password| CharField| Inherited from AbstractUser |Hashed for security|
   |profile_image|CloudinaryField| Custom Field |Stores profile image via Cloudinary|
   |bio|TextField| Custom Field|Optional user bio (blank=True, null=True)|
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 ---
@@ -244,3 +248,5 @@ Tests for my posts app.
   6. Your E-pics application should now be deployed and accessible via the provided Heroku app URL.
   7. Your app should now be deployed and accessible via the provided Heroku URL.
 >>>>>>> 8659ba5245f0ea41c2bd2c56e0e97fbc3fac5dc6
+=======
+>>>>>>> parent of f29410e (Added info to readme file about Structured Table Representation of the models in the project)
