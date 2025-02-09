@@ -1,0 +1,448 @@
+{
+  "info": {
+    "_postman_id": "7fa48595-236e-4783-b5a0-886bcc0b96a0",
+    "name": "E-PICS(DRF)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40781059"
+  },
+  "item": [
+    {
+      "name": "POSTS",
+      "item": [
+        {
+          "name": "Show all posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}posts/",
+              "host": ["{{BASE_URL}}posts"],
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get specific post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}posts/46",
+              "host": ["{{BASE_URL}}posts"],
+              "path": ["46"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Download post's img",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token c6df93c6b5c292e69ae06ec8b81f5b58cfbdf156",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n//     \"username\":\"Sam\",\r\n//     \"password\":\"qweqwe123\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}posts/46/download",
+              "host": ["{{BASE_URL}}posts"],
+              "path": ["46", "download"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "USERS",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "tokenc6df93c6b5c292e69ae06ec8b81f5b58cfbdf156",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"ernesto3\",\r\n    \"password\": \"qweqwe123\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}users/login/",
+              "host": ["{{BASE_URL}}users"],
+              "path": ["login", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"erik\",\r\n    \"password\": \"qazqaz123\",\r\n    \"password_again\": \"qazqaz123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}users/register/",
+              "host": ["{{BASE_URL}}users"],
+              "path": ["register", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token 208220c4f3d5457e11ca17f5d1aa57632154db17",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}users/logout/",
+              "host": ["{{BASE_URL}}users"],
+              "path": ["logout", ""],
+              "query": [
+                {
+                  "key": "Au",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile update",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token bc5b7d3859dbf97dfabed2aae4295a2d2266699d",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"ernesto3\",\r\n    \"bio\": \"logo3\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}users/profile/update",
+              "host": ["{{BASE_URL}}users"],
+              "path": ["profile", "update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token bc5b7d3859dbf97dfabed2aae4295a2d2266699d",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}users/profile/33",
+              "host": ["{{BASE_URL}}users"],
+              "path": ["profile", "33"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "COMMENTS",
+      "item": [
+        {
+          "name": "write a comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token bc5b7d3859dbf97dfabed2aae4295a2d2266699d",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"content\": \"test comment in postman 2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}comments/46/post",
+              "host": ["{{BASE_URL}}comments"],
+              "path": ["46", "post"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update a comment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token bc5b7d3859dbf97dfabed2aae4295a2d2266699d",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"content\": \"new comment by post man\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}comments/54",
+              "host": ["{{BASE_URL}}comments"],
+              "path": ["54"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view all comments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token bc5b7d3859dbf97dfabed2aae4295a2d2266699d",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}comments/post/46",
+              "host": ["{{BASE_URL}}comments"],
+              "path": ["post", "46"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "COMMENT LIKE",
+      "item": [
+        {
+          "name": "like comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token e5c8cfe9b76a645e44b2a2b26cbe76a55baf6e9a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}comment-like/55",
+              "host": ["{{BASE_URL}}comment-like"],
+              "path": ["55"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ALBUMS",
+      "item": [
+        {
+          "name": "create ablum",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token e5c8cfe9b76a645e44b2a2b26cbe76a55baf6e9a",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Kebab\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}albums/",
+              "host": ["{{BASE_URL}}albums"],
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view album",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token e5c8cfe9b76a645e44b2a2b26cbe76a55baf6e9a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}albums/39",
+              "host": ["{{BASE_URL}}albums"],
+              "path": ["39"],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add post to album",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token e5c8cfe9b76a645e44b2a2b26cbe76a55baf6e9a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}albums/39/add-post/46",
+              "host": ["{{BASE_URL}}albums"],
+              "path": ["39", "add-post", "46"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete album",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token e5c8cfe9b76a645e44b2a2b26cbe76a55baf6e9a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}albums/39",
+              "host": ["{{BASE_URL}}albums"],
+              "path": ["39"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net/",
+      "type": "string"
+    }
+  ]
+}
