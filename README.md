@@ -1,17 +1,30 @@
-# Table of Contents
+# Introduction and Project Goals
 
-## Introduction and Project Goals
-
-- The API is hosted at E-Pics back-end.(https://my-e-pics-d3d3d941434e.herokuapp.com/).
-- You can find the back-end code for this API on GitHub.(https://github.com/SamGree/e-pics).
-- The API is hosted at E-Pics live link.(https://last-epics-76629a697a31.herokuapp.com/).
-- You can find the front-end code for this API on GitHub.(https://github.com/SamGree/last).
+- The API is hosted at E-Pics back-end. [Heroku-back-end](https://my-e-pics-d3d3d941434e.herokuapp.com/).
+- You can find the back-end code for this API on GitHub. [Github back-end](https://github.com/SamGree/e-pics).
+- The API is hosted at E-Pics live link.[E-pics](https://last-epics-76629a697a31.herokuapp.com/).
+- You can find the front-end code for this API on GitHub.[Github frond-end](https://github.com/SamGree/last).
 - This platform provides all the necessary functionality for users to carry out CRUD operations on the back-end.
   E-Pics is a photo-sharing platform where users can upload and share images with others.
   All uploaded photos are freely available for download, fostering a collaborative and sharing community.
   Users can create accounts to engage in various interactions, such as uploading and downloading images, liking, commenting, and saving images to albums within their profile.
 
 ---
+
+## Table of Contents
+
+- [Project Models](#project-models)
+  - [albums](#albums)
+  - [commentlikes](#commentlikes)
+  - [comments](#comments)
+  - [postlikes](#postlikes)
+  - [posts](#posts)
+  - [posttags](#posttags)
+  - [tags](#tags)
+  - [users](#users)
+- [Unit Tests](#unit-tests)
+- [Postman](#postman)
+- [Deployment](#deployment)
 
 ---
 
@@ -160,6 +173,21 @@
 
 ---
 
+## Postman
+
+- The Postman collection file for this project is located at [postman](https://github.com/SamGree/e-pics/blob/main/postman/postman.json) .
+- You can import this file into Postman to access the collection of API endpoints and test them.
+- Import from postman
+- Open Postman.
+- Dropdown three dots next to you app name.
+  ![postman](/readme.img/postmanj.png)
+- Click on export.
+- This will direct you to your computer files where you can choose to locate your postman file.
+- By importing the Postman collection, you can seamlessly access and test the API endpoints of the E-PICS Task Management System for functionality.
+- I have thoroughly tested all my apps using Postman to ensure that the CRUD operations function correctly.
+
+---
+
 ## Deployment
 
 - E-pics is deployed on Heroku using Heroku PostgreSQL as the database
@@ -171,3 +199,9 @@
 5. Run migrations and set up the database (heroku run python manage.py migrate).
 6. Your E-pics application should now be deployed and accessible via the provided Heroku app URL.
 7. Your app should now be deployed and accessible via the provided Heroku URL.
+
+---
+
+## Technologies Used
+
+- This api was written using Python.
