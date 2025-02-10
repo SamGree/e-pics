@@ -29,6 +29,5 @@ class CommentLike(models.Model):
         ]
 
     def __str__(self):
-        return (
-            f"{self.user.username} likes comment {self.comment.id}"
-        )
+        return f"{self.user.username} likes comment {self.comment.id}"
+        
