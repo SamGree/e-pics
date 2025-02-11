@@ -5,6 +5,7 @@ from posts.models import Post
 
 User = get_user_model()
 
+
 class AlbumModelTest(TestCase):
 
     def setUp(self):
