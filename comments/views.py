@@ -75,21 +75,12 @@ class PostCommentsView(APIView):
     Class-based view for fetching all comments for a specific post.
     URL: /comments/<post_id>/
     """
-    """
+
     def get(self, request, post_id):
         comments = Comment.objects.filter(
             post_id=post_id).order_by('-created_at')
         if comments.exists():
             serializer = CommentSerializer(comments, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(
-            {'message': 'No comments found for this post.'},
-            status=status.HTTP_404_NOT_FOUND)
-    """
-    def get(self, request, post_id):
-        comments = Comment.objects.filter(
-            post_id=post_id).order_by('-created_at')
-        if comments.exists():
-            serializer = CommentSerializer(comments, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'message': 'No comments found for this post.'}, status=status.HTTP_404_NOT_FOUND)        
+        return Response({'message': 'No comments found for this post.'},
+                        status=status.HTTP_404_NOT_FOUND)        
