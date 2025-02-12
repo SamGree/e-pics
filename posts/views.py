@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from cloudinary.uploader import destroy as cloudinary_destroy
 from rest_framework.parsers import MultiPartParser, FormParser
 
+
 class IsAuthenticatedOrReadOnly(BasePermission):
     """
     Custom permission allowing read-only access to unauthenticated users
@@ -25,32 +26,33 @@ class IsAuthenticatedOrReadOnly(BasePermission):
             return True
         return request.user and request.user.is_authenticated
 
+
 class PostListCreateView(APIView):
     """
     API view for listing all posts or creating a new post.
     """
     permission_classes = [IsAuthenticatedOrReadOnly]
-    
-    # parser_classes = [MultiPartParser, FormParser]
 
     def get(self, request):
         """
         Retrieve a list of all posts.
         """
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True, context={'request': request})
+        serializer = PostSerializer(
+            posts, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
     def post(self, request, *args, **kwargs):
         """
         Create a new post. Requires authentication.
         """
-        serializer = PostSerializer(data=request.data, context={'request': request})
+        serializer = PostSerializer(
+            data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class PostDetailView(APIView):
     """
@@ -64,11 +66,13 @@ class PostDetailView(APIView):
         """
         try:
             post = Post.objects.get(id=post_id)
-            post_serializer = PostSerializer(post, context={'request': request})
+            post_serializer = PostSerializer(
+                 post, context={'request': request})
             print(post_serializer.data)
             comments = Comment.objects.filter(post=post)
-            comment_serializer = CommentSerializer(comments, many=True, context={'request': request})
-            
+            comment_serializer = CommentSerializer(
+                comments, many=True, context={'request': request})
+
             if request.user.is_authenticated:
                 user_albums = Album.objects.filter(user=request.user)
                 album_serializer = AlbumSerializer(user_albums, many=True)
@@ -81,7 +85,8 @@ class PostDetailView(APIView):
                 'albums': album_serializer.data
             }, status=status.HTTP_200_OK)
         except Post.DoesNotExist:
-            return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Post not found'},
+                            status=status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, post_id):
         """
@@ -89,14 +94,16 @@ class PostDetailView(APIView):
         """
         try:
             post = Post.objects.get(id=post_id, user=request.user)
-            serializer = PostSerializer(post, data=request.data, partial=True, context={'request': request})
+            serializer = PostSerializer(post, data=request.data, partial=True,
+                                        context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
         except Post.DoesNotExist:
-            return Response({'error': 'Post not found or not owned by user'}, status=status.HTTP_404_NOT_FOUND)
-
+            return Response({'error': 'Post not found or not owned by user'},
+                            status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, post_id):
         """
@@ -105,20 +112,23 @@ class PostDetailView(APIView):
         try:
             post = Post.objects.get(id=post_id, user=request.user)
             if post.image and hasattr(post.image, "public_id"):
-                cloudinary_destroy(post.image.public_id) 
+                cloudinary_destroy(post.image.public_id)
 
             post.delete()
-            return Response({'message': 'Post deleted successfully'}, status=status.HTTP_200_OK)
-        
+            return Response({'message': 'Post deleted successfully'},
+                            status=status.HTTP_200_OK)
+
         except Post.DoesNotExist:
-            return Response({'error': 'Post not found or not owned by user'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Post not found or not owned by user'},
+                            status=status.HTTP_404_NOT_FOUND)
+
 
 class PostDownloadView(APIView):
     """
     API view for downloading a post's image and tracking download count.
     """
     permission_classes = [IsAuthenticated]
-    
+
     def get(self, request, post_id):
         """
         Increment the download count and return the image URL.
@@ -128,7 +138,13 @@ class PostDownloadView(APIView):
         post.download_count += 1
         post.save()
 
-        return Response({'download_url': post.image.url, 'download_count': post.download_count}, status=status.HTTP_200_OK)
+        return Response(
+            {
+                'download_url': post.image.url,
+                'download_count': post.download_count
+            },
+            status=status.HTTP_200_OK)
+
 
 class SearchView(APIView):
     """
@@ -136,16 +152,18 @@ class SearchView(APIView):
     """
     def get(self, request):
         query = request.query_params.get('q', '').strip()
-        
+
         if not query:
-            return Response({"message": "Enter a search term."}, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response({"message": "Enter a search term."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         # Filter posts by title, author's username, or tags
         posts = Post.objects.filter(
             Q(title__icontains=query) |
             Q(user__username__icontains=query) |
             Q(post_tags__tag__name__icontains=query)
         ).distinct()
-        
-        serializer = PostSerializer(posts, many=True, context={'request': request})
+
+        serializer = PostSerializer(
+            posts, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
