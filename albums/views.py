@@ -112,5 +112,5 @@ class AddPostToAlbumView(APIView):
 
         return Response(
             {"message": "Post added to album successfully"},
-            status=status.HTTP_200_Ok
+            status=status.HTTP_200_OK
             )
