@@ -204,4 +204,32 @@
 
 ## Technologies Used
 
-- This api was written using Python.
+- **Core Technologies**
+  - Python – Main programming language.
+  - Django (v5.1.4) – Web framework for building the backend.
+  - Django REST Framework (DRF) Used for building REST APIs.
+- **Authentication & Security**
+  - dj-rest-auth – Provides authentication endpoints.
+  - django-allauth – Handles social authentication.
+  - djangorestframework-simplejwt – JWT authentication.
+  - django-cors-headers – Manages CORS policies.
+- **Database & ORM**
+  - PostgreSQL – Database management system.
+  - dj-database-url (v0.5.0) – Database configuration tool.
+  - psycopg2-binary (v2.9.10) – PostgreSQL adapter for Django.
+  - sqlparse – SQL query parsing.
+- **Cloud & Storage**
+  - Cloudinary (v1.41.0) – Cloud-based media storage.
+  - django-cloudinary-storage (v0.3.0) – Cloudinary integration for Django.
+  - pillow (v11.0.0) – Image processing library.
+- **Deployment & Server**
+  - Gunicorn (v23.0.0) – WSGI HTTP server for running the application.
+  - Whitenoise (v6.8.2) – Serves static files efficiently.
+  - Heroku – Cloud platform for deployment.
+- **Utilities & Other Dependencies**
+  - asgiref (v3.8.1) – ASGI compatibility for Django.
+  - pillow (v11.0.0) – Image processing library.
+  - python-decouple (v3.8) – Handles environment variables.
+  - requests-oauthlib (v2.0.0) – OAuth authentication.
+  - tzdata (v2024.2) – Timezone management.
+  - pytz (v2024.2) – Timezone utilities.
