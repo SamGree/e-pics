@@ -16,7 +16,9 @@ class UserAPITest(TestCase):
         self.client = APIClient()
 
         # Create test user
-        self.user = User.objects.create_user(username="testuser", password="testpassword", bio="This is a test bio")
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword",
+            bio="This is a test bio")
         self.token = Token.objects.create(user=self.user)
 
         # Authentication headers
@@ -26,7 +28,8 @@ class UserAPITest(TestCase):
         self.register_url = reverse("register")
         self.login_url = reverse("login")
         self.logout_url = reverse("logout")
-        self.profile_url = reverse("user-profile-detail", kwargs={"user_id": self.user.id})
+        self.profile_url = reverse(
+             "user-profile-detail", kwargs={"user_id": self.user.id})
         self.profile_update_url = reverse("profile-update")
 
     def test_register_user(self):
@@ -85,7 +88,7 @@ class UserAPITest(TestCase):
         """
         Test retrieving user profile by ID.
         """
-        response = self.client.get(self.profile_url, **self.auth_headers)  # Added authentication headers
+        response = self.client.get(self.profile_url, **self.auth_headers)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["user"]["username"], "testuser")
 
@@ -94,7 +97,8 @@ class UserAPITest(TestCase):
         Test updating user profile details.
         """
         data = {"bio": "Updated bio"}
-        response = self.client.patch(self.profile_update_url, data, format="json", **self.auth_headers)
+        response = self.client.patch(
+             self.profile_update_url, data, format="json", **self.auth_headers)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["bio"], "Updated bio")
 
@@ -103,5 +107,6 @@ class UserAPITest(TestCase):
         Test that unauthenticated users cannot update profiles.
         """
         data = {"bio": "Unauthorized update"}
-        response = self.client.patch(self.profile_update_url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN) 
+        response = self.client.patch(
+            self.profile_update_url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
