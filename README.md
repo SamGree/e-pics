@@ -96,17 +96,19 @@
 
 ### users
 
-- Model inherits fields from AbstractUser
-  | Name | KYE | TYPE | EXTRA |
-  | ---------- | ------------- | ---- | -------------------- |
-  |id| AutoField| Django default| Primary Key (Automatically generated)|
-  |username| CharField| Inherited from AbstractUser |Unique Identifier|
-  |email| EmailField| Inherited from AbstractUser| Unique, Optional|
-  |password| CharField| Inherited from AbstractUser |Hashed for security|
-  |profile_image|CloudinaryField| Custom Field |Stores profile image via Cloudinary|
-  |bio|TextField| Custom Field|Optional user bio (blank=True, null=True)|
-  ***
-  ***
+Model inherits fields from AbstractUser
+| Name | KYE | TYPE | EXTRA |
+| ---------- | ------------- | ---- | -------------------- |
+|id| AutoField| Django default| Primary Key (Automatically generated)|
+|username| CharField| Inherited from AbstractUser |Unique Identifier|
+|email| EmailField| Inherited from AbstractUser| Unique, Optional|
+|password| CharField| Inherited from AbstractUser |Hashed for security|
+|profile_image|CloudinaryField| Custom Field |Stores profile image via Cloudinary|
+|bio|TextField| Custom Field|Optional user bio (blank=True, null=True)|
+
+---
+
+---
 
 ## Unit Tests
 
