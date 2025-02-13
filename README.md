@@ -25,6 +25,10 @@
 - [Unit Tests](#unit-tests)
 - [Postman](#postman)
 - [Deployment](#deployment)
+- [Technologies Used](#technologies-used)
+- [Validation](#validation)
+- [Bugs](#bugs)
+- [Credits](#credits)
 
 ---
 
