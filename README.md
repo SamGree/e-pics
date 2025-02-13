@@ -14,7 +14,7 @@
 ## Table of Contents
 
 - [Project Models](#project-models)
-  - [albums](#albums)
+  - [Albums](#albums)
   - [commentlikes](#commentlikes)
   - [comments](#comments)
   - [postlikes](#postlikes)
@@ -32,7 +32,7 @@
 
 ---
 
-### Albums App
+### Albums
 
 | Name       | KYE             | TYPE             | EXTRA                            |
 | ---------- | --------------- | ---------------- | -------------------------------- |
@@ -252,7 +252,7 @@
 
 ---
 
-- Error occured because of os was not imported.
+- Error occured because of < os > was not imported.
 - ![os](/readme.img/forgot.import%20os.png)
 
 ---
