@@ -239,22 +239,24 @@
 - I used [PEP8 CI Python linter](https://pep8ci.herokuapp.com/) validation to all my files, and Results:
   All clear, no errors found.
 
+---
+
 ## Bugs
 
+- I wrote the app name capital letter instead of small letter, error solved
 - ![P to p](/readme.img/fix.P.to.p.png)
-  - I wrote the app name capital letter instead of small letter, error solved
 
 ---
 
+- Error occured because of os was not imported.
 - ![os](/readme.img/forgot.import%20os.png)
-  - Error occured because of os was not imported.
 
 ---
 
+- This error appears after deployment; if I wanted to add a post to the album, first click shows error, but second click on the same image then show the successful message.
 - ![frontalbum](/readme.img/viewalbum.jpg)
-  - This error appears after deployment; if I wanted to add a post to the album, first click shows error, but second click on the same image then show the successful message.
+- after debugging, the error I had was in the views.py albums, because (Ok) was not in _capital letter_ by changing to capital letter (OK) error solved
 - ![views albums](/readme.img/viewalbum1.png)
-  - after debugging, the error I had was in the views.py albums, because (Ok) was not in _capital letter_ by changing to capital letter (OK) error solved
 
 ---
 
