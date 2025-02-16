@@ -1,4 +1,3 @@
-
 /**
  * Cloudinary's JavaScript library - Version 2.5.0
  * Copyright Cloudinary
@@ -6,27 +5,37 @@
  *
  */
 var slice = [].slice,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  extend = function (child, parent) {
+    for (var key in parent) {
+      if (hasProp.call(parent, key)) child[key] = parent[key];
+    }
+    function ctor() {
+      this.constructor = child;
+    }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+    child.__super__ = parent.prototype;
+    return child;
+  },
   hasProp = {}.hasOwnProperty;
 
-(function(root, factory) {
+(function (root, factory) {
   var name, ref, results, value;
-  if ((typeof define === 'function') && define.amd) {
-    return define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    return module.exports = factory(require('jquery'));
+  if (typeof define === "function" && define.amd) {
+    return define(["jquery"], factory);
+  } else if (typeof exports === "object") {
+    return (module.exports = factory(require("jquery")));
   } else {
     root.cloudinary || (root.cloudinary = {});
     ref = factory(jQuery);
     results = [];
     for (name in ref) {
       value = ref[name];
-      results.push(root.cloudinary[name] = value);
+      results.push((root.cloudinary[name] = value));
     }
     return results;
   }
-})(this, function(jQuery) {
-
+})(this, function (jQuery) {
   /*
    * Includes common utility methods and shims
    */
@@ -36,8 +45,73 @@ var slice = [].slice,
    * @function Util.allString
    * @param {Array} list - an array of items
    */
-  var ArrayParam, BaseUtil, ClientHintsMetaTag, Cloudinary, CloudinaryJQuery, Condition, Configuration, Expression, ExpressionParam, FetchLayer, HtmlTag, ImageTag, Layer, LayerParam, Param, RangeParam, RawParam, SubtitlesLayer, TextLayer, Transformation, TransformationBase, TransformationParam, Util, VideoTag, addClass, allStrings, base64Encode, base64EncodeURL, camelCase, cloneDeep, cloudinary, compact, contains, convertKeys, crc32, defaults, difference, funcTag, functions, getAttribute, getData, hasClass, identity, isEmpty, isFunction, isNumberLike, isObject, isString, m, merge, objToString, objectProto, parameters, reWords, removeAttribute, setAttribute, setAttributes, setData, smartEscape, snakeCase, utf8_encode, webp, width, withCamelCaseKeys, withSnakeCaseKeys, without;
-  allStrings = function(list) {
+  var ArrayParam,
+    BaseUtil,
+    ClientHintsMetaTag,
+    Cloudinary,
+    CloudinaryJQuery,
+    Condition,
+    Configuration,
+    Expression,
+    ExpressionParam,
+    FetchLayer,
+    HtmlTag,
+    ImageTag,
+    Layer,
+    LayerParam,
+    Param,
+    RangeParam,
+    RawParam,
+    SubtitlesLayer,
+    TextLayer,
+    Transformation,
+    TransformationBase,
+    TransformationParam,
+    Util,
+    VideoTag,
+    addClass,
+    allStrings,
+    base64Encode,
+    base64EncodeURL,
+    camelCase,
+    cloneDeep,
+    cloudinary,
+    compact,
+    contains,
+    convertKeys,
+    crc32,
+    defaults,
+    difference,
+    funcTag,
+    functions,
+    getAttribute,
+    getData,
+    hasClass,
+    identity,
+    isEmpty,
+    isFunction,
+    isNumberLike,
+    isObject,
+    isString,
+    m,
+    merge,
+    objToString,
+    objectProto,
+    parameters,
+    reWords,
+    removeAttribute,
+    setAttribute,
+    setAttributes,
+    setData,
+    smartEscape,
+    snakeCase,
+    utf8_encode,
+    webp,
+    width,
+    withCamelCaseKeys,
+    withSnakeCaseKeys,
+    without;
+  allStrings = function (list) {
     var item, j, len;
     for (j = 0, len = list.length; j < len; j++) {
       item = list[j];
@@ -49,13 +123,13 @@ var slice = [].slice,
   };
 
   /**
-  * Creates a new array without the given item.
-  * @function Util.without
-  * @param {Array} array - original array
-  * @param {*} item - the item to exclude from the new array
-  * @return {Array} a new array made of the original array's items except for `item`
+   * Creates a new array without the given item.
+   * @function Util.without
+   * @param {Array} array - original array
+   * @param {*} item - the item to exclude from the new array
+   * @return {Array} a new array made of the original array's items except for `item`
    */
-  without = function(array, item) {
+  without = function (array, item) {
     var i, length, newArray;
     newArray = [];
     i = -1;
@@ -69,18 +143,18 @@ var slice = [].slice,
   };
 
   /**
-  * Return true is value is a number or a string representation of a number.
-  * @function Util.isNumberLike
-  * @param {*} value
-  * @returns {boolean} true if value is a number
-  * @example
-  *    Util.isNumber(0) // true
-  *    Util.isNumber("1.3") // true
-  *    Util.isNumber("") // false
-  *    Util.isNumber(undefined) // false
+   * Return true is value is a number or a string representation of a number.
+   * @function Util.isNumberLike
+   * @param {*} value
+   * @returns {boolean} true if value is a number
+   * @example
+   *    Util.isNumber(0) // true
+   *    Util.isNumber("1.3") // true
+   *    Util.isNumber("") // false
+   *    Util.isNumber(undefined) // false
    */
-  isNumberLike = function(value) {
-    return (value != null) && !isNaN(parseFloat(value));
+  isNumberLike = function (value) {
+    return value != null && !isNaN(parseFloat(value));
   };
 
   /**
@@ -90,14 +164,17 @@ var slice = [].slice,
    * @param {RegExp} unsafe - characters that must be escaped
    * @return {string} escaped string
    */
-  smartEscape = function(string, unsafe) {
+  smartEscape = function (string, unsafe) {
     if (unsafe == null) {
       unsafe = /([^a-zA-Z0-9_.\-\/:]+)/g;
     }
-    return string.replace(unsafe, function(match) {
-      return match.split("").map(function(c) {
-        return "%" + c.charCodeAt(0).toString(16).toUpperCase();
-      }).join("");
+    return string.replace(unsafe, function (match) {
+      return match
+        .split("")
+        .map(function (c) {
+          return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+        })
+        .join("");
     });
   };
 
@@ -109,10 +186,11 @@ var slice = [].slice,
    * @param {...Object} source - the source object(s) to assign defaults from
    * @return {Object} destination after it was modified
    */
-  defaults = function() {
+  defaults = function () {
     var destination, sources;
-    destination = arguments[0], sources = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-    return sources.reduce(function(dest, source) {
+    (destination = arguments[0]),
+      (sources = 2 <= arguments.length ? slice.call(arguments, 1) : []);
+    return sources.reduce(function (dest, source) {
       var key, value;
       for (key in source) {
         value = source[key];
@@ -150,51 +228,64 @@ var slice = [].slice,
   #isObject(1);
    * // => false
    */
-  isObject = function(value) {
+  isObject = function (value) {
     var type;
     type = typeof value;
-    return !!value && (type === 'object' || type === 'function');
+    return !!value && (type === "object" || type === "function");
   };
-  funcTag = '[object Function]';
+  funcTag = "[object Function]";
 
   /**
-  * Checks if `value` is classified as a `Function` object.
-  * @function Util.isFunction
-  * @param {*} value The value to check.
-  * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
-  * @example
-  *
-  * function Foo(){};
-  * isFunction(Foo);
-  * // => true
-  *
-  * isFunction(/abc/);
-  * // => false
+   * Checks if `value` is classified as a `Function` object.
+   * @function Util.isFunction
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+   * @example
+   *
+   * function Foo(){};
+   * isFunction(Foo);
+   * // => true
+   *
+   * isFunction(/abc/);
+   * // => false
    */
-  isFunction = function(value) {
+  isFunction = function (value) {
     return isObject(value) && objToString.call(value) === funcTag;
   };
 
   /*********** lodash functions */
 
   /** Used to match words to create compound words. */
-  reWords = (function() {
+  reWords = (function () {
     var lower, upper;
-    upper = '[A-Z]';
-    lower = '[a-z]+';
-    return RegExp(upper + '+(?=' + upper + lower + ')|' + upper + '?' + lower + '|' + upper + '+|[0-9]+', 'g');
+    upper = "[A-Z]";
+    lower = "[a-z]+";
+    return RegExp(
+      upper +
+        "+(?=" +
+        upper +
+        lower +
+        ")|" +
+        upper +
+        "?" +
+        lower +
+        "|" +
+        upper +
+        "+|[0-9]+",
+      "g"
+    );
   })();
 
   /**
-  * Convert string to camelCase
-  * @function Util.camelCase
-  * @param {string} string - the string to convert
-  * @return {string} in camelCase format
+   * Convert string to camelCase
+   * @function Util.camelCase
+   * @param {string} string - the string to convert
+   * @return {string} in camelCase format
    */
-  camelCase = function(source) {
+  camelCase = function (source) {
     var i, word, words;
     words = source.match(reWords);
-    words = (function() {
+    words = (function () {
       var j, len, results;
       results = [];
       for (i = j = 0, len = words.length; j < len; i = ++j) {
@@ -208,7 +299,7 @@ var slice = [].slice,
       }
       return results;
     })();
-    return words.join('');
+    return words.join("");
   };
 
   /**
@@ -217,10 +308,10 @@ var slice = [].slice,
    * @param {string} string - the string to convert
    * @return {string} in snake_case format
    */
-  snakeCase = function(source) {
+  snakeCase = function (source) {
     var i, word, words;
     words = source.match(reWords);
-    words = (function() {
+    words = (function () {
       var j, len, results;
       results = [];
       for (i = j = 0, len = words.length; j < len; i = ++j) {
@@ -229,9 +320,9 @@ var slice = [].slice,
       }
       return results;
     })();
-    return words.join('_');
+    return words.join("_");
   };
-  convertKeys = function(source, converter) {
+  convertKeys = function (source, converter) {
     var key, result, value;
     if (converter == null) {
       converter = Util.identity;
@@ -253,7 +344,7 @@ var slice = [].slice,
    * @param {Object} value - the object to copy
    * @return {Object} a new object
    */
-  withCamelCaseKeys = function(source) {
+  withCamelCaseKeys = function (source) {
     return convertKeys(source, Util.camelCase);
   };
 
@@ -263,26 +354,31 @@ var slice = [].slice,
    * @param {Object} value - the object to copy
    * @return {Object} a new object
    */
-  withSnakeCaseKeys = function(source) {
+  withSnakeCaseKeys = function (source) {
     return convertKeys(source, Util.snakeCase);
   };
-  base64Encode = typeof btoa !== 'undefined' && isFunction(btoa) ? btoa : typeof Buffer !== 'undefined' && isFunction(Buffer) ? function(input) {
-    if (!(input instanceof Buffer)) {
-      input = new Buffer.from(String(input), 'binary');
-    }
-    return input.toString('base64');
-  } : function(input) {
-    throw new Error("No base64 encoding function found");
-  };
+  base64Encode =
+    typeof btoa !== "undefined" && isFunction(btoa)
+      ? btoa
+      : typeof Buffer !== "undefined" && isFunction(Buffer)
+      ? function (input) {
+          if (!(input instanceof Buffer)) {
+            input = new Buffer.from(String(input), "binary");
+          }
+          return input.toString("base64");
+        }
+      : function (input) {
+          throw new Error("No base64 encoding function found");
+        };
 
   /**
-  * Returns the Base64-decoded version of url.<br>
-  * This method delegates to `btoa` if present. Otherwise it tries `Buffer`.
-  * @function Util.base64EncodeURL
-  * @param {string} url - the url to encode. the value is URIdecoded and then re-encoded before converting to base64 representation
-  * @return {string} the base64 representation of the URL
+   * Returns the Base64-decoded version of url.<br>
+   * This method delegates to `btoa` if present. Otherwise it tries `Buffer`.
+   * @function Util.base64EncodeURL
+   * @param {string} url - the url to encode. the value is URIdecoded and then re-encoded before converting to base64 representation
+   * @return {string} the base64 representation of the URL
    */
-  base64EncodeURL = function(input) {
+  base64EncodeURL = function (input) {
     var error1, ignore;
     try {
       input = decodeURI(input);
@@ -304,64 +400,64 @@ var slice = [].slice,
     smartEscape: smartEscape,
     withCamelCaseKeys: withCamelCaseKeys,
     withSnakeCaseKeys: withSnakeCaseKeys,
-    base64EncodeURL: base64EncodeURL
+    base64EncodeURL: base64EncodeURL,
   };
 
   /**
-    * Includes utility methods and lodash / jQuery shims
+   * Includes utility methods and lodash / jQuery shims
    */
 
   /**
-    * Get data from the DOM element.
-    *
-    * This method will use jQuery's `data()` method if it is available, otherwise it will get the `data-` attribute
-    * @param {Element} element - the element to get the data from
-    * @param {string} name - the name of the data item
-    * @returns the value associated with the `name`
-    * @function Util.getData
+   * Get data from the DOM element.
+   *
+   * This method will use jQuery's `data()` method if it is available, otherwise it will get the `data-` attribute
+   * @param {Element} element - the element to get the data from
+   * @param {string} name - the name of the data item
+   * @returns the value associated with the `name`
+   * @function Util.getData
    */
-  getData = function(element, name) {
+  getData = function (element, name) {
     return jQuery(element).data(name);
   };
 
   /**
-    * Set data in the DOM element.
-    *
-    * This method will use jQuery's `data()` method if it is available, otherwise it will set the `data-` attribute
-    * @function Util.setData
-    * @param {Element} element - the element to set the data in
-    * @param {string} name - the name of the data item
-    * @param {*} value - the value to be set
-    *
+   * Set data in the DOM element.
+   *
+   * This method will use jQuery's `data()` method if it is available, otherwise it will set the `data-` attribute
+   * @function Util.setData
+   * @param {Element} element - the element to set the data in
+   * @param {string} name - the name of the data item
+   * @param {*} value - the value to be set
+   *
    */
-  setData = function(element, name, value) {
+  setData = function (element, name, value) {
     return jQuery(element).data(name, value);
   };
 
   /**
-    * Get attribute from the DOM element.
-    *
-    * This method will use jQuery's `attr()` method if it is available, otherwise it will get the attribute directly
-    * @function Util.getAttribute
-    * @param {Element} element - the element to set the attribute for
-    * @param {string} name - the name of the attribute
-    * @returns {*} the value of the attribute
-    *
+   * Get attribute from the DOM element.
+   *
+   * This method will use jQuery's `attr()` method if it is available, otherwise it will get the attribute directly
+   * @function Util.getAttribute
+   * @param {Element} element - the element to set the attribute for
+   * @param {string} name - the name of the attribute
+   * @returns {*} the value of the attribute
+   *
    */
-  getAttribute = function(element, name) {
+  getAttribute = function (element, name) {
     return jQuery(element).attr(name);
   };
 
   /**
-    * Set attribute in the DOM element.
-    *
-    * This method will use jQuery's `attr()` method if it is available, otherwise it will set the attribute directly
-    * @function Util.setAttribute
-    * @param {Element} element - the element to set the attribute for
-    * @param {string} name - the name of the attribute
-    * @param {*} value - the value to be set
+   * Set attribute in the DOM element.
+   *
+   * This method will use jQuery's `attr()` method if it is available, otherwise it will set the attribute directly
+   * @function Util.setAttribute
+   * @param {Element} element - the element to set the attribute for
+   * @param {string} name - the name of the attribute
+   * @param {*} value - the value to be set
    */
-  setAttribute = function(element, name, value) {
+  setAttribute = function (element, name, value) {
     return jQuery(element).attr(name, value);
   };
 
@@ -372,17 +468,17 @@ var slice = [].slice,
    * @param {Element} element - the element to set the attribute for
    * @param {string} name - the name of the attribute
    */
-  removeAttribute = function(element, name) {
+  removeAttribute = function (element, name) {
     return jQuery(element).removeAttr(name);
   };
 
   /**
-    * Set a group of attributes to the element
-    * @function Util.setAttributes
-    * @param {Element} element - the element to set the attributes for
-    * @param {Object} attributes - a hash of attribute names and values
+   * Set a group of attributes to the element
+   * @function Util.setAttributes
+   * @param {Element} element - the element to set the attributes for
+   * @param {Object} attributes - a hash of attribute names and values
    */
-  setAttributes = function(element, attributes) {
+  setAttributes = function (element, attributes) {
     return jQuery(element).attr(attributes);
   };
 
@@ -393,20 +489,20 @@ var slice = [].slice,
     * @param {string} name - the class name
     @returns {boolean} true if the element has the class
    */
-  hasClass = function(element, name) {
+  hasClass = function (element, name) {
     return jQuery(element).hasClass(name);
   };
 
   /**
-    * Add class to the element
-    * @function Util.addClass
-    * @param {Element} element - the element
-    * @param {string} name - the class name to add
+   * Add class to the element
+   * @function Util.addClass
+   * @param {Element} element - the element
+   * @param {string} name - the class name to add
    */
-  addClass = function(element, name) {
+  addClass = function (element, name) {
     return jQuery(element).addClass(name);
   };
-  width = function(element) {
+  width = function (element) {
     return jQuery(element).width();
   };
 
@@ -421,8 +517,12 @@ var slice = [].slice,
    * @param item
    * @returns {boolean} true if item is empty
    */
-  isEmpty = function(item) {
-    return (item == null) || (Array.isArray(item) || Util.isString(item)) && item.length === 0 || (jQuery.isPlainObject(item) && jQuery.isEmptyObject(item));
+  isEmpty = function (item) {
+    return (
+      item == null ||
+      ((Array.isArray(item) || Util.isString(item)) && item.length === 0) ||
+      (jQuery.isPlainObject(item) && jQuery.isEmptyObject(item))
+    );
   };
 
   /**
@@ -430,8 +530,11 @@ var slice = [].slice,
    * @param item
    * @returns {boolean} true if item is a string
    */
-  isString = function(item) {
-    return typeof item === 'string' || (item != null ? item.toString() : void 0) === '[object String]';
+  isString = function (item) {
+    return (
+      typeof item === "string" ||
+      (item != null ? item.toString() : void 0) === "[object String]"
+    );
   };
 
   /**
@@ -440,9 +543,9 @@ var slice = [].slice,
    * @param {Object} destination - the object to assign to
    * @param {...Object} [sources] The source objects.
    */
-  merge = function() {
+  merge = function () {
     var args, i;
-    args = (function() {
+    args = function () {
       var j, len, results;
       results = [];
       for (j = 0, len = arguments.length; j < len; j++) {
@@ -450,7 +553,7 @@ var slice = [].slice,
         results.push(i);
       }
       return results;
-    }).apply(this, arguments);
+    }.apply(this, arguments);
     args.unshift(true);
     return jQuery.extend.apply(this, args);
   };
@@ -461,7 +564,7 @@ var slice = [].slice,
    * @param {Array} array - the array to remove values from
    * @return {Array} a new array without falsey values
    */
-  compact = function(arr) {
+  compact = function (arr) {
     var item, j, len, results;
     results = [];
     for (j = 0, len = arr.length; j < len; j++) {
@@ -479,7 +582,7 @@ var slice = [].slice,
    * @param {Object} value - the object to clone
    * @return {Object} a new deep copy of the object
    */
-  cloneDeep = function() {
+  cloneDeep = function () {
     var args;
     args = jQuery.makeArray(arguments);
     args.unshift({});
@@ -494,7 +597,7 @@ var slice = [].slice,
    * @param {*} item - the item to search for
    * @return {boolean} true if the item is included in the array
    */
-  contains = function(arr, item) {
+  contains = function (arr, item) {
     var i, j, len;
     for (j = 0, len = arr.length; j < len; j++) {
       i = arr[j];
@@ -512,7 +615,7 @@ var slice = [].slice,
    * @param {Array} values - values to filter from arr
    * @return {Array} the filtered values
    */
-  difference = function(arr, values) {
+  difference = function (arr, values) {
     var item, j, len, results;
     results = [];
     for (j = 0, len = arr.length; j < len; j++) {
@@ -530,7 +633,7 @@ var slice = [].slice,
    * @param {Object} object - the object to inspect
    * @return {Array} a list of functions of object
    */
-  functions = function(object) {
+  functions = function (object) {
     var i, results;
     results = [];
     for (i in object) {
@@ -547,7 +650,7 @@ var slice = [].slice,
    * @param {*} value
    * @return {*} the provided value
    */
-  identity = function(value) {
+  identity = function (value) {
     return value;
   };
 
@@ -590,20 +693,20 @@ var slice = [].slice,
      * @param {string} text
      * @return {string} the `text` without leading or trailing spaces
      */
-    trim: jQuery.trim
+    trim: jQuery.trim,
   });
 
   /**
    * UTF8 encoder
    *
    */
-  utf8_encode = function(argString) {
+  utf8_encode = function (argString) {
     var c1, enc, end, n, start, string, stringl, utftext;
-    if (argString === null || typeof argString === 'undefined') {
-      return '';
+    if (argString === null || typeof argString === "undefined") {
+      return "";
     }
-    string = argString + '';
-    utftext = '';
+    string = argString + "";
+    utftext = "";
     start = void 0;
     end = void 0;
     stringl = 0;
@@ -616,9 +719,13 @@ var slice = [].slice,
       if (c1 < 128) {
         end++;
       } else if (c1 > 127 && c1 < 2048) {
-        enc = String.fromCharCode(c1 >> 6 | 192, c1 & 63 | 128);
+        enc = String.fromCharCode((c1 >> 6) | 192, (c1 & 63) | 128);
       } else {
-        enc = String.fromCharCode(c1 >> 12 | 224, c1 >> 6 & 63 | 128, c1 & 63 | 128);
+        enc = String.fromCharCode(
+          (c1 >> 12) | 224,
+          ((c1 >> 6) & 63) | 128,
+          (c1 & 63) | 128
+        );
       }
       if (enc !== null) {
         if (end > start) {
@@ -639,10 +746,11 @@ var slice = [].slice,
    * CRC32 calculator
    * Depends on 'utf8_encode'
    */
-  crc32 = function(str) {
+  crc32 = function (str) {
     var crc, i, iTop, table, x, y;
     str = utf8_encode(str);
-    table = '00000000 77073096 EE0E612C 990951BA 076DC419 706AF48F E963A535 9E6495A3 0EDB8832 79DCB8A4 E0D5E91E 97D2D988 09B64C2B 7EB17CBD E7B82D07 90BF1D91 1DB71064 6AB020F2 F3B97148 84BE41DE 1ADAD47D 6DDDE4EB F4D4B551 83D385C7 136C9856 646BA8C0 FD62F97A 8A65C9EC 14015C4F 63066CD9 FA0F3D63 8D080DF5 3B6E20C8 4C69105E D56041E4 A2677172 3C03E4D1 4B04D447 D20D85FD A50AB56B 35B5A8FA 42B2986C DBBBC9D6 ACBCF940 32D86CE3 45DF5C75 DCD60DCF ABD13D59 26D930AC 51DE003A C8D75180 BFD06116 21B4F4B5 56B3C423 CFBA9599 B8BDA50F 2802B89E 5F058808 C60CD9B2 B10BE924 2F6F7C87 58684C11 C1611DAB B6662D3D 76DC4190 01DB7106 98D220BC EFD5102A 71B18589 06B6B51F 9FBFE4A5 E8B8D433 7807C9A2 0F00F934 9609A88E E10E9818 7F6A0DBB 086D3D2D 91646C97 E6635C01 6B6B51F4 1C6C6162 856530D8 F262004E 6C0695ED 1B01A57B 8208F4C1 F50FC457 65B0D9C6 12B7E950 8BBEB8EA FCB9887C 62DD1DDF 15DA2D49 8CD37CF3 FBD44C65 4DB26158 3AB551CE A3BC0074 D4BB30E2 4ADFA541 3DD895D7 A4D1C46D D3D6F4FB 4369E96A 346ED9FC AD678846 DA60B8D0 44042D73 33031DE5 AA0A4C5F DD0D7CC9 5005713C 270241AA BE0B1010 C90C2086 5768B525 206F85B3 B966D409 CE61E49F 5EDEF90E 29D9C998 B0D09822 C7D7A8B4 59B33D17 2EB40D81 B7BD5C3B C0BA6CAD EDB88320 9ABFB3B6 03B6E20C 74B1D29A EAD54739 9DD277AF 04DB2615 73DC1683 E3630B12 94643B84 0D6D6A3E 7A6A5AA8 E40ECF0B 9309FF9D 0A00AE27 7D079EB1 F00F9344 8708A3D2 1E01F268 6906C2FE F762575D 806567CB 196C3671 6E6B06E7 FED41B76 89D32BE0 10DA7A5A 67DD4ACC F9B9DF6F 8EBEEFF9 17B7BE43 60B08ED5 D6D6A3E8 A1D1937E 38D8C2C4 4FDFF252 D1BB67F1 A6BC5767 3FB506DD 48B2364B D80D2BDA AF0A1B4C 36034AF6 41047A60 DF60EFC3 A867DF55 316E8EEF 4669BE79 CB61B38C BC66831A 256FD2A0 5268E236 CC0C7795 BB0B4703 220216B9 5505262F C5BA3BBE B2BD0B28 2BB45A92 5CB36A04 C2D7FFA7 B5D0CF31 2CD99E8B 5BDEAE1D 9B64C2B0 EC63F226 756AA39C 026D930A 9C0906A9 EB0E363F 72076785 05005713 95BF4A82 E2B87A14 7BB12BAE 0CB61B38 92D28E9B E5D5BE0D 7CDCEFB7 0BDBDF21 86D3D2D4 F1D4E242 68DDB3F8 1FDA836E 81BE16CD F6B9265B 6FB077E1 18B74777 88085AE6 FF0F6A70 66063BCA 11010B5C 8F659EFF F862AE69 616BFFD3 166CCF45 A00AE278 D70DD2EE 4E048354 3903B3C2 A7672661 D06016F7 4969474D 3E6E77DB AED16A4A D9D65ADC 40DF0B66 37D83BF0 A9BCAE53 DEBB9EC5 47B2CF7F 30B5FFE9 BDBDF21C CABAC28A 53B39330 24B4A3A6 BAD03605 CDD70693 54DE5729 23D967BF B3667A2E C4614AB8 5D681B02 2A6F2B94 B40BBE37 C30C8EA1 5A05DF1B 2D02EF8D';
+    table =
+      "00000000 77073096 EE0E612C 990951BA 076DC419 706AF48F E963A535 9E6495A3 0EDB8832 79DCB8A4 E0D5E91E 97D2D988 09B64C2B 7EB17CBD E7B82D07 90BF1D91 1DB71064 6AB020F2 F3B97148 84BE41DE 1ADAD47D 6DDDE4EB F4D4B551 83D385C7 136C9856 646BA8C0 FD62F97A 8A65C9EC 14015C4F 63066CD9 FA0F3D63 8D080DF5 3B6E20C8 4C69105E D56041E4 A2677172 3C03E4D1 4B04D447 D20D85FD A50AB56B 35B5A8FA 42B2986C DBBBC9D6 ACBCF940 32D86CE3 45DF5C75 DCD60DCF ABD13D59 26D930AC 51DE003A C8D75180 BFD06116 21B4F4B5 56B3C423 CFBA9599 B8BDA50F 2802B89E 5F058808 C60CD9B2 B10BE924 2F6F7C87 58684C11 C1611DAB B6662D3D 76DC4190 01DB7106 98D220BC EFD5102A 71B18589 06B6B51F 9FBFE4A5 E8B8D433 7807C9A2 0F00F934 9609A88E E10E9818 7F6A0DBB 086D3D2D 91646C97 E6635C01 6B6B51F4 1C6C6162 856530D8 F262004E 6C0695ED 1B01A57B 8208F4C1 F50FC457 65B0D9C6 12B7E950 8BBEB8EA FCB9887C 62DD1DDF 15DA2D49 8CD37CF3 FBD44C65 4DB26158 3AB551CE A3BC0074 D4BB30E2 4ADFA541 3DD895D7 A4D1C46D D3D6F4FB 4369E96A 346ED9FC AD678846 DA60B8D0 44042D73 33031DE5 AA0A4C5F DD0D7CC9 5005713C 270241AA BE0B1010 C90C2086 5768B525 206F85B3 B966D409 CE61E49F 5EDEF90E 29D9C998 B0D09822 C7D7A8B4 59B33D17 2EB40D81 B7BD5C3B C0BA6CAD EDB88320 9ABFB3B6 03B6E20C 74B1D29A EAD54739 9DD277AF 04DB2615 73DC1683 E3630B12 94643B84 0D6D6A3E 7A6A5AA8 E40ECF0B 9309FF9D 0A00AE27 7D079EB1 F00F9344 8708A3D2 1E01F268 6906C2FE F762575D 806567CB 196C3671 6E6B06E7 FED41B76 89D32BE0 10DA7A5A 67DD4ACC F9B9DF6F 8EBEEFF9 17B7BE43 60B08ED5 D6D6A3E8 A1D1937E 38D8C2C4 4FDFF252 D1BB67F1 A6BC5767 3FB506DD 48B2364B D80D2BDA AF0A1B4C 36034AF6 41047A60 DF60EFC3 A867DF55 316E8EEF 4669BE79 CB61B38C BC66831A 256FD2A0 5268E236 CC0C7795 BB0B4703 220216B9 5505262F C5BA3BBE B2BD0B28 2BB45A92 5CB36A04 C2D7FFA7 B5D0CF31 2CD99E8B 5BDEAE1D 9B64C2B0 EC63F226 756AA39C 026D930A 9C0906A9 EB0E363F 72076785 05005713 95BF4A82 E2B87A14 7BB12BAE 0CB61B38 92D28E9B E5D5BE0D 7CDCEFB7 0BDBDF21 86D3D2D4 F1D4E242 68DDB3F8 1FDA836E 81BE16CD F6B9265B 6FB077E1 18B74777 88085AE6 FF0F6A70 66063BCA 11010B5C 8F659EFF F862AE69 616BFFD3 166CCF45 A00AE278 D70DD2EE 4E048354 3903B3C2 A7672661 D06016F7 4969474D 3E6E77DB AED16A4A D9D65ADC 40DF0B66 37D83BF0 A9BCAE53 DEBB9EC5 47B2CF7F 30B5FFE9 BDBDF21C CABAC28A 53B39330 24B4A3A6 BAD03605 CDD70693 54DE5729 23D967BF B3667A2E C4614AB8 5D681B02 2A6F2B94 B40BBE37 C30C8EA1 5A05DF1B 2D02EF8D";
     crc = 0;
     x = 0;
     y = 0;
@@ -650,9 +758,9 @@ var slice = [].slice,
     i = 0;
     iTop = str.length;
     while (i < iTop) {
-      y = (crc ^ str.charCodeAt(i)) & 0xFF;
-      x = '0x' + table.substr(y * 9, 8);
-      crc = crc >>> 8 ^ x;
+      y = (crc ^ str.charCodeAt(i)) & 0xff;
+      x = "0x" + table.substr(y * 9, 8);
+      crc = (crc >>> 8) ^ x;
       i++;
     }
     crc = crc ^ -1;
@@ -661,8 +769,7 @@ var slice = [].slice,
     }
     return crc;
   };
-  Layer = (function() {
-
+  Layer = (function () {
     /**
      * Layer
      * @constructor Layer
@@ -671,30 +778,34 @@ var slice = [].slice,
     function Layer(options) {
       this.options = {};
       if (options != null) {
-        ["resourceType", "type", "publicId", "format"].forEach((function(_this) {
-          return function(key) {
-            var ref;
-            return _this.options[key] = (ref = options[key]) != null ? ref : options[Util.snakeCase(key)];
-          };
-        })(this));
+        ["resourceType", "type", "publicId", "format"].forEach(
+          (function (_this) {
+            return function (key) {
+              var ref;
+              return (_this.options[key] =
+                (ref = options[key]) != null
+                  ? ref
+                  : options[Util.snakeCase(key)]);
+            };
+          })(this)
+        );
       }
     }
 
-    Layer.prototype.resourceType = function(value) {
+    Layer.prototype.resourceType = function (value) {
       this.options.resourceType = value;
       return this;
     };
 
-    Layer.prototype.type = function(value) {
+    Layer.prototype.type = function (value) {
       this.options.type = value;
       return this;
     };
 
-    Layer.prototype.publicId = function(value) {
+    Layer.prototype.publicId = function (value) {
       this.options.publicId = value;
       return this;
     };
-
 
     /**
      * Get the public ID, formatted for layer parameter
@@ -702,11 +813,12 @@ var slice = [].slice,
      * @return {String} public ID
      */
 
-    Layer.prototype.getPublicId = function() {
+    Layer.prototype.getPublicId = function () {
       var ref;
-      return (ref = this.options.publicId) != null ? ref.replace(/\//g, ":") : void 0;
+      return (ref = this.options.publicId) != null
+        ? ref.replace(/\//g, ":")
+        : void 0;
     };
-
 
     /**
      * Get the public ID, with format if present
@@ -714,7 +826,7 @@ var slice = [].slice,
      * @return {String} public ID
      */
 
-    Layer.prototype.getFullPublicId = function() {
+    Layer.prototype.getFullPublicId = function () {
       if (this.options.format != null) {
         return this.getPublicId() + "." + this.options.format;
       } else {
@@ -722,18 +834,17 @@ var slice = [].slice,
       }
     };
 
-    Layer.prototype.format = function(value) {
+    Layer.prototype.format = function (value) {
       this.options.format = value;
       return this;
     };
-
 
     /**
      * generate the string representation of the layer
      * @function Layer#toString
      */
 
-    Layer.prototype.toString = function() {
+    Layer.prototype.toString = function () {
       var components;
       components = [];
       if (this.options.publicId == null) {
@@ -750,11 +861,9 @@ var slice = [].slice,
     };
 
     return Layer;
-
   })();
-  FetchLayer = (function(superClass) {
+  FetchLayer = (function (superClass) {
     extend(FetchLayer, superClass);
-
 
     /**
      * @constructor FetchLayer
@@ -771,11 +880,10 @@ var slice = [].slice,
       }
     }
 
-    FetchLayer.prototype.url = function(url) {
+    FetchLayer.prototype.url = function (url) {
       this.options.url = url;
       return this;
     };
-
 
     /**
      * generate the string representation of the layer
@@ -783,16 +891,14 @@ var slice = [].slice,
      * @return {String}
      */
 
-    FetchLayer.prototype.toString = function() {
-      return "fetch:" + (cloudinary.Util.base64EncodeURL(this.options.url));
+    FetchLayer.prototype.toString = function () {
+      return "fetch:" + cloudinary.Util.base64EncodeURL(this.options.url);
     };
 
     return FetchLayer;
-
   })(Layer);
-  TextLayer = (function(superClass) {
+  TextLayer = (function (superClass) {
     extend(TextLayer, superClass);
-
 
     /**
      * @constructor TextLayer
@@ -802,95 +908,115 @@ var slice = [].slice,
     function TextLayer(options) {
       var keys;
       TextLayer.__super__.constructor.call(this, options);
-      keys = ["resourceType", "resourceType", "fontFamily", "fontSize", "fontWeight", "fontStyle", "textDecoration", "textAlign", "stroke", "letterSpacing", "lineSpacing", "fontHinting", "fontAntialiasing", "text", "textStyle"];
+      keys = [
+        "resourceType",
+        "resourceType",
+        "fontFamily",
+        "fontSize",
+        "fontWeight",
+        "fontStyle",
+        "textDecoration",
+        "textAlign",
+        "stroke",
+        "letterSpacing",
+        "lineSpacing",
+        "fontHinting",
+        "fontAntialiasing",
+        "text",
+        "textStyle",
+      ];
       if (options != null) {
-        keys.forEach((function(_this) {
-          return function(key) {
-            var ref;
-            return _this.options[key] = (ref = options[key]) != null ? ref : options[Util.snakeCase(key)];
-          };
-        })(this));
+        keys.forEach(
+          (function (_this) {
+            return function (key) {
+              var ref;
+              return (_this.options[key] =
+                (ref = options[key]) != null
+                  ? ref
+                  : options[Util.snakeCase(key)]);
+            };
+          })(this)
+        );
       }
       this.options.resourceType = "text";
     }
 
-    TextLayer.prototype.resourceType = function(resourceType) {
+    TextLayer.prototype.resourceType = function (resourceType) {
       throw "Cannot modify resourceType for text layers";
     };
 
-    TextLayer.prototype.type = function(type) {
+    TextLayer.prototype.type = function (type) {
       throw "Cannot modify type for text layers";
     };
 
-    TextLayer.prototype.format = function(format) {
+    TextLayer.prototype.format = function (format) {
       throw "Cannot modify format for text layers";
     };
 
-    TextLayer.prototype.fontFamily = function(fontFamily) {
+    TextLayer.prototype.fontFamily = function (fontFamily) {
       this.options.fontFamily = fontFamily;
       return this;
     };
 
-    TextLayer.prototype.fontSize = function(fontSize) {
+    TextLayer.prototype.fontSize = function (fontSize) {
       this.options.fontSize = fontSize;
       return this;
     };
 
-    TextLayer.prototype.fontWeight = function(fontWeight) {
+    TextLayer.prototype.fontWeight = function (fontWeight) {
       this.options.fontWeight = fontWeight;
       return this;
     };
 
-    TextLayer.prototype.fontStyle = function(fontStyle) {
+    TextLayer.prototype.fontStyle = function (fontStyle) {
       this.options.fontStyle = fontStyle;
       return this;
     };
 
-    TextLayer.prototype.textDecoration = function(textDecoration) {
+    TextLayer.prototype.textDecoration = function (textDecoration) {
       this.options.textDecoration = textDecoration;
       return this;
     };
 
-    TextLayer.prototype.textAlign = function(textAlign) {
+    TextLayer.prototype.textAlign = function (textAlign) {
       this.options.textAlign = textAlign;
       return this;
     };
 
-    TextLayer.prototype.stroke = function(stroke) {
+    TextLayer.prototype.stroke = function (stroke) {
       this.options.stroke = stroke;
       return this;
     };
 
-    TextLayer.prototype.letterSpacing = function(letterSpacing) {
+    TextLayer.prototype.letterSpacing = function (letterSpacing) {
       this.options.letterSpacing = letterSpacing;
       return this;
     };
 
-    TextLayer.prototype.lineSpacing = function(lineSpacing) {
+    TextLayer.prototype.lineSpacing = function (lineSpacing) {
       this.options.lineSpacing = lineSpacing;
       return this;
     };
 
-    TextLayer.prototype.fontAntialiasing = function(fontAntialiasing){
+    TextLayer.prototype.fontAntialiasing = function (fontAntialiasing) {
       this.options.fontAntialiasing = fontAntialiasing;
       return this;
     };
 
-    TextLayer.prototype.fontHinting = function(fontHinting ){
-      this.options.fontHinting  = fontHinting ;
+    TextLayer.prototype.fontHinting = function (fontHinting) {
+      this.options.fontHinting = fontHinting;
       return this;
     };
 
-    TextLayer.prototype.text = function(text) {
+    TextLayer.prototype.text = function (text) {
       this.options.text = text;
       return this;
     };
 
-    TextLayer.prototype.textStyle = function(textStyle) {
+    TextLayer.prototype.textStyle = function (textStyle) {
       this.options.textStyle = textStyle;
       return this;
     };
-
 
     /**
      * generate the string representation of the layer
@@ -898,8 +1024,17 @@ var slice = [].slice,
      * @return {String}
      */
 
-    TextLayer.prototype.toString = function() {
-      var components, hasPublicId, hasStyle, publicId, re, res, start, style, text, textSource;
+    TextLayer.prototype.toString = function () {
+      var components,
+        hasPublicId,
+        hasStyle,
+        publicId,
+        re,
+        res,
+        start,
+        style,
+        text,
+        textSource;
       style = this.textStyleIdentifier();
       if (this.options.publicId != null) {
         publicId = this.getFullPublicId();
@@ -907,14 +1042,14 @@ var slice = [].slice,
       if (this.options.text != null) {
         hasPublicId = !Util.isEmpty(publicId);
         hasStyle = !Util.isEmpty(style);
-        if (hasPublicId && hasStyle || !hasPublicId && !hasStyle) {
+        if ((hasPublicId && hasStyle) || (!hasPublicId && !hasStyle)) {
           throw "Must supply either style parameters or a public_id when providing text parameter in a text overlay/underlay, but not both!";
         }
         re = /\$\([a-zA-Z]\w*\)/g;
         start = 0;
         textSource = Util.smartEscape(this.options.text, /[,\/]/g);
         text = "";
-        while (res = re.exec(textSource)) {
+        while ((res = re.exec(textSource))) {
           text += Util.smartEscape(textSource.slice(start, res.index));
           text += res[0];
           start = res.index + res[0].length;
@@ -925,7 +1060,7 @@ var slice = [].slice,
       return Util.compact(components).join(":");
     };
 
-    TextLayer.prototype.textStyleIdentifier = function() {
+    TextLayer.prototype.textStyleIdentifier = function () {
       // Note: if a text-style argument is provided as a whole, it overrides everything else, no mix and match.
       if (!Util.isEmpty(this.options.textStyle)) {
         return this.options.textStyle;
@@ -945,23 +1080,36 @@ var slice = [].slice,
       if (this.options.stroke !== "none") {
         components.push(this.options.stroke);
       }
-      if (!(Util.isEmpty(this.options.letterSpacing) && !Util.isNumberLike(this.options.letterSpacing))) {
+      if (
+        !(
+          Util.isEmpty(this.options.letterSpacing) &&
+          !Util.isNumberLike(this.options.letterSpacing)
+        )
+      ) {
         components.push("letter_spacing_" + this.options.letterSpacing);
       }
-      if (!(Util.isEmpty(this.options.lineSpacing) && !Util.isNumberLike(this.options.lineSpacing))) {
+      if (
+        !(
+          Util.isEmpty(this.options.lineSpacing) &&
+          !Util.isNumberLike(this.options.lineSpacing)
+        )
+      ) {
         components.push("line_spacing_" + this.options.lineSpacing);
       }
       if (this.options.fontAntialiasing !== "none") {
-        components.push("antialias_"+this.options.fontAntialiasing);
+        components.push("antialias_" + this.options.fontAntialiasing);
       }
       if (this.options.fontHinting !== "none") {
-        components.push("hinting_"+this.options.fontHinting);
+        components.push("hinting_" + this.options.fontHinting);
       }
       if (!Util.isEmpty(Util.compact(components))) {
         if (Util.isEmpty(this.options.fontFamily)) {
           throw "Must supply fontFamily. " + components;
         }
-        if (Util.isEmpty(this.options.fontSize) && !Util.isNumberLike(this.options.fontSize)) {
+        if (
+          Util.isEmpty(this.options.fontSize) &&
+          !Util.isNumberLike(this.options.fontSize)
+        ) {
           throw "Must supply fontSize.";
         }
       }
@@ -971,11 +1119,9 @@ var slice = [].slice,
     };
 
     return TextLayer;
-
   })(Layer);
-  SubtitlesLayer = (function(superClass) {
+  SubtitlesLayer = (function (superClass) {
     extend(SubtitlesLayer, superClass);
-
 
     /**
      * Represent a subtitles layer
@@ -989,15 +1135,13 @@ var slice = [].slice,
     }
 
     return SubtitlesLayer;
-
   })(TextLayer);
 
   /**
    * Transformation parameters
    * Depends on 'util', 'transformation'
    */
-  Param = (function() {
-
+  Param = (function () {
     /**
      * Represents a single parameter
      * @class Param
@@ -1031,7 +1175,6 @@ var slice = [].slice,
       this.process = process;
     }
 
-
     /**
      * Set a (unprocessed) value for this parameter
      * @function Param#set
@@ -1039,11 +1182,10 @@ var slice = [].slice,
      * @return {Param} self for chaining
      */
 
-    Param.prototype.set = function(origValue) {
+    Param.prototype.set = function (origValue) {
       this.origValue = origValue;
       return this;
     };
-
 
     /**
      * Generate the serialized form of the parameter
@@ -1051,32 +1193,36 @@ var slice = [].slice,
      * @return {string} the serialized form of the parameter
      */
 
-    Param.prototype.serialize = function() {
+    Param.prototype.serialize = function () {
       var val, valid;
       val = this.value();
-      valid = cloudinary.Util.isArray(val) || cloudinary.Util.isPlainObject(val) || cloudinary.Util.isString(val) ? !cloudinary.Util.isEmpty(val) : val != null;
-      if ((this.shortName != null) && valid) {
+      valid =
+        cloudinary.Util.isArray(val) ||
+        cloudinary.Util.isPlainObject(val) ||
+        cloudinary.Util.isString(val)
+          ? !cloudinary.Util.isEmpty(val)
+          : val != null;
+      if (this.shortName != null && valid) {
         return this.shortName + "_" + val;
       } else {
-        return '';
+        return "";
       }
     };
-
 
     /**
      * Return the processed value of the parameter
      * @function Param#value
      */
 
-    Param.prototype.value = function() {
+    Param.prototype.value = function () {
       return this.process(this.origValue);
     };
 
-    Param.norm_color = function(value) {
-      return value != null ? value.replace(/^#/, 'rgb:') : void 0;
+    Param.norm_color = function (value) {
+      return value != null ? value.replace(/^#/, "rgb:") : void 0;
     };
 
-    Param.prototype.build_array = function(arg) {
+    Param.prototype.build_array = function (arg) {
       if (arg == null) {
         arg = [];
       }
@@ -1086,7 +1232,6 @@ var slice = [].slice,
         return [arg];
       }
     };
-
 
     /**
     * Covert value to video codec string.
@@ -1101,18 +1246,18 @@ var slice = [].slice,
     * @ignore
      */
 
-    Param.process_video_params = function(param) {
+    Param.process_video_params = function (param) {
       var video;
       switch (param.constructor) {
         case Object:
           video = "";
-          if ('codec' in param) {
-            video = param['codec'];
-            if ('profile' in param) {
-              video += ":" + param['profile'];
-              if ('level' in param) {
-                video += ":" + param['level'];
-                if ('b_frames' in param && param['b_frames'] === false) {
+          if ("codec" in param) {
+            video = param["codec"];
+            if ("profile" in param) {
+              video += ":" + param["profile"];
+              if ("level" in param) {
+                video += ":" + param["level"];
+                if ("b_frames" in param && param["b_frames"] === false) {
                   video += ":bframes_no";
                 }
               }
@@ -1127,11 +1272,9 @@ var slice = [].slice,
     };
 
     return Param;
-
   })();
-  ArrayParam = (function(superClass) {
+  ArrayParam = (function (superClass) {
     extend(ArrayParam, superClass);
-
 
     /**
      * A parameter that represents an array
@@ -1147,22 +1290,22 @@ var slice = [].slice,
 
     function ArrayParam(name, shortName, sep, process) {
       if (sep == null) {
-        sep = '.';
+        sep = ".";
       }
       this.sep = sep;
       ArrayParam.__super__.constructor.call(this, name, shortName, process);
     }
 
-    ArrayParam.prototype.serialize = function() {
+    ArrayParam.prototype.serialize = function () {
       var arrayValue, flat, t;
       if (this.shortName != null) {
         arrayValue = this.value();
         if (cloudinary.Util.isEmpty(arrayValue)) {
-          return '';
+          return "";
         } else if (cloudinary.Util.isString(arrayValue)) {
           return this.shortName + "_" + arrayValue;
         } else {
-          flat = (function() {
+          flat = (function () {
             var j, len, results;
             results = [];
             for (j = 0, len = arrayValue.length; j < len; j++) {
@@ -1175,14 +1318,14 @@ var slice = [].slice,
             }
             return results;
           })();
-          return this.shortName + "_" + (flat.join(this.sep));
+          return this.shortName + "_" + flat.join(this.sep);
         }
       } else {
-        return '';
+        return "";
       }
     };
 
-    ArrayParam.prototype.value = function() {
+    ArrayParam.prototype.value = function () {
       var j, len, ref, results, v;
       if (cloudinary.Util.isArray(this.origValue)) {
         ref = this.origValue;
@@ -1197,8 +1340,8 @@ var slice = [].slice,
       }
     };
 
-    ArrayParam.prototype.set = function(origValue) {
-      if ((origValue == null) || cloudinary.Util.isArray(origValue)) {
+    ArrayParam.prototype.set = function (origValue) {
+      if (origValue == null || cloudinary.Util.isArray(origValue)) {
         return ArrayParam.__super__.set.call(this, origValue);
       } else {
         return ArrayParam.__super__.set.call(this, [origValue]);
@@ -1206,11 +1349,9 @@ var slice = [].slice,
     };
 
     return ArrayParam;
-
   })(Param);
-  TransformationParam = (function(superClass) {
+  TransformationParam = (function (superClass) {
     extend(TransformationParam, superClass);
-
 
     /**
      * A parameter that represents a transformation
@@ -1228,25 +1369,30 @@ var slice = [].slice,
         shortName = "t";
       }
       if (sep == null) {
-        sep = '.';
+        sep = ".";
       }
       this.sep = sep;
-      TransformationParam.__super__.constructor.call(this, name, shortName, process);
+      TransformationParam.__super__.constructor.call(
+        this,
+        name,
+        shortName,
+        process
+      );
     }
 
-    TransformationParam.prototype.serialize = function() {
+    TransformationParam.prototype.serialize = function () {
       var joined, result, t;
       if (cloudinary.Util.isEmpty(this.value())) {
-        return '';
+        return "";
       } else if (cloudinary.Util.allStrings(this.value())) {
         joined = this.value().join(this.sep);
         if (!cloudinary.Util.isEmpty(joined)) {
           return this.shortName + "_" + joined;
         } else {
-          return '';
+          return "";
         }
       } else {
-        result = (function() {
+        result = function () {
           var j, len, ref, results;
           ref = this.value();
           results = [];
@@ -1257,7 +1403,10 @@ var slice = [].slice,
                 results.push(this.shortName + "_" + t);
               } else if (cloudinary.Util.isFunction(t.serialize)) {
                 results.push(t.serialize());
-              } else if (cloudinary.Util.isPlainObject(t) && !cloudinary.Util.isEmpty(t)) {
+              } else if (
+                cloudinary.Util.isPlainObject(t) &&
+                !cloudinary.Util.isEmpty(t)
+              ) {
                 results.push(new Transformation(t).serialize());
               } else {
                 results.push(void 0);
@@ -1265,12 +1414,12 @@ var slice = [].slice,
             }
           }
           return results;
-        }).call(this);
+        }.call(this);
         return cloudinary.Util.compact(result);
       }
     };
 
-    TransformationParam.prototype.set = function(origValue1) {
+    TransformationParam.prototype.set = function (origValue1) {
       this.origValue = origValue1;
       if (cloudinary.Util.isArray(this.origValue)) {
         return TransformationParam.__super__.set.call(this, this.origValue);
@@ -1280,11 +1429,9 @@ var slice = [].slice,
     };
 
     return TransformationParam;
-
   })(Param);
-  RangeParam = (function(superClass) {
+  RangeParam = (function (superClass) {
     extend(RangeParam, superClass);
-
 
     /**
      * A parameter that represents a range
@@ -1304,20 +1451,19 @@ var slice = [].slice,
       RangeParam.__super__.constructor.call(this, name, shortName, process);
     }
 
-    RangeParam.norm_range_value = function(value) {
+    RangeParam.norm_range_value = function (value) {
       var modifier, offset;
-      offset = String(value).match(new RegExp('^' + offset_any_pattern + '$'));
+      offset = String(value).match(new RegExp("^" + offset_any_pattern + "$"));
       if (offset) {
-        modifier = offset[5] != null ? 'p' : '';
+        modifier = offset[5] != null ? "p" : "";
         value = (offset[1] || offset[4]) + modifier;
       }
       return value;
     };
 
     return RangeParam;
-
   })(Param);
-  RawParam = (function(superClass) {
+  RawParam = (function (superClass) {
     extend(RawParam, superClass);
 
     function RawParam(name, shortName, process) {
@@ -1327,14 +1473,13 @@ var slice = [].slice,
       RawParam.__super__.constructor.call(this, name, shortName, process);
     }
 
-    RawParam.prototype.serialize = function() {
+    RawParam.prototype.serialize = function () {
       return this.value();
     };
 
     return RawParam;
-
   })(Param);
-  LayerParam = (function(superClass) {
+  LayerParam = (function (superClass) {
     var LAYER_KEYWORD_PARAMS;
 
     extend(LayerParam, superClass);
@@ -1343,16 +1488,19 @@ var slice = [].slice,
       return LayerParam.__super__.constructor.apply(this, arguments);
     }
 
-    LayerParam.prototype.value = function() {
+    LayerParam.prototype.value = function () {
       var layerOptions, result;
       layerOptions = this.origValue;
       if (cloudinary.Util.isPlainObject(layerOptions)) {
         layerOptions = Util.withCamelCaseKeys(layerOptions);
-        if (layerOptions.resourceType === "text" || (layerOptions.text != null)) {
+        if (layerOptions.resourceType === "text" || layerOptions.text != null) {
           result = new cloudinary.TextLayer(layerOptions).toString();
         } else if (layerOptions.resourceType === "subtitles") {
           result = new cloudinary.SubtitlesLayer(layerOptions).toString();
-        } else if (layerOptions.resourceType === "fetch" || (layerOptions.url != null)) {
+        } else if (
+          layerOptions.resourceType === "fetch" ||
+          layerOptions.url != null
+        ) {
           result = new cloudinary.FetchLayer(layerOptions).toString();
         } else {
           result = new cloudinary.Layer(layerOptions).toString();
@@ -1365,28 +1513,36 @@ var slice = [].slice,
       return result;
     };
 
-    LAYER_KEYWORD_PARAMS = [["font_weight", "normal"], ["font_style", "normal"], ["text_decoration", "none"], ["text_align", null], ["stroke", "none"], ["letter_spacing", null], ["line_spacing", null]];
+    LAYER_KEYWORD_PARAMS = [
+      ["font_weight", "normal"],
+      ["font_style", "normal"],
+      ["text_decoration", "none"],
+      ["text_align", null],
+      ["stroke", "none"],
+      ["letter_spacing", null],
+      ["line_spacing", null],
+    ];
 
-    LayerParam.prototype.textStyle = function(layer) {
-      return (new cloudinary.TextLayer(layer)).textStyleIdentifier();
+    LayerParam.prototype.textStyle = function (layer) {
+      return new cloudinary.TextLayer(layer).textStyleIdentifier();
     };
 
     return LayerParam;
-
   })(Param);
-  ExpressionParam = (function(superClass) {
+  ExpressionParam = (function (superClass) {
     extend(ExpressionParam, superClass);
 
     function ExpressionParam() {
       return ExpressionParam.__super__.constructor.apply(this, arguments);
     }
 
-    ExpressionParam.prototype.serialize = function() {
-      return Expression.normalize(ExpressionParam.__super__.serialize.call(this));
+    ExpressionParam.prototype.serialize = function () {
+      return Expression.normalize(
+        ExpressionParam.__super__.serialize.call(this)
+      );
     };
 
     return ExpressionParam;
-
   })(Param);
   parameters = {};
   parameters.Param = Param;
@@ -1396,22 +1552,21 @@ var slice = [].slice,
   parameters.TransformationParam = TransformationParam;
   parameters.LayerParam = LayerParam;
   parameters.ExpressionParam = ExpressionParam;
-  Expression = (function() {
-
+  Expression = (function () {
     /**
      * @internal
      */
     var faceCount;
 
     Expression.OPERATORS = {
-      "=": 'eq',
-      "!=": 'ne',
-      "<": 'lt',
-      ">": 'gt',
-      "<=": 'lte',
-      ">=": 'gte',
-      "&&": 'and',
-      "||": 'or',
+      "=": "eq",
+      "!=": "ne",
+      "<": "lt",
+      ">": "gt",
+      "<=": "lte",
+      ">=": "gte",
+      "&&": "and",
+      "||": "or",
       "*": "mul",
       "/": "div",
       "+": "add",
@@ -1419,42 +1574,39 @@ var slice = [].slice,
       "^": "pow",
     };
 
-
     /**
      * @internal
      */
 
     Expression.PREDEFINED_VARS = {
-      "aspect_ratio": "ar",
-      "aspectRatio": "ar",
-      "current_page": "cp",
-      "currentPage": "cp",
-      "face_count": "fc",
-      "faceCount": "fc",
-      "height": "h",
-      "initial_aspect_ratio": "iar",
-      "initial_height": "ih",
-      "initial_width": "iw",
-      "initialAspectRatio": "iar",
-      "initialHeight": "ih",
-      "initialWidth": "iw",
-      "page_count": "pc",
-      "page_x": "px",
-      "page_y": "py",
-      "pageCount": "pc",
-      "pageX": "px",
-      "pageY": "py",
-      "tags": "tags",
-      "width": "w"
+      aspect_ratio: "ar",
+      aspectRatio: "ar",
+      current_page: "cp",
+      currentPage: "cp",
+      face_count: "fc",
+      faceCount: "fc",
+      height: "h",
+      initial_aspect_ratio: "iar",
+      initial_height: "ih",
+      initial_width: "iw",
+      initialAspectRatio: "iar",
+      initialHeight: "ih",
+      initialWidth: "iw",
+      page_count: "pc",
+      page_x: "px",
+      page_y: "py",
+      pageCount: "pc",
+      pageX: "px",
+      pageY: "py",
+      tags: "tags",
+      width: "w",
     };
-
 
     /**
      * @internal
      */
 
     Expression.BOUNDRY = "[ _]+";
-
 
     /**
      * Represents a transformation expression
@@ -1464,10 +1616,9 @@ var slice = [].slice,
      */
 
     function Expression(expressionStr) {
-
       /**
-        * @protected
-        * @inner Expression-expressions
+       * @protected
+       * @inner Expression-expressions
        */
       this.expressions = [];
       if (expressionStr != null) {
@@ -1475,13 +1626,12 @@ var slice = [].slice,
       }
     }
 
-
     /**
      * Convenience constructor method
      * @function Expression.new
      */
 
-    Expression["new"] = function(expressionStr) {
+    Expression["new"] = function (expressionStr) {
       return new this(expressionStr);
     };
 
@@ -1491,8 +1641,12 @@ var slice = [].slice,
      * @param {string} expression a expression, e.g. "w gt 100", "width_gt_100", "width > 100"
      * @return {string} the normalized form of the value expression, e.g. "w_gt_100"
      */
-    Expression.normalize = function(expression) {
-      var operators, operatorsPattern, operatorsReplaceRE, predefinedVarsPattern, predefinedVarsReplaceRE;
+    Expression.normalize = function (expression) {
+      var operators,
+        operatorsPattern,
+        operatorsReplaceRE,
+        predefinedVarsPattern,
+        predefinedVarsReplaceRE;
       if (expression == null) {
         return expression;
       }
@@ -1507,13 +1661,19 @@ var slice = [].slice,
       });
 
       // predefined variables
-      predefinedVarsPattern = "(" + Object.keys(Expression.PREDEFINED_VARS).join("|") + ")";
+      predefinedVarsPattern =
+        "(" + Object.keys(Expression.PREDEFINED_VARS).join("|") + ")";
       predefinedVarsReplaceRE = new RegExp(predefinedVarsPattern, "g");
-      expression = expression.replace(predefinedVarsReplaceRE, function(match, p1, offset){
-        return (expression[offset - 1] === '$' ? match : Expression.PREDEFINED_VARS[match]);
-      });
+      expression = expression.replace(
+        predefinedVarsReplaceRE,
+        function (match, p1, offset) {
+          return expression[offset - 1] === "$"
+            ? match
+            : Expression.PREDEFINED_VARS[match];
+        }
+      );
 
-      return expression.replace(/[ _]+/g, '_');
+      return expression.replace(/[ _]+/g, "_");
     };
 
     /**
@@ -1521,24 +1681,22 @@ var slice = [].slice,
      * @return {string} the expression as a string
      */
 
-    Expression.prototype.serialize = function() {
+    Expression.prototype.serialize = function () {
       return Expression.normalize(this.expressions.join("_"));
     };
 
-    Expression.prototype.toString = function() {
+    Expression.prototype.toString = function () {
       return this.serialize();
     };
-
 
     /**
      * Get the parent transformation of this expression
      * @return Transformation
      */
 
-    Expression.prototype.getParent = function() {
+    Expression.prototype.getParent = function () {
       return this.parent;
     };
-
 
     /**
      * Set the parent transformation of this expression
@@ -1546,11 +1704,10 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.setParent = function(parent) {
+    Expression.prototype.setParent = function (parent) {
       this.parent = parent;
       return this;
     };
-
 
     /**
      * Add a expression
@@ -1558,7 +1715,7 @@ var slice = [].slice,
      * @internal
      */
 
-    Expression.prototype.predicate = function(name, operator, value) {
+    Expression.prototype.predicate = function (name, operator, value) {
       if (Expression.OPERATORS[operator] != null) {
         operator = Expression.OPERATORS[operator];
       }
@@ -1566,26 +1723,23 @@ var slice = [].slice,
       return this;
     };
 
-
     /**
      * @function Expression#and
      */
 
-    Expression.prototype.and = function() {
+    Expression.prototype.and = function () {
       this.expressions.push("and");
       return this;
     };
-
 
     /**
      * @function Expression#or
      */
 
-    Expression.prototype.or = function() {
+    Expression.prototype.or = function () {
       this.expressions.push("or");
       return this;
     };
-
 
     /**
      * Conclude expression
@@ -1593,10 +1747,9 @@ var slice = [].slice,
      * @return {Transformation} the transformation this expression is defined for
      */
 
-    Expression.prototype.then = function() {
+    Expression.prototype.then = function () {
       return this.getParent()["if"](this.toString());
     };
-
 
     /**
      * @function Expression#height
@@ -1605,10 +1758,9 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.height = function(operator, value) {
+    Expression.prototype.height = function (operator, value) {
       return this.predicate("h", operator, value);
     };
-
 
     /**
      * @function Expression#width
@@ -1617,10 +1769,9 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.width = function(operator, value) {
+    Expression.prototype.width = function (operator, value) {
       return this.predicate("w", operator, value);
     };
-
 
     /**
      * @function Expression#aspectRatio
@@ -1629,10 +1780,9 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.aspectRatio = function(operator, value) {
+    Expression.prototype.aspectRatio = function (operator, value) {
       return this.predicate("ar", operator, value);
     };
-
 
     /**
      * @function Expression#pages
@@ -1641,10 +1791,9 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.pageCount = function(operator, value) {
+    Expression.prototype.pageCount = function (operator, value) {
       return this.predicate("pc", operator, value);
     };
-
 
     /**
      * @function Expression#faces
@@ -1653,149 +1802,134 @@ var slice = [].slice,
      * @return {Expression} this expression
      */
 
-    Expression.prototype.faceCount = function(operator, value) {
+    Expression.prototype.faceCount = function (operator, value) {
       return this.predicate("fc", operator, value);
     };
 
-    Expression.prototype.value = function(value) {
+    Expression.prototype.value = function (value) {
       this.expressions.push(value);
       return this;
     };
 
-
     /**
      */
 
-    Expression.variable = function(name, value) {
+    Expression.variable = function (name, value) {
       return new this(name).value(value);
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "width"
-      * @function Expression.width
+     * @returns a new expression with the predefined variable "width"
+     * @function Expression.width
      */
 
-    Expression.width = function() {
+    Expression.width = function () {
       return new this("width");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "height"
-      * @function Expression.height
+     * @returns a new expression with the predefined variable "height"
+     * @function Expression.height
      */
 
-    Expression.height = function() {
+    Expression.height = function () {
       return new this("height");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "initialWidth"
-      * @function Expression.initialWidth
+     * @returns a new expression with the predefined variable "initialWidth"
+     * @function Expression.initialWidth
      */
 
-    Expression.initialWidth = function() {
+    Expression.initialWidth = function () {
       return new this("initialWidth");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "initialHeight"
-      * @function Expression.initialHeight
+     * @returns a new expression with the predefined variable "initialHeight"
+     * @function Expression.initialHeight
      */
 
-    Expression.initialHeight = function() {
+    Expression.initialHeight = function () {
       return new this("initialHeight");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "aspectRatio"
-      * @function Expression.aspectRatio
+     * @returns a new expression with the predefined variable "aspectRatio"
+     * @function Expression.aspectRatio
      */
 
-    Expression.aspectRatio = function() {
+    Expression.aspectRatio = function () {
       return new this("aspectRatio");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "initialAspectRatio"
-      * @function Expression.initialAspectRatio
+     * @returns a new expression with the predefined variable "initialAspectRatio"
+     * @function Expression.initialAspectRatio
      */
 
-    Expression.initialAspectRatio = function() {
+    Expression.initialAspectRatio = function () {
       return new this("initialAspectRatio");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "pageCount"
-      * @function Expression.pageCount
+     * @returns a new expression with the predefined variable "pageCount"
+     * @function Expression.pageCount
      */
 
-    Expression.pageCount = function() {
+    Expression.pageCount = function () {
       return new this("pageCount");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "faceCount"
-      * @function Expression.faceCount
+     * @returns a new expression with the predefined variable "faceCount"
+     * @function Expression.faceCount
      */
 
-    faceCount = function() {
+    faceCount = function () {
       return new this("faceCount");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "currentPage"
-      * @function Expression.currentPage
+     * @returns a new expression with the predefined variable "currentPage"
+     * @function Expression.currentPage
      */
 
-    Expression.currentPage = function() {
+    Expression.currentPage = function () {
       return new this("currentPage");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "tags"
-      * @function Expression.tags
+     * @returns a new expression with the predefined variable "tags"
+     * @function Expression.tags
      */
 
-    Expression.tags = function() {
+    Expression.tags = function () {
       return new this("tags");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "pageX"
-      * @function Expression.pageX
+     * @returns a new expression with the predefined variable "pageX"
+     * @function Expression.pageX
      */
 
-    Expression.pageX = function() {
+    Expression.pageX = function () {
       return new this("pageX");
     };
 
-
     /**
-      * @returns a new expression with the predefined variable "pageY"
-      * @function Expression.pageY
+     * @returns a new expression with the predefined variable "pageY"
+     * @function Expression.pageY
      */
 
-    Expression.pageY = function() {
+    Expression.pageY = function () {
       return new this("pageY");
     };
 
     return Expression;
-
   })();
-  Condition = (function(superClass) {
+  Condition = (function (superClass) {
     extend(Condition, superClass);
-
 
     /**
      * Represents a transformation condition
@@ -1825,7 +1959,6 @@ var slice = [].slice,
       Condition.__super__.constructor.call(this, conditionStr);
     }
 
-
     /**
      * @function Condition#height
      * @param {string} operator the comparison operator (e.g. "<", "lt")
@@ -1833,10 +1966,9 @@ var slice = [].slice,
      * @return {Condition} this condition
      */
 
-    Condition.prototype.height = function(operator, value) {
+    Condition.prototype.height = function (operator, value) {
       return this.predicate("h", operator, value);
     };
-
 
     /**
      * @function Condition#width
@@ -1845,10 +1977,9 @@ var slice = [].slice,
      * @return {Condition} this condition
      */
 
-    Condition.prototype.width = function(operator, value) {
+    Condition.prototype.width = function (operator, value) {
       return this.predicate("w", operator, value);
     };
-
 
     /**
      * @function Condition#aspectRatio
@@ -1857,10 +1988,9 @@ var slice = [].slice,
      * @return {Condition} this condition
      */
 
-    Condition.prototype.aspectRatio = function(operator, value) {
+    Condition.prototype.aspectRatio = function (operator, value) {
       return this.predicate("ar", operator, value);
     };
-
 
     /**
      * @function Condition#pages
@@ -1869,10 +1999,9 @@ var slice = [].slice,
      * @return {Condition} this condition
      */
 
-    Condition.prototype.pageCount = function(operator, value) {
+    Condition.prototype.pageCount = function (operator, value) {
       return this.predicate("pc", operator, value);
     };
-
 
     /**
      * @function Condition#faces
@@ -1881,34 +2010,60 @@ var slice = [].slice,
      * @return {Condition} this condition
      */
 
-    Condition.prototype.faceCount = function(operator, value) {
+    Condition.prototype.faceCount = function (operator, value) {
       return this.predicate("fc", operator, value);
     };
 
     return Condition;
-
   })(Expression);
 
   /**
    * Cloudinary configuration class
    * Depends on 'utils'
    */
-  Configuration = (function() {
-
+  Configuration = (function () {
     /**
      * Defaults configuration.
      */
     var DEFAULT_CONFIGURATION_PARAMS, ref;
 
     DEFAULT_CONFIGURATION_PARAMS = {
-      responsive_class: 'cld-responsive',
+      responsive_class: "cld-responsive",
       responsive_use_breakpoints: true,
       round_dpr: true,
-      secure: (typeof window !== "undefined" && window !== null ? (ref = window.location) != null ? ref.protocol : void 0 : void 0) === 'https:'
+      secure:
+        (typeof window !== "undefined" && window !== null
+          ? (ref = window.location) != null
+            ? ref.protocol
+            : void 0
+          : void 0) === "https:",
     };
 
-    Configuration.CONFIG_PARAMS = ["api_key", "api_secret", "callback", "cdn_subdomain", "cloud_name", "cname", "private_cdn", "protocol", "resource_type", "responsive", "responsive_class", "responsive_use_breakpoints", "responsive_width", "round_dpr", "secure", "secure_cdn_subdomain", "secure_distribution", "shorten", "type", "upload_preset", "url_suffix", "use_root_path", "version"];
-
+    Configuration.CONFIG_PARAMS = [
+      "api_key",
+      "api_secret",
+      "callback",
+      "cdn_subdomain",
+      "cloud_name",
+      "cname",
+      "private_cdn",
+      "protocol",
+      "resource_type",
+      "responsive",
+      "responsive_class",
+      "responsive_use_breakpoints",
+      "responsive_width",
+      "round_dpr",
+      "secure",
+      "secure_cdn_subdomain",
+      "secure_distribution",
+      "shorten",
+      "type",
+      "upload_preset",
+      "url_suffix",
+      "use_root_path",
+      "version",
+    ];
 
     /**
      * Cloudinary configuration class
@@ -1924,7 +2079,6 @@ var slice = [].slice,
       Util.defaults(this.configuration, DEFAULT_CONFIGURATION_PARAMS);
     }
 
-
     /**
      * Initialize the configuration.
      * The function first tries to retrieve the configuration form the environment and then from the document.
@@ -1934,12 +2088,11 @@ var slice = [].slice,
      * @see fromEnvironment
      */
 
-    Configuration.prototype.init = function() {
+    Configuration.prototype.init = function () {
       this.fromEnvironment();
       this.fromDocument();
       return this;
     };
-
 
     /**
      * Set a new configuration item
@@ -1950,11 +2103,10 @@ var slice = [].slice,
      *
      */
 
-    Configuration.prototype.set = function(name, value) {
+    Configuration.prototype.set = function (name, value) {
       this.configuration[name] = value;
       return this;
     };
-
 
     /**
      * Get the value of a configuration item
@@ -1963,18 +2115,17 @@ var slice = [].slice,
      * @return {*} the configuration item
      */
 
-    Configuration.prototype.get = function(name) {
+    Configuration.prototype.get = function (name) {
       return this.configuration[name];
     };
 
-    Configuration.prototype.merge = function(config) {
+    Configuration.prototype.merge = function (config) {
       if (config == null) {
         config = {};
       }
       Util.assign(this.configuration, Util.cloneDeep(config));
       return this;
     };
-
 
     /**
      * Initialize Cloudinary from HTML meta tags.
@@ -1984,18 +2135,22 @@ var slice = [].slice,
      *
      */
 
-    Configuration.prototype.fromDocument = function() {
+    Configuration.prototype.fromDocument = function () {
       var el, j, len, meta_elements;
-      meta_elements = typeof document !== "undefined" && document !== null ? document.querySelectorAll('meta[name^="cloudinary_"]') : void 0;
+      meta_elements =
+        typeof document !== "undefined" && document !== null
+          ? document.querySelectorAll('meta[name^="cloudinary_"]')
+          : void 0;
       if (meta_elements) {
         for (j = 0, len = meta_elements.length; j < len; j++) {
           el = meta_elements[j];
-          this.configuration[el.getAttribute('name').replace('cloudinary_', '')] = el.getAttribute('content');
+          this.configuration[
+            el.getAttribute("name").replace("cloudinary_", "")
+          ] = el.getAttribute("content");
         }
       }
       return this;
     };
-
 
     /**
      * Initialize Cloudinary from the `CLOUDINARY_URL` environment variable.
@@ -2005,34 +2160,51 @@ var slice = [].slice,
      * @requires Node.js
      */
 
-    Configuration.prototype.fromEnvironment = function() {
-      var cloudinary_url, j, k, len, query, ref1, ref2, ref3, uri, uriRegex, v, value;
-      cloudinary_url = typeof process !== "undefined" && process !== null ? (ref1 = process.env) != null ? ref1.CLOUDINARY_URL : void 0 : void 0;
+    Configuration.prototype.fromEnvironment = function () {
+      var cloudinary_url,
+        j,
+        k,
+        len,
+        query,
+        ref1,
+        ref2,
+        ref3,
+        uri,
+        uriRegex,
+        v,
+        value;
+      cloudinary_url =
+        typeof process !== "undefined" && process !== null
+          ? (ref1 = process.env) != null
+            ? ref1.CLOUDINARY_URL
+            : void 0
+          : void 0;
       if (cloudinary_url != null) {
-        uriRegex = /cloudinary:\/\/(?:(\w+)(?:\:([\w-]+))?@)?([\w\.-]+)(?:\/([^?]*))?(?:\?(.+))?/;
+        uriRegex =
+          /cloudinary:\/\/(?:(\w+)(?:\:([\w-]+))?@)?([\w\.-]+)(?:\/([^?]*))?(?:\?(.+))?/;
         uri = uriRegex.exec(cloudinary_url);
         if (uri) {
           if (uri[3] != null) {
-            this.configuration['cloud_name'] = uri[3];
+            this.configuration["cloud_name"] = uri[3];
           }
           if (uri[1] != null) {
-            this.configuration['api_key'] = uri[1];
+            this.configuration["api_key"] = uri[1];
           }
           if (uri[2] != null) {
-            this.configuration['api_secret'] = uri[2];
+            this.configuration["api_secret"] = uri[2];
           }
           if (uri[4] != null) {
-            this.configuration['private_cdn'] = uri[4] != null;
+            this.configuration["private_cdn"] = uri[4] != null;
           }
           if (uri[4] != null) {
-            this.configuration['secure_distribution'] = uri[4];
+            this.configuration["secure_distribution"] = uri[4];
           }
           query = uri[5];
           if (query != null) {
-            ref2 = query.split('&');
+            ref2 = query.split("&");
             for (j = 0, len = ref2.length; j < len; j++) {
               value = ref2[j];
-              ref3 = value.split('='), k = ref3[0], v = ref3[1];
+              (ref3 = value.split("=")), (k = ref3[0]), (v = ref3[1]);
               if (v == null) {
                 v = true;
               }
@@ -2043,7 +2215,6 @@ var slice = [].slice,
       }
       return this;
     };
-
 
     /**
      * Create or modify the Cloudinary client configuration
@@ -2060,7 +2231,7 @@ var slice = [].slice,
      * @see {@link fromDocument} for initialization using HTML meta tags
      */
 
-    Configuration.prototype.config = function(new_config, new_value) {
+    Configuration.prototype.config = function (new_config, new_value) {
       switch (false) {
         case new_value === void 0:
           this.set(new_config, new_value);
@@ -2075,19 +2246,17 @@ var slice = [].slice,
       }
     };
 
-
     /**
      * Returns a copy of the configuration parameters
      * @function Configuration#toOptions
      * @returns {Object} a key:value collection of the configuration parameters
      */
 
-    Configuration.prototype.toOptions = function() {
+    Configuration.prototype.toOptions = function () {
       return Util.cloneDeep(this.configuration);
     };
 
     return Configuration;
-
   })();
 
   /**
@@ -2095,16 +2264,16 @@ var slice = [].slice,
    * Depends on 'configuration', 'parameters','util'
    * @internal
    */
-  TransformationBase = (function() {
+  TransformationBase = (function () {
     var VAR_NAME_RE, lastArgCallback, processVar;
 
     VAR_NAME_RE = /^\$[a-zA-Z0-9]+$/;
 
-    TransformationBase.prototype.trans_separator = '/';
+    TransformationBase.prototype.trans_separator = "/";
 
-    TransformationBase.prototype.param_separator = ',';
+    TransformationBase.prototype.param_separator = ",";
 
-    lastArgCallback = function(args) {
+    lastArgCallback = function (args) {
       var callback;
       callback = args != null ? args[args.length - 1] : void 0;
       if (Util.isFunction(callback)) {
@@ -2113,7 +2282,6 @@ var slice = [].slice,
         return void 0;
       }
     };
-
 
     /**
      * The base class for transformations.
@@ -2138,47 +2306,48 @@ var slice = [].slice,
        * @function Transformation#toOptions
        * @return {Object} Returns a plain object representing this transformation
        */
-      this.toOptions || (this.toOptions = function(withChain) {
-        var key, list, opt, ref, ref1, tr, value;
-        if (withChain == null) {
-          withChain = true;
-        }
-        opt = {};
-        for (key in trans) {
-          value = trans[key];
-          opt[key] = value.origValue;
-        }
-        ref = this.otherOptions;
-        for (key in ref) {
-          value = ref[key];
-          if (value !== void 0) {
-            opt[key] = value;
+      this.toOptions ||
+        (this.toOptions = function (withChain) {
+          var key, list, opt, ref, ref1, tr, value;
+          if (withChain == null) {
+            withChain = true;
           }
-        }
-        if (withChain && !Util.isEmpty(this.chained)) {
-          list = (function() {
-            var j, len, ref1, results;
-            ref1 = this.chained;
-            results = [];
-            for (j = 0, len = ref1.length; j < len; j++) {
-              tr = ref1[j];
-              results.push(tr.toOptions());
-            }
-            return results;
-          }).call(this);
-          list.push(opt);
           opt = {};
-          ref1 = this.otherOptions;
-          for (key in ref1) {
-            value = ref1[key];
+          for (key in trans) {
+            value = trans[key];
+            opt[key] = value.origValue;
+          }
+          ref = this.otherOptions;
+          for (key in ref) {
+            value = ref[key];
             if (value !== void 0) {
               opt[key] = value;
             }
           }
-          opt.transformation = list;
-        }
-        return opt;
-      });
+          if (withChain && !Util.isEmpty(this.chained)) {
+            list = function () {
+              var j, len, ref1, results;
+              ref1 = this.chained;
+              results = [];
+              for (j = 0, len = ref1.length; j < len; j++) {
+                tr = ref1[j];
+                results.push(tr.toOptions());
+              }
+              return results;
+            }.call(this);
+            list.push(opt);
+            opt = {};
+            ref1 = this.otherOptions;
+            for (key in ref1) {
+              value = ref1[key];
+              if (value !== void 0) {
+                opt[key] = value;
+              }
+            }
+            opt.transformation = list;
+          }
+          return opt;
+        });
 
       /**
        * Set a parent for this object for chaining purposes.
@@ -2187,13 +2356,18 @@ var slice = [].slice,
        * @param {Object} object - the parent to be assigned to
        * @returns {Transformation} Returns this instance for chaining purposes.
        */
-      this.setParent || (this.setParent = function(object) {
-        parent = object;
-        if (object != null) {
-          this.fromOptions(typeof object.toOptions === "function" ? object.toOptions() : void 0);
-        }
-        return this;
-      });
+      this.setParent ||
+        (this.setParent = function (object) {
+          parent = object;
+          if (object != null) {
+            this.fromOptions(
+              typeof object.toOptions === "function"
+                ? object.toOptions()
+                : void 0
+            );
+          }
+          return this;
+        });
 
       /**
        * Returns the parent of this object in the chain
@@ -2201,75 +2375,98 @@ var slice = [].slice,
        * @protected
        * @return {Object} Returns the parent of this object if there is any
        */
-      this.getParent || (this.getParent = function() {
-        return parent;
-      });
+      this.getParent ||
+        (this.getParent = function () {
+          return parent;
+        });
 
       /** @protected */
-      this.param || (this.param = function(value, name, abbr, defaultValue, process) {
-        if (process == null) {
-          if (Util.isFunction(defaultValue)) {
-            process = defaultValue;
-          } else {
+      this.param ||
+        (this.param = function (value, name, abbr, defaultValue, process) {
+          if (process == null) {
+            if (Util.isFunction(defaultValue)) {
+              process = defaultValue;
+            } else {
+              process = Util.identity;
+            }
+          }
+          trans[name] = new Param(name, abbr, process).set(value);
+          return this;
+        });
+
+      /** @protected */
+      this.rawParam ||
+        (this.rawParam = function (value, name, abbr, defaultValue, process) {
+          if (process == null) {
             process = Util.identity;
           }
-        }
-        trans[name] = new Param(name, abbr, process).set(value);
-        return this;
-      });
+          process = lastArgCallback(arguments);
+          trans[name] = new RawParam(name, abbr, process).set(value);
+          return this;
+        });
 
       /** @protected */
-      this.rawParam || (this.rawParam = function(value, name, abbr, defaultValue, process) {
-        if (process == null) {
-          process = Util.identity;
-        }
-        process = lastArgCallback(arguments);
-        trans[name] = new RawParam(name, abbr, process).set(value);
-        return this;
-      });
+      this.rangeParam ||
+        (this.rangeParam = function (value, name, abbr, defaultValue, process) {
+          if (process == null) {
+            process = Util.identity;
+          }
+          process = lastArgCallback(arguments);
+          trans[name] = new RangeParam(name, abbr, process).set(value);
+          return this;
+        });
 
       /** @protected */
-      this.rangeParam || (this.rangeParam = function(value, name, abbr, defaultValue, process) {
-        if (process == null) {
-          process = Util.identity;
-        }
-        process = lastArgCallback(arguments);
-        trans[name] = new RangeParam(name, abbr, process).set(value);
-        return this;
-      });
+      this.arrayParam ||
+        (this.arrayParam = function (
+          value,
+          name,
+          abbr,
+          sep,
+          defaultValue,
+          process
+        ) {
+          if (sep == null) {
+            sep = ":";
+          }
+          if (defaultValue == null) {
+            defaultValue = [];
+          }
+          if (process == null) {
+            process = Util.identity;
+          }
+          process = lastArgCallback(arguments);
+          trans[name] = new ArrayParam(name, abbr, sep, process).set(value);
+          return this;
+        });
 
       /** @protected */
-      this.arrayParam || (this.arrayParam = function(value, name, abbr, sep, defaultValue, process) {
-        if (sep == null) {
-          sep = ":";
-        }
-        if (defaultValue == null) {
-          defaultValue = [];
-        }
-        if (process == null) {
-          process = Util.identity;
-        }
-        process = lastArgCallback(arguments);
-        trans[name] = new ArrayParam(name, abbr, sep, process).set(value);
-        return this;
-      });
-
-      /** @protected */
-      this.transformationParam || (this.transformationParam = function(value, name, abbr, sep, defaultValue, process) {
-        if (sep == null) {
-          sep = ".";
-        }
-        if (process == null) {
-          process = Util.identity;
-        }
-        process = lastArgCallback(arguments);
-        trans[name] = new TransformationParam(name, abbr, sep, process).set(value);
-        return this;
-      });
-      this.layerParam || (this.layerParam = function(value, name, abbr) {
-        trans[name] = new LayerParam(name, abbr).set(value);
-        return this;
-      });
+      this.transformationParam ||
+        (this.transformationParam = function (
+          value,
+          name,
+          abbr,
+          sep,
+          defaultValue,
+          process
+        ) {
+          if (sep == null) {
+            sep = ".";
+          }
+          if (process == null) {
+            process = Util.identity;
+          }
+          process = lastArgCallback(arguments);
+          trans[name] = new TransformationParam(name, abbr, sep, process).set(
+            value
+          );
+          return this;
+        });
+      this.layerParam ||
+        (this.layerParam = function (value, name, abbr) {
+          trans[name] = new LayerParam(name, abbr).set(value);
+          return this;
+        });
 
       /**
        * Get the value associated with the given name.
@@ -2278,10 +2475,14 @@ var slice = [].slice,
        * @return {*} the processed value associated with the given name
        * @description Use {@link get}.origValue for the value originally provided for the parameter
        */
-      this.getValue || (this.getValue = function(name) {
-        var ref, ref1;
-        return (ref = (ref1 = trans[name]) != null ? ref1.value() : void 0) != null ? ref : this.otherOptions[name];
-      });
+      this.getValue ||
+        (this.getValue = function (name) {
+          var ref, ref1;
+          return (ref = (ref1 = trans[name]) != null ? ref1.value() : void 0) !=
+            null
+            ? ref
+            : this.otherOptions[name];
+        });
 
       /**
        * Get the parameter object for the given parameter name
@@ -2289,9 +2490,10 @@ var slice = [].slice,
        * @param {string} name the name of the transformation parameter
        * @returns {Param} the param object for the given name, or undefined
        */
-      this.get || (this.get = function(name) {
-        return trans[name];
-      });
+      this.get ||
+        (this.get = function (name) {
+          return trans[name];
+        });
 
       /**
        * Remove a transformation option from the transformation.
@@ -2300,72 +2502,77 @@ var slice = [].slice,
        * @return {*} Returns the option that was removed or null if no option by that name was found. The type of the
        *              returned value depends on the value.
        */
-      this.remove || (this.remove = function(name) {
-        var temp;
-        switch (false) {
-          case trans[name] == null:
-            temp = trans[name];
-            delete trans[name];
-            return temp.origValue;
-          case this.otherOptions[name] == null:
-            temp = this.otherOptions[name];
-            delete this.otherOptions[name];
-            return temp;
-          default:
-            return null;
-        }
-      });
+      this.remove ||
+        (this.remove = function (name) {
+          var temp;
+          switch (false) {
+            case trans[name] == null:
+              temp = trans[name];
+              delete trans[name];
+              return temp.origValue;
+            case this.otherOptions[name] == null:
+              temp = this.otherOptions[name];
+              delete this.otherOptions[name];
+              return temp;
+            default:
+              return null;
+          }
+        });
 
       /**
        * Return an array of all the keys (option names) in the transformation.
        * @return {Array<string>} the keys in snakeCase format
        */
-      this.keys || (this.keys = function() {
-        var key;
-        return ((function() {
-          var results;
-          results = [];
-          for (key in trans) {
-            if (key != null) {
-              results.push(key.match(VAR_NAME_RE) ? key : Util.snakeCase(key));
+      this.keys ||
+        (this.keys = function () {
+          var key;
+          return (function () {
+            var results;
+            results = [];
+            for (key in trans) {
+              if (key != null) {
+                results.push(
+                  key.match(VAR_NAME_RE) ? key : Util.snakeCase(key)
+                );
+              }
             }
-          }
-          return results;
-        })()).sort();
-      });
+            return results;
+          })().sort();
+        });
 
       /**
        * Returns a plain object representation of the transformation. Values are processed.
        * @function Transformation#toPlainObject
        * @return {Object} the transformation options as plain object
        */
-      this.toPlainObject || (this.toPlainObject = function() {
-        var hash, key, list, tr;
-        hash = {};
-        for (key in trans) {
-          hash[key] = trans[key].value();
-          if (Util.isPlainObject(hash[key])) {
-            hash[key] = Util.cloneDeep(hash[key]);
-          }
-        }
-        if (!Util.isEmpty(this.chained)) {
-          list = (function() {
-            var j, len, ref, results;
-            ref = this.chained;
-            results = [];
-            for (j = 0, len = ref.length; j < len; j++) {
-              tr = ref[j];
-              results.push(tr.toPlainObject());
+      this.toPlainObject ||
+        (this.toPlainObject = function () {
+          var hash, key, list, tr;
+          hash = {};
+          for (key in trans) {
+            hash[key] = trans[key].value();
+            if (Util.isPlainObject(hash[key])) {
+              hash[key] = Util.cloneDeep(hash[key]);
             }
-            return results;
-          }).call(this);
-          list.push(hash);
-          hash = {
-            transformation: list
-          };
-        }
-        return hash;
-      });
+          }
+          if (!Util.isEmpty(this.chained)) {
+            list = function () {
+              var j, len, ref, results;
+              ref = this.chained;
+              results = [];
+              for (j = 0, len = ref.length; j < len; j++) {
+                tr = ref[j];
+                results.push(tr.toPlainObject());
+              }
+              return results;
+            }.call(this);
+            list.push(hash);
+            hash = {
+              transformation: list,
+            };
+          }
+          return hash;
+        });
 
       /**
        * Complete the current transformation and chain to a new one.
@@ -2377,20 +2584,22 @@ var slice = [].slice,
        * tr.width(10).crop('fit').chain().angle(15).serialize()
        * // produces "c_fit,w_10/a_15"
        */
-      this.chain || (this.chain = function() {
-        var names, tr;
-        names = Object.getOwnPropertyNames(trans);
-        if (names.length !== 0) {
-          tr = new this.constructor(this.toOptions(false));
-          this.resetTransformations();
-          this.chained.push(tr);
-        }
-        return this;
-      });
-      this.resetTransformations || (this.resetTransformations = function() {
-        trans = {};
-        return this;
-      });
+      this.chain ||
+        (this.chain = function () {
+          var names, tr;
+          names = Object.getOwnPropertyNames(trans);
+          if (names.length !== 0) {
+            tr = new this.constructor(this.toOptions(false));
+            this.resetTransformations();
+            this.chained.push(tr);
+          }
+          return this;
+        });
+      this.resetTransformations ||
+        (this.resetTransformations = function () {
+          trans = {};
+          return this;
+        });
       this.otherOptions || (this.otherOptions = {});
       this.chained = [];
       if (!Util.isEmpty(options)) {
@@ -2398,14 +2607,13 @@ var slice = [].slice,
       }
     }
 
-
     /**
      * Merge the provided options with own's options
      * @param {Object} [options={}] key-value list of options
      * @returns {Transformation} Returns this instance for chaining
      */
 
-    TransformationBase.prototype.fromOptions = function(options) {
+    TransformationBase.prototype.fromOptions = function (options) {
       var key, opt;
       if (options instanceof TransformationBase) {
         this.fromTransformation(options);
@@ -2413,10 +2621,10 @@ var slice = [].slice,
         options || (options = {});
         if (Util.isString(options) || Util.isArray(options)) {
           options = {
-            transformation: options
+            transformation: options,
           };
         }
-        options = Util.cloneDeep(options, function(value) {
+        options = Util.cloneDeep(options, function (value) {
           if (value instanceof TransformationBase) {
             return new value.constructor(value.toOptions());
           }
@@ -2428,8 +2636,8 @@ var slice = [].slice,
         for (key in options) {
           opt = options[key];
           if (key.match(VAR_NAME_RE)) {
-            if (key !== '$attr') {
-              this.set('variable', key, opt);
+            if (key !== "$attr") {
+              this.set("variable", key, opt);
             }
           } else {
             this.set(key, opt);
@@ -2439,7 +2647,7 @@ var slice = [].slice,
       return this;
     };
 
-    TransformationBase.prototype.fromTransformation = function(other) {
+    TransformationBase.prototype.fromTransformation = function (other) {
       var j, key, len, ref;
       if (other instanceof TransformationBase) {
         ref = other.keys();
@@ -2451,7 +2659,6 @@ var slice = [].slice,
       return this;
     };
 
-
     /**
      * Set a parameter.
      * The parameter name `key` is converted to
@@ -2460,9 +2667,10 @@ var slice = [].slice,
      * @returns {Transformation} Returns this instance for chaining
      */
 
-    TransformationBase.prototype.set = function() {
+    TransformationBase.prototype.set = function () {
       var camelKey, key, values;
-      key = arguments[0], values = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      (key = arguments[0]),
+        (values = 2 <= arguments.length ? slice.call(arguments, 1) : []);
       camelKey = Util.camelCase(key);
       if (Util.contains(Transformation.methods, camelKey)) {
         this[camelKey].apply(this, values);
@@ -2472,10 +2680,9 @@ var slice = [].slice,
       return this;
     };
 
-    TransformationBase.prototype.hasLayer = function() {
+    TransformationBase.prototype.hasLayer = function () {
       return this.getValue("overlay") || this.getValue("underlay");
     };
-
 
     /**
      * Generate a string representation of the transformation.
@@ -2483,9 +2690,26 @@ var slice = [].slice,
      * @return {string} Returns the transformation as a string
      */
 
-    TransformationBase.prototype.serialize = function() {
-      var ifParam, j, len, paramList, ref, ref1, ref2, ref3, ref4, resultArray, t, tr, transformationList, transformationString, transformations, value, variables, vars;
-      resultArray = (function() {
+    TransformationBase.prototype.serialize = function () {
+      var ifParam,
+        j,
+        len,
+        paramList,
+        ref,
+        ref1,
+        ref2,
+        ref3,
+        ref4,
+        resultArray,
+        t,
+        tr,
+        transformationList,
+        transformationString,
+        transformations,
+        value,
+        variables,
+        vars;
+      resultArray = function () {
         var j, len, ref, results;
         ref = this.chained;
         results = [];
@@ -2494,20 +2718,35 @@ var slice = [].slice,
           results.push(tr.serialize());
         }
         return results;
-      }).call(this);
+      }.call(this);
       paramList = this.keys();
-      transformations = (ref = this.get("transformation")) != null ? ref.serialize() : void 0;
+      transformations =
+        (ref = this.get("transformation")) != null ? ref.serialize() : void 0;
       ifParam = (ref1 = this.get("if")) != null ? ref1.serialize() : void 0;
-      variables = processVar((ref2 = this.get("variables")) != null ? ref2.value() : void 0);
-      paramList = Util.difference(paramList, ["transformation", "if", "variables"]);
+      variables = processVar(
+        (ref2 = this.get("variables")) != null ? ref2.value() : void 0
+      );
+      paramList = Util.difference(paramList, [
+        "transformation",
+        "if",
+        "variables",
+      ]);
       vars = [];
       transformationList = [];
       for (j = 0, len = paramList.length; j < len; j++) {
         t = paramList[j];
         if (t.match(VAR_NAME_RE)) {
-          vars.push(t + "_" + Expression.normalize((ref3 = this.get(t)) != null ? ref3.value() : void 0));
+          vars.push(
+            t +
+              "_" +
+              Expression.normalize(
+                (ref3 = this.get(t)) != null ? ref3.value() : void 0
+              )
+          );
         } else {
-          transformationList.push((ref4 = this.get(t)) != null ? ref4.serialize() : void 0);
+          transformationList.push(
+            (ref4 = this.get(t)) != null ? ref4.serialize() : void 0
+          );
         }
       }
       switch (false) {
@@ -2517,30 +2756,37 @@ var slice = [].slice,
         case !Util.isArray(transformations):
           resultArray = resultArray.concat(transformations);
       }
-      transformationList = (function() {
+      transformationList = (function () {
         var l, len1, results;
         results = [];
         for (l = 0, len1 = transformationList.length; l < len1; l++) {
           value = transformationList[l];
-          if (Util.isArray(value) && !Util.isEmpty(value) || !Util.isArray(value) && value) {
+          if (
+            (Util.isArray(value) && !Util.isEmpty(value)) ||
+            (!Util.isArray(value) && value)
+          ) {
             results.push(value);
           }
         }
         return results;
       })();
-      transformationList = vars.sort().concat(variables).concat(transformationList.sort());
+      transformationList = vars
+        .sort()
+        .concat(variables)
+        .concat(transformationList.sort());
       if (ifParam === "if_end") {
         transformationList.push(ifParam);
       } else if (!Util.isEmpty(ifParam)) {
         transformationList.unshift(ifParam);
       }
-      transformationString = Util.compact(transformationList).join(this.param_separator);
+      transformationString = Util.compact(transformationList).join(
+        this.param_separator
+      );
       if (!Util.isEmpty(transformationString)) {
         resultArray.push(transformationString);
       }
       return Util.compact(resultArray).join(this.trans_separator);
     };
-
 
     /**
      * Provide a list of all the valid transformation option names
@@ -2549,10 +2795,9 @@ var slice = [].slice,
      * @return {Array<string>} a array of all the valid option names
      */
 
-    TransformationBase.prototype.listNames = function() {
+    TransformationBase.prototype.listNames = function () {
       return Transformation.methods;
     };
-
 
     /**
      * Returns attributes for an HTML tag.
@@ -2560,13 +2805,13 @@ var slice = [].slice,
      * @return PlainObject
      */
 
-    TransformationBase.prototype.toHtmlAttributes = function() {
+    TransformationBase.prototype.toHtmlAttributes = function () {
       var attrName, height, j, key, len, options, ref, ref1, ref2, ref3, value;
       options = {};
       ref = this.otherOptions;
       for (key in ref) {
         value = ref[key];
-        if (!(!Util.contains(Transformation.PARAM_NAMES, Util.snakeCase(key)))) {
+        if (!!Util.contains(Transformation.PARAM_NAMES, Util.snakeCase(key))) {
           continue;
         }
         attrName = /^html_/.test(key) ? key.slice(5) : key;
@@ -2579,27 +2824,32 @@ var slice = [].slice,
           options[Util.camelCase(key.slice(5))] = this.getValue(key);
         }
       }
-      if (!(this.hasLayer() || this.getValue("angle") || Util.contains(["fit", "limit", "lfill"], this.getValue("crop")))) {
+      if (
+        !(
+          this.hasLayer() ||
+          this.getValue("angle") ||
+          Util.contains(["fit", "limit", "lfill"], this.getValue("crop"))
+        )
+      ) {
         width = (ref2 = this.get("width")) != null ? ref2.origValue : void 0;
         height = (ref3 = this.get("height")) != null ? ref3.origValue : void 0;
         if (parseFloat(width) >= 1.0) {
-          if (options['width'] == null) {
-            options['width'] = width;
+          if (options["width"] == null) {
+            options["width"] = width;
           }
         }
         if (parseFloat(height) >= 1.0) {
-          if (options['height'] == null) {
-            options['height'] = height;
+          if (options["height"] == null) {
+            options["height"] = height;
           }
         }
       }
       return options;
     };
 
-    TransformationBase.prototype.isValidParamName = function(name) {
+    TransformationBase.prototype.isValidParamName = function (name) {
       return Transformation.methods.indexOf(Util.camelCase(name)) >= 0;
     };
-
 
     /**
      * Delegate to the parent (up the call chain) to produce HTML
@@ -2609,27 +2859,31 @@ var slice = [].slice,
      * tag = cloudinary.ImageTag.new("sample", {cloud_name: "demo"})
      * // ImageTag {name: "img", publicId: "sample"}
      * tag.toHtml()
-     * // <img src="http://res.cloudinary.com/demo/image/upload/sample">
+     * // <img src="https://res.cloudinary.com/demo/image/upload/sample">
      * tag.transformation().crop("fit").width(300).toHtml()
-     * // <img src="http://res.cloudinary.com/demo/image/upload/c_fit,w_300/sample">
+     * // <img src="https://res.cloudinary.com/demo/image/upload/c_fit,w_300/sample">
      */
 
-    TransformationBase.prototype.toHtml = function() {
+    TransformationBase.prototype.toHtml = function () {
       var ref;
-      return (ref = this.getParent()) != null ? typeof ref.toHtml === "function" ? ref.toHtml() : void 0 : void 0;
+      return (ref = this.getParent()) != null
+        ? typeof ref.toHtml === "function"
+          ? ref.toHtml()
+          : void 0
+        : void 0;
     };
 
-    TransformationBase.prototype.toString = function() {
+    TransformationBase.prototype.toString = function () {
       return this.serialize();
     };
 
-    processVar = function(varArray) {
+    processVar = function (varArray) {
       var j, len, name, ref, results, v;
       if (Util.isArray(varArray)) {
         results = [];
         for (j = 0, len = varArray.length; j < len; j++) {
-          ref = varArray[j], name = ref[0], v = ref[1];
-          results.push(name + "_" + (Expression.normalize(v)));
+          (ref = varArray[j]), (name = ref[0]), (v = ref[1]);
+          results.push(name + "_" + Expression.normalize(v));
         }
         return results;
       } else {
@@ -2658,11 +2912,9 @@ var slice = [].slice,
     };
 
     return TransformationBase;
-
   })();
-  Transformation = (function(superClass) {
+  Transformation = (function (superClass) {
     extend(Transformation, superClass);
-
 
     /**
      *  Represents a single transformation.
@@ -2684,7 +2936,6 @@ var slice = [].slice,
       this;
     }
 
-
     /**
      * Convenience constructor
      * @param {Object} options
@@ -2692,165 +2943,187 @@ var slice = [].slice,
      * @example cl = cloudinary.Transformation.new( {angle: 20, crop: "scale", width: "auto"})
      */
 
-    Transformation["new"] = function(args) {
+    Transformation["new"] = function (args) {
       return new Transformation(args);
     };
-
 
     /*
       Transformation Parameters
      */
 
-    Transformation.prototype.angle = function(value) {
+    Transformation.prototype.angle = function (value) {
       return this.arrayParam(value, "angle", "a", ".", Expression.normalize);
     };
 
-    Transformation.prototype.audioCodec = function(value) {
+    Transformation.prototype.audioCodec = function (value) {
       return this.param(value, "audio_codec", "ac");
     };
 
-    Transformation.prototype.audioFrequency = function(value) {
+    Transformation.prototype.audioFrequency = function (value) {
       return this.param(value, "audio_frequency", "af");
     };
 
-    Transformation.prototype.aspectRatio = function(value) {
+    Transformation.prototype.aspectRatio = function (value) {
       return this.param(value, "aspect_ratio", "ar", Expression.normalize);
     };
 
-    Transformation.prototype.background = function(value) {
+    Transformation.prototype.background = function (value) {
       return this.param(value, "background", "b", Param.norm_color);
     };
 
-    Transformation.prototype.bitRate = function(value) {
+    Transformation.prototype.bitRate = function (value) {
       return this.param(value, "bit_rate", "br");
     };
 
-    Transformation.prototype.border = function(value) {
-      return this.param(value, "border", "bo", function(border) {
+    Transformation.prototype.border = function (value) {
+      return this.param(value, "border", "bo", function (border) {
         if (Util.isPlainObject(border)) {
-          border = Util.assign({}, {
-            color: "black",
-            width: 2
-          }, border);
-          return border.width + "px_solid_" + (Param.norm_color(border.color));
+          border = Util.assign(
+            {},
+            {
+              color: "black",
+              width: 2,
+            },
+            border
+          );
+          return border.width + "px_solid_" + Param.norm_color(border.color);
         } else {
           return border;
         }
       });
     };
 
-    Transformation.prototype.color = function(value) {
+    Transformation.prototype.color = function (value) {
       return this.param(value, "color", "co", Param.norm_color);
     };
 
-    Transformation.prototype.colorSpace = function(value) {
+    Transformation.prototype.colorSpace = function (value) {
       return this.param(value, "color_space", "cs");
     };
 
-    Transformation.prototype.crop = function(value) {
+    Transformation.prototype.crop = function (value) {
       return this.param(value, "crop", "c");
     };
 
-    Transformation.prototype.defaultImage = function(value) {
+    Transformation.prototype.defaultImage = function (value) {
       return this.param(value, "default_image", "d");
     };
 
-    Transformation.prototype.delay = function(value) {
+    Transformation.prototype.delay = function (value) {
       return this.param(value, "delay", "dl");
     };
 
-    Transformation.prototype.density = function(value) {
+    Transformation.prototype.density = function (value) {
       return this.param(value, "density", "dn");
     };
 
-    Transformation.prototype.duration = function(value) {
+    Transformation.prototype.duration = function (value) {
       return this.rangeParam(value, "duration", "du");
     };
 
-    Transformation.prototype.dpr = function(value) {
-      return this.param(value, "dpr", "dpr", (function(_this) {
-        return function(dpr) {
-          dpr = dpr.toString();
-          if (dpr != null ? dpr.match(/^\d+$/) : void 0) {
-            return dpr + ".0";
-          } else {
-            return Expression.normalize(dpr);
-          }
-        };
-      })(this));
+    Transformation.prototype.dpr = function (value) {
+      return this.param(
+        value,
+        "dpr",
+        "dpr",
+        (function (_this) {
+          return function (dpr) {
+            dpr = dpr.toString();
+            if (dpr != null ? dpr.match(/^\d+$/) : void 0) {
+              return dpr + ".0";
+            } else {
+              return Expression.normalize(dpr);
+            }
+          };
+        })(this)
+      );
     };
 
-    Transformation.prototype.effect = function(value) {
+    Transformation.prototype.effect = function (value) {
       return this.arrayParam(value, "effect", "e", ":", Expression.normalize);
     };
 
-    Transformation.prototype["else"] = function() {
-      return this["if"]('else');
+    Transformation.prototype["else"] = function () {
+      return this["if"]("else");
     };
 
-    Transformation.prototype.endIf = function() {
-      return this["if"]('end');
+    Transformation.prototype.endIf = function () {
+      return this["if"]("end");
     };
 
-    Transformation.prototype.endOffset = function(value) {
+    Transformation.prototype.endOffset = function (value) {
       return this.rangeParam(value, "end_offset", "eo");
     };
 
-    Transformation.prototype.fallbackContent = function(value) {
+    Transformation.prototype.fallbackContent = function (value) {
       return this.param(value, "fallback_content");
     };
 
-    Transformation.prototype.fetchFormat = function(value) {
+    Transformation.prototype.fetchFormat = function (value) {
       return this.param(value, "fetch_format", "f");
     };
 
-    Transformation.prototype.format = function(value) {
+    Transformation.prototype.format = function (value) {
       return this.param(value, "format");
     };
 
-    Transformation.prototype.flags = function(value) {
+    Transformation.prototype.flags = function (value) {
       return this.arrayParam(value, "flags", "fl", ".");
     };
 
-    Transformation.prototype.gravity = function(value) {
+    Transformation.prototype.gravity = function (value) {
       return this.param(value, "gravity", "g");
     };
 
-    Transformation.prototype.fps = function(value) {
-      return this.param(value, "fps", "fps", (function(_this) {
-        return function(fps) {
-          if (Util.isString(fps)) {
-            return fps;
-          } else if (Util.isArray(fps)) {
-            return fps.join("-");
-          } else {
-            return fps;
-          }
-        };
-      })(this));
+    Transformation.prototype.fps = function (value) {
+      return this.param(
+        value,
+        "fps",
+        "fps",
+        (function (_this) {
+          return function (fps) {
+            if (Util.isString(fps)) {
+              return fps;
+            } else if (Util.isArray(fps)) {
+              return fps.join("-");
+            } else {
+              return fps;
+            }
+          };
+        })(this)
+      );
     };
 
-    Transformation.prototype.height = function(value) {
-      return this.param(value, "height", "h", (function(_this) {
-        return function() {
-          if (_this.getValue("crop") || _this.getValue("overlay") || _this.getValue("underlay")) {
-            return Expression.normalize(value);
-          } else {
-            return null;
-          }
-        };
-      })(this));
+    Transformation.prototype.height = function (value) {
+      return this.param(
+        value,
+        "height",
+        "h",
+        (function (_this) {
+          return function () {
+            if (
+              _this.getValue("crop") ||
+              _this.getValue("overlay") ||
+              _this.getValue("underlay")
+            ) {
+              return Expression.normalize(value);
+            } else {
+              return null;
+            }
+          };
+        })(this)
+      );
     };
 
-    Transformation.prototype.htmlHeight = function(value) {
+    Transformation.prototype.htmlHeight = function (value) {
       return this.param(value, "html_height");
     };
 
-    Transformation.prototype.htmlWidth = function(value) {
+    Transformation.prototype.htmlWidth = function (value) {
       return this.param(value, "html_width");
     };
 
-    Transformation.prototype["if"] = function(value) {
+    Transformation.prototype["if"] = function (value) {
       var i, ifVal, j, ref, trIf, trRest;
       if (value == null) {
         value = "";
@@ -2869,7 +3142,10 @@ var slice = [].slice,
               trIf = Transformation["new"]()["if"](ifVal);
               this.chained[i].remove("if");
               trRest = this.chained[i];
-              this.chained[i] = Transformation["new"]().transformation([trIf, trRest]);
+              this.chained[i] = Transformation["new"]().transformation([
+                trIf,
+                trRest,
+              ]);
               if (ifVal !== "else") {
                 break;
               }
@@ -2879,19 +3155,25 @@ var slice = [].slice,
         case "":
           return Condition["new"]().setParent(this);
         default:
-          return this.param(value, "if", "if", function(value) {
+          return this.param(value, "if", "if", function (value) {
             return Condition["new"](value).toString();
           });
       }
     };
 
-    Transformation.prototype.keyframeInterval = function(value) {
+    Transformation.prototype.keyframeInterval = function (value) {
       return this.param(value, "keyframe_interval", "ki");
     };
 
-    Transformation.prototype.offset = function(value) {
+    Transformation.prototype.offset = function (value) {
       var end_o, ref, start_o;
-      ref = Util.isFunction(value != null ? value.split : void 0) ? value.split('..') : Util.isArray(value) ? value : [null, null], start_o = ref[0], end_o = ref[1];
+      (ref = Util.isFunction(value != null ? value.split : void 0)
+        ? value.split("..")
+        : Util.isArray(value)
+        ? value
+        : [null, null]),
+        (start_o = ref[0]),
+        (end_o = ref[1]);
       if (start_o != null) {
         this.startOffset(start_o);
       }
@@ -2900,113 +3182,121 @@ var slice = [].slice,
       }
     };
 
-    Transformation.prototype.opacity = function(value) {
+    Transformation.prototype.opacity = function (value) {
       return this.param(value, "opacity", "o", Expression.normalize);
     };
 
-    Transformation.prototype.overlay = function(value) {
+    Transformation.prototype.overlay = function (value) {
       return this.layerParam(value, "overlay", "l");
     };
 
-    Transformation.prototype.page = function(value) {
+    Transformation.prototype.page = function (value) {
       return this.param(value, "page", "pg");
     };
 
-    Transformation.prototype.poster = function(value) {
+    Transformation.prototype.poster = function (value) {
       return this.param(value, "poster");
     };
 
-    Transformation.prototype.prefix = function(value) {
+    Transformation.prototype.prefix = function (value) {
       return this.param(value, "prefix", "p");
     };
 
-    Transformation.prototype.quality = function(value) {
+    Transformation.prototype.quality = function (value) {
       return this.param(value, "quality", "q", Expression.normalize);
     };
 
-    Transformation.prototype.radius = function(value) {
+    Transformation.prototype.radius = function (value) {
       return this.param(value, "radius", "r", Expression.normalize);
     };
 
-    Transformation.prototype.rawTransformation = function(value) {
+    Transformation.prototype.rawTransformation = function (value) {
       return this.rawParam(value, "raw_transformation");
     };
 
-    Transformation.prototype.size = function(value) {
+    Transformation.prototype.size = function (value) {
       var height, ref;
       if (Util.isFunction(value != null ? value.split : void 0)) {
-        ref = value.split('x'), width = ref[0], height = ref[1];
+        (ref = value.split("x")), (width = ref[0]), (height = ref[1]);
         this.width(width);
         return this.height(height);
       }
     };
 
-    Transformation.prototype.sourceTypes = function(value) {
+    Transformation.prototype.sourceTypes = function (value) {
       return this.param(value, "source_types");
     };
 
-    Transformation.prototype.sourceTransformation = function(value) {
+    Transformation.prototype.sourceTransformation = function (value) {
       return this.param(value, "source_transformation");
     };
 
-    Transformation.prototype.startOffset = function(value) {
+    Transformation.prototype.startOffset = function (value) {
       return this.rangeParam(value, "start_offset", "so");
     };
 
-    Transformation.prototype.streamingProfile = function(value) {
+    Transformation.prototype.streamingProfile = function (value) {
       return this.param(value, "streaming_profile", "sp");
     };
 
-    Transformation.prototype.transformation = function(value) {
+    Transformation.prototype.transformation = function (value) {
       return this.transformationParam(value, "transformation", "t");
     };
 
-    Transformation.prototype.underlay = function(value) {
+    Transformation.prototype.underlay = function (value) {
       return this.layerParam(value, "underlay", "u");
     };
 
-    Transformation.prototype.variable = function(name, value) {
+    Transformation.prototype.variable = function (name, value) {
       return this.param(value, name, name);
     };
 
-    Transformation.prototype.variables = function(values) {
+    Transformation.prototype.variables = function (values) {
       return this.arrayParam(values, "variables");
     };
 
-    Transformation.prototype.videoCodec = function(value) {
+    Transformation.prototype.videoCodec = function (value) {
       return this.param(value, "video_codec", "vc", Param.process_video_params);
     };
 
-    Transformation.prototype.videoSampling = function(value) {
+    Transformation.prototype.videoSampling = function (value) {
       return this.param(value, "video_sampling", "vs");
     };
 
-    Transformation.prototype.width = function(value) {
-      return this.param(value, "width", "w", (function(_this) {
-        return function() {
-          if (_this.getValue("crop") || _this.getValue("overlay") || _this.getValue("underlay")) {
-            return Expression.normalize(value);
-          } else {
-            return null;
-          }
-        };
-      })(this));
+    Transformation.prototype.width = function (value) {
+      return this.param(
+        value,
+        "width",
+        "w",
+        (function (_this) {
+          return function () {
+            if (
+              _this.getValue("crop") ||
+              _this.getValue("overlay") ||
+              _this.getValue("underlay")
+            ) {
+              return Expression.normalize(value);
+            } else {
+              return null;
+            }
+          };
+        })(this)
+      );
     };
 
-    Transformation.prototype.x = function(value) {
+    Transformation.prototype.x = function (value) {
       return this.param(value, "x", "x", Expression.normalize);
     };
 
-    Transformation.prototype.y = function(value) {
+    Transformation.prototype.y = function (value) {
       return this.param(value, "y", "y", Expression.normalize);
     };
 
-    Transformation.prototype.zoom = function(value) {
+    Transformation.prototype.zoom = function (value) {
       return this.param(value, "zoom", "z", Expression.normalize);
     };
 
     return Transformation;
-
   })(TransformationBase);
 
   /**
@@ -3014,30 +3304,34 @@ var slice = [].slice,
    * This is a list of the parameters defined in Transformation.
    * Values are camelCased.
    */
-  Transformation.methods || (Transformation.methods = Util.difference(Util.functions(Transformation.prototype), Util.functions(TransformationBase.prototype)));
+  Transformation.methods ||
+    (Transformation.methods = Util.difference(
+      Util.functions(Transformation.prototype),
+      Util.functions(TransformationBase.prototype)
+    ));
 
   /**
    * Parameters that are filtered out before passing the options to an HTML tag.
    *
    * The list of parameters is a combination of `Transformation::methods` and `Configuration::CONFIG_PARAMS`
    */
-  Transformation.PARAM_NAMES || (Transformation.PARAM_NAMES = ((function() {
-    var j, len, ref, results;
-    ref = Transformation.methods;
-    results = [];
-    for (j = 0, len = ref.length; j < len; j++) {
-      m = ref[j];
-      results.push(Util.snakeCase(m));
-    }
-    return results;
-  })()).concat(Configuration.CONFIG_PARAMS));
+  Transformation.PARAM_NAMES ||
+    (Transformation.PARAM_NAMES = (function () {
+      var j, len, ref, results;
+      ref = Transformation.methods;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        m = ref[j];
+        results.push(Util.snakeCase(m));
+      }
+      return results;
+    })().concat(Configuration.CONFIG_PARAMS));
 
   /**
    * Generic HTML tag
    * Depends on 'transformation', 'util'
    */
-  HtmlTag = (function() {
-
+  HtmlTag = (function () {
     /**
      * Represents an HTML (DOM) tag
      * @constructor HtmlTag
@@ -3062,11 +3356,10 @@ var slice = [].slice,
       }
       transformation = new Transformation(options);
       transformation.setParent(this);
-      this.transformation = function() {
+      this.transformation = function () {
         return transformation;
       };
     }
-
 
     /**
      * Convenience constructor
@@ -3079,10 +3372,9 @@ var slice = [].slice,
      * @example tag = HtmlTag.new( 'div', { 'width': 10})
      */
 
-    HtmlTag["new"] = function(name, publicId, options) {
+    HtmlTag["new"] = function (name, publicId, options) {
       return new this(name, publicId, options);
     };
-
 
     /**
      * Represent the given key and value as an HTML attribute.
@@ -3094,16 +3386,15 @@ var slice = [].slice,
      *
      */
 
-    toAttribute = function(key, value) {
+    toAttribute = function (key, value) {
       if (!value) {
         return void 0;
       } else if (value === true) {
         return key;
       } else {
-        return key + "=\"" + value + "\"";
+        return key + '="' + value + '"';
       }
     };
-
 
     /**
      * combine key and value from the `attr` to generate an HTML tag attributes string.
@@ -3114,9 +3405,9 @@ var slice = [].slice,
      * @ignore
      */
 
-    HtmlTag.prototype.htmlAttrs = function(attrs) {
+    HtmlTag.prototype.htmlAttrs = function (attrs) {
       var key, pairs, value;
-      return pairs = ((function() {
+      return (pairs = (function () {
         var results;
         results = [];
         for (key in attrs) {
@@ -3126,9 +3417,10 @@ var slice = [].slice,
           }
         }
         return results;
-      })()).sort().join(' ');
+      })()
+        .sort()
+        .join(" "));
     };
-
 
     /**
      * Get all options related to this tag.
@@ -3137,10 +3429,9 @@ var slice = [].slice,
      *
      */
 
-    HtmlTag.prototype.getOptions = function() {
+    HtmlTag.prototype.getOptions = function () {
       return this.transformation().toOptions();
     };
-
 
     /**
      * Get the value of option `name`
@@ -3150,10 +3441,9 @@ var slice = [].slice,
      *
      */
 
-    HtmlTag.prototype.getOption = function(name) {
+    HtmlTag.prototype.getOption = function (name) {
       return this.transformation().getValue(name);
     };
-
 
     /**
      * Get the attributes of the tag.
@@ -3161,10 +3451,9 @@ var slice = [].slice,
      * @returns {Object} attributes
      */
 
-    HtmlTag.prototype.attributes = function() {
+    HtmlTag.prototype.attributes = function () {
       return this.transformation().toHtmlAttributes();
     };
-
 
     /**
      * Set a tag attribute named `name` to `value`
@@ -3173,11 +3462,10 @@ var slice = [].slice,
      * @param {string} value - the value of the attribute
      */
 
-    HtmlTag.prototype.setAttr = function(name, value) {
+    HtmlTag.prototype.setAttr = function (name, value) {
       this.transformation().set("html_" + name, value);
       return this;
     };
-
 
     /**
      * Get the value of the tag attribute `name`
@@ -3186,10 +3474,9 @@ var slice = [].slice,
      * @returns {*}
      */
 
-    HtmlTag.prototype.getAttr = function(name) {
+    HtmlTag.prototype.getAttr = function (name) {
       return this.attributes()["html_" + name] || this.attributes()[name];
     };
-
 
     /**
      * Remove the tag attributed named `name`
@@ -3198,11 +3485,12 @@ var slice = [].slice,
      * @returns {*}
      */
 
-    HtmlTag.prototype.removeAttr = function(name) {
+    HtmlTag.prototype.removeAttr = function (name) {
       var ref;
-      return (ref = this.transformation().remove("html_" + name)) != null ? ref : this.transformation().remove(name);
+      return (ref = this.transformation().remove("html_" + name)) != null
+        ? ref
+        : this.transformation().remove(name);
     };
-
 
     /**
      * @function HtmlTag#content
@@ -3210,10 +3498,9 @@ var slice = [].slice,
      * @ignore
      */
 
-    HtmlTag.prototype.content = function() {
+    HtmlTag.prototype.content = function () {
       return "";
     };
-
 
     /**
      * @function HtmlTag#openTag
@@ -3221,10 +3508,9 @@ var slice = [].slice,
      * @ignore
      */
 
-    HtmlTag.prototype.openTag = function() {
-      return "<" + this.name + " " + (this.htmlAttrs(this.attributes())) + ">";
+    HtmlTag.prototype.openTag = function () {
+      return "<" + this.name + " " + this.htmlAttrs(this.attributes()) + ">";
     };
-
 
     /**
      * @function HtmlTag#closeTag
@@ -3232,10 +3518,9 @@ var slice = [].slice,
      * @ignore
      */
 
-    HtmlTag.prototype.closeTag = function() {
+    HtmlTag.prototype.closeTag = function () {
       return "</" + this.name + ">";
     };
-
 
     /**
      * Generates an HTML representation of the tag.
@@ -3243,10 +3528,9 @@ var slice = [].slice,
      * @returns {string} Returns HTML in string format
      */
 
-    HtmlTag.prototype.toHtml = function() {
+    HtmlTag.prototype.toHtml = function () {
       return this.openTag() + this.content() + this.closeTag();
     };
-
 
     /**
      * Creates a DOM object representing the tag.
@@ -3254,9 +3538,15 @@ var slice = [].slice,
      * @returns {Element}
      */
 
-    HtmlTag.prototype.toDOM = function() {
+    HtmlTag.prototype.toDOM = function () {
       var element, name, ref, value;
-      if (!Util.isFunction(typeof document !== "undefined" && document !== null ? document.createElement : void 0)) {
+      if (
+        !Util.isFunction(
+          typeof document !== "undefined" && document !== null
+            ? document.createElement
+            : void 0
+        )
+      ) {
         throw "Can't create DOM if document is not present!";
       }
       element = document.createElement(this.name);
@@ -3268,23 +3558,21 @@ var slice = [].slice,
       return element;
     };
 
-    HtmlTag.isResponsive = function(tag, responsiveClass) {
+    HtmlTag.isResponsive = function (tag, responsiveClass) {
       var dataSrc;
-      dataSrc = Util.getData(tag, 'src-cache') || Util.getData(tag, 'src');
+      dataSrc = Util.getData(tag, "src-cache") || Util.getData(tag, "src");
       return Util.hasClass(tag, responsiveClass) && /\bw_auto\b/.exec(dataSrc);
     };
 
     return HtmlTag;
-
   })();
 
   /**
    * Image Tag
    * Depends on 'tags/htmltag', 'cloudinary'
    */
-  ImageTag = (function(superClass) {
+  ImageTag = (function (superClass) {
     extend(ImageTag, superClass);
-
 
     /**
      * Creates an HTML (DOM) Image tag using Cloudinary as the source.
@@ -3301,49 +3589,53 @@ var slice = [].slice,
       ImageTag.__super__.constructor.call(this, "img", publicId, options);
     }
 
-
     /** @override */
 
-    ImageTag.prototype.closeTag = function() {
+    ImageTag.prototype.closeTag = function () {
       return "";
     };
 
-
     /** @override */
 
-    ImageTag.prototype.attributes = function() {
+    ImageTag.prototype.attributes = function () {
       var attr, options, srcAttribute;
       attr = ImageTag.__super__.attributes.call(this) || [];
       options = this.getOptions();
-      srcAttribute = options.responsive && !options.client_hints ? 'data-src' : 'src';
+      srcAttribute =
+        options.responsive && !options.client_hints ? "data-src" : "src";
       if (attr[srcAttribute] == null) {
-        attr[srcAttribute] = new Cloudinary(this.getOptions()).url(this.publicId);
+        attr[srcAttribute] = new Cloudinary(this.getOptions()).url(
+          this.publicId
+        );
       }
       return attr;
     };
 
     return ImageTag;
-
   })(HtmlTag);
 
   /**
    * Video Tag
    * Depends on 'tags/htmltag', 'util', 'cloudinary'
    */
-  VideoTag = (function(superClass) {
+  VideoTag = (function (superClass) {
     var DEFAULT_POSTER_OPTIONS, DEFAULT_VIDEO_SOURCE_TYPES, VIDEO_TAG_PARAMS;
 
     extend(VideoTag, superClass);
 
-    VIDEO_TAG_PARAMS = ['source_types', 'source_transformation', 'fallback_content', 'poster'];
+    VIDEO_TAG_PARAMS = [
+      "source_types",
+      "source_transformation",
+      "fallback_content",
+      "poster",
+    ];
 
-    DEFAULT_VIDEO_SOURCE_TYPES = ['webm', 'mp4', 'ogv'];
+    DEFAULT_VIDEO_SOURCE_TYPES = ["webm", "mp4", "ogv"];
 
     DEFAULT_POSTER_OPTIONS = {
-      format: 'jpg',
-      resource_type: 'video'
+      format: "jpg",
+      resource_type: "video",
     };
-
 
     /**
      * Creates an HTML (DOM) Video tag using Cloudinary as the source.
@@ -3358,9 +3650,13 @@ var slice = [].slice,
         options = {};
       }
       options = Util.defaults({}, options, Cloudinary.DEFAULT_VIDEO_PARAMS);
-      VideoTag.__super__.constructor.call(this, "video", publicId.replace(/\.(mp4|ogv|webm)$/, ''), options);
+      VideoTag.__super__.constructor.call(
+        this,
+        "video",
+        publicId.replace(/\.(mp4|ogv|webm)$/, ""),
+        options
+      );
     }
-
 
     /**
      * Set the transformation to apply on each source
@@ -3369,11 +3665,10 @@ var slice = [].slice,
      * @returns {VideoTag} Returns this instance for chaining purposes.
      */
 
-    VideoTag.prototype.setSourceTransformation = function(value) {
+    VideoTag.prototype.setSourceTransformation = function (value) {
       this.transformation().sourceTransformation(value);
       return this;
     };
-
 
     /**
      * Set the source types to include in the video tag
@@ -3382,11 +3677,10 @@ var slice = [].slice,
      * @returns {VideoTag} Returns this instance for chaining purposes.
      */
 
-    VideoTag.prototype.setSourceTypes = function(value) {
+    VideoTag.prototype.setSourceTypes = function (value) {
       this.transformation().sourceTypes(value);
       return this;
     };
-
 
     /**
      * Set the poster to be used in the video tag
@@ -3397,11 +3691,10 @@ var slice = [].slice,
      * @returns {VideoTag} Returns this instance for chaining purposes.
      */
 
-    VideoTag.prototype.setPoster = function(value) {
+    VideoTag.prototype.setPoster = function (value) {
       this.transformation().poster(value);
       return this;
     };
-
 
     /**
      * Set the content to use as fallback in the video tag
@@ -3410,50 +3703,74 @@ var slice = [].slice,
      * @returns {VideoTag} Returns this instance for chaining purposes.
      */
 
-    VideoTag.prototype.setFallbackContent = function(value) {
+    VideoTag.prototype.setFallbackContent = function (value) {
       this.transformation().fallbackContent(value);
       return this;
     };
 
-    VideoTag.prototype.content = function() {
-      var cld, fallback, innerTags, mimeType, sourceTransformation, sourceTypes, src, srcType, transformation, videoType;
-      sourceTypes = this.transformation().getValue('source_types');
-      sourceTransformation = this.transformation().getValue('source_transformation');
-      fallback = this.transformation().getValue('fallback_content');
+    VideoTag.prototype.content = function () {
+      var cld,
+        fallback,
+        innerTags,
+        mimeType,
+        sourceTransformation,
+        sourceTypes,
+        src,
+        srcType,
+        transformation,
+        videoType;
+      sourceTypes = this.transformation().getValue("source_types");
+      sourceTransformation = this.transformation().getValue(
+        "source_transformation"
+      );
+      fallback = this.transformation().getValue("fallback_content");
       if (Util.isArray(sourceTypes)) {
         cld = new Cloudinary(this.getOptions());
-        innerTags = (function() {
+        innerTags = function () {
           var j, len, results;
           results = [];
           for (j = 0, len = sourceTypes.length; j < len; j++) {
             srcType = sourceTypes[j];
             transformation = sourceTransformation[srcType] || {};
-            src = cld.url("" + this.publicId, Util.defaults({}, transformation, {
-              resource_type: 'video',
-              format: srcType
-            }));
-            videoType = srcType === 'ogv' ? 'ogg' : srcType;
-            mimeType = 'video/' + videoType;
-            results.push("<source " + (this.htmlAttrs({
-              src: src,
-              type: mimeType
-            })) + ">");
+            src = cld.url(
+              "" + this.publicId,
+              Util.defaults({}, transformation, {
+                resource_type: "video",
+                format: srcType,
+              })
+            );
+            videoType = srcType === "ogv" ? "ogg" : srcType;
+            mimeType = "video/" + videoType;
+            results.push(
+              "<source " +
+                this.htmlAttrs({
+                  src: src,
+                  type: mimeType,
+                }) +
+                ">"
+            );
           }
           return results;
-        }).call(this);
+        }.call(this);
       } else {
         innerTags = [];
       }
-      return innerTags.join('') + fallback;
+      return innerTags.join("") + fallback;
     };
 
-    VideoTag.prototype.attributes = function() {
+    VideoTag.prototype.attributes = function () {
       var a, attr, j, len, poster, ref, ref1, sourceTypes;
-      sourceTypes = this.getOption('source_types');
-      poster = (ref = this.getOption('poster')) != null ? ref : {};
+      sourceTypes = this.getOption("source_types");
+      poster = (ref = this.getOption("poster")) != null ? ref : {};
       if (Util.isPlainObject(poster)) {
-        defaults = poster.public_id != null ? Cloudinary.DEFAULT_IMAGE_PARAMS : DEFAULT_POSTER_OPTIONS;
-        poster = new Cloudinary(this.getOptions()).url((ref1 = poster.public_id) != null ? ref1 : this.publicId, Util.defaults({}, poster, defaults));
+        defaults =
+          poster.public_id != null
+            ? Cloudinary.DEFAULT_IMAGE_PARAMS
+            : DEFAULT_POSTER_OPTIONS;
+        poster = new Cloudinary(this.getOptions()).url(
+          (ref1 = poster.public_id) != null ? ref1 : this.publicId,
+          Util.defaults({}, poster, defaults)
+        );
       }
       attr = VideoTag.__super__.attributes.call(this) || [];
       for (j = 0, len = attr.length; j < len; j++) {
@@ -3464,8 +3781,8 @@ var slice = [].slice,
       }
       if (!Util.isArray(sourceTypes)) {
         attr["src"] = new Cloudinary(this.getOptions()).url(this.publicId, {
-          resource_type: 'video',
-          format: sourceTypes
+          resource_type: "video",
+          format: sourceTypes,
         });
       }
       if (poster != null) {
@@ -3475,16 +3792,14 @@ var slice = [].slice,
     };
 
     return VideoTag;
-
   })(HtmlTag);
 
   /**
    * Image Tag
    * Depends on 'tags/htmltag', 'cloudinary'
    */
-  ClientHintsMetaTag = (function(superClass) {
+  ClientHintsMetaTag = (function (superClass) {
     extend(ClientHintsMetaTag, superClass);
-
 
     /**
      * Creates an HTML (DOM) Meta tag that enables client-hints.
@@ -3493,24 +3808,47 @@ var slice = [].slice,
      */
 
     function ClientHintsMetaTag(options) {
-      ClientHintsMetaTag.__super__.constructor.call(this, 'meta', void 0, Util.assign({
-        "http-equiv": "Accept-CH",
-        content: "DPR, Viewport-Width, Width"
-      }, options));
+      ClientHintsMetaTag.__super__.constructor.call(
+        this,
+        "meta",
+        void 0,
+        Util.assign(
+          {
+            "http-equiv": "Accept-CH",
+            content: "DPR, Viewport-Width, Width",
+          },
+          options
+        )
+      );
     }
-
 
     /** @override */
 
-    ClientHintsMetaTag.prototype.closeTag = function() {
+    ClientHintsMetaTag.prototype.closeTag = function () {
       return "";
     };
 
     return ClientHintsMetaTag;
-
   })(HtmlTag);
-  Cloudinary = (function() {
-    var AKAMAI_SHARED_CDN, CF_SHARED_CDN, DEFAULT_POSTER_OPTIONS, DEFAULT_VIDEO_SOURCE_TYPES, OLD_AKAMAI_SHARED_CDN, SEO_TYPES, SHARED_CDN, VERSION, absolutize, applyBreakpoints, cdnSubdomainNumber, closestAbove, cloudinaryUrlPrefix, defaultBreakpoints, finalizeResourceType, findContainerWidth, maxWidth, updateDpr;
+  Cloudinary = (function () {
+    var AKAMAI_SHARED_CDN,
+      CF_SHARED_CDN,
+      DEFAULT_POSTER_OPTIONS,
+      DEFAULT_VIDEO_SOURCE_TYPES,
+      OLD_AKAMAI_SHARED_CDN,
+      SEO_TYPES,
+      SHARED_CDN,
+      VERSION,
+      absolutize,
+      applyBreakpoints,
+      cdnSubdomainNumber,
+      closestAbove,
+      cloudinaryUrlPrefix,
+      defaultBreakpoints,
+      finalizeResourceType,
+      findContainerWidth,
+      maxWidth,
+      updateDpr;
 
     VERSION = "2.5.0";
 
@@ -3523,50 +3861,47 @@ var slice = [].slice,
     SHARED_CDN = AKAMAI_SHARED_CDN;
 
     DEFAULT_POSTER_OPTIONS = {
-      format: 'jpg',
-      resource_type: 'video'
+      format: "jpg",
+      resource_type: "video",
     };
 
-    DEFAULT_VIDEO_SOURCE_TYPES = ['webm', 'mp4', 'ogv'];
+    DEFAULT_VIDEO_SOURCE_TYPES = ["webm", "mp4", "ogv"];
 
     SEO_TYPES = {
       "image/upload": "images",
       "image/private": "private_images",
       "image/authenticated": "authenticated_images",
       "raw/upload": "files",
-      "video/upload": "videos"
+      "video/upload": "videos",
     };
 
-
     /**
-    * @const {Object} Cloudinary.DEFAULT_IMAGE_PARAMS
-    * Defaults values for image parameters.
-    *
-    * (Previously defined using option_consume() )
+     * @const {Object} Cloudinary.DEFAULT_IMAGE_PARAMS
+     * Defaults values for image parameters.
+     *
+     * (Previously defined using option_consume() )
      */
 
     Cloudinary.DEFAULT_IMAGE_PARAMS = {
       resource_type: "image",
       transformation: [],
-      type: 'upload'
+      type: "upload",
     };
 
-
     /**
-    * Defaults values for video parameters.
-    * @const {Object} Cloudinary.DEFAULT_VIDEO_PARAMS
-    * (Previously defined using option_consume() )
+     * Defaults values for video parameters.
+     * @const {Object} Cloudinary.DEFAULT_VIDEO_PARAMS
+     * (Previously defined using option_consume() )
      */
 
     Cloudinary.DEFAULT_VIDEO_PARAMS = {
-      fallback_content: '',
+      fallback_content: "",
       resource_type: "video",
       source_transformation: {},
       source_types: DEFAULT_VIDEO_SOURCE_TYPES,
       transformation: [],
-      type: 'upload'
+      type: "upload",
     };
-
 
     /**
      * Main Cloudinary class
@@ -3584,7 +3919,7 @@ var slice = [].slice,
       this.responsiveConfig = {};
       this.responsiveResizeInitialized = false;
       configuration = new Configuration(options);
-      this.config = function(newConfig, newValue) {
+      this.config = function (newConfig, newValue) {
         return configuration.config(newConfig, newValue);
       };
 
@@ -3592,7 +3927,7 @@ var slice = [].slice,
        * Use \<meta\> tags in the document to configure this Cloudinary instance.
        * @return {Cloudinary} this for chaining
        */
-      this.fromDocument = function() {
+      this.fromDocument = function () {
         configuration.fromDocument();
         return this;
       };
@@ -3601,7 +3936,7 @@ var slice = [].slice,
        * Use environment variables to configure this Cloudinary instance.
        * @return {Cloudinary} this for chaining
        */
-      this.fromEnvironment = function() {
+      this.fromEnvironment = function () {
         configuration.fromEnvironment();
         return this;
       };
@@ -3612,12 +3947,11 @@ var slice = [].slice,
        * @see Configuration#init
        * @return {Cloudinary} this for chaining
        */
-      this.init = function() {
+      this.init = function () {
         configuration.init();
         return this;
       };
     }
-
 
     /**
      * Convenience constructor
@@ -3626,10 +3960,9 @@ var slice = [].slice,
      * @example cl = cloudinary.Cloudinary.new( { cloud_name: "mycloud"})
      */
 
-    Cloudinary["new"] = function(options) {
+    Cloudinary["new"] = function (options) {
       return new this(options);
     };
-
 
     /**
      * Return the resource type and action type based on the given configuration
@@ -3643,7 +3976,13 @@ var slice = [].slice,
      * @ignore
      */
 
-    finalizeResourceType = function(resourceType, type, urlSuffix, useRootPath, shorten) {
+    finalizeResourceType = function (
+      resourceType,
+      type,
+      urlSuffix,
+      useRootPath,
+      shorten
+    ) {
       var key, options;
       if (resourceType == null) {
         resourceType = "image";
@@ -3660,51 +3999,56 @@ var slice = [].slice,
         shorten = options.shorten;
       }
       if (type == null) {
-        type = 'upload';
+        type = "upload";
       }
       if (urlSuffix != null) {
         resourceType = SEO_TYPES[resourceType + "/" + type];
         type = null;
         if (resourceType == null) {
-          throw new Error("URL Suffix only supported for " + (((function() {
-            var results;
-            results = [];
-            for (key in SEO_TYPES) {
-              results.push(key);
-            }
-            return results;
-          })()).join(', ')));
+          throw new Error(
+            "URL Suffix only supported for " +
+              (function () {
+                var results;
+                results = [];
+                for (key in SEO_TYPES) {
+                  results.push(key);
+                }
+                return results;
+              })().join(", ")
+          );
         }
       }
       if (useRootPath) {
-        if (resourceType === 'image' && type === 'upload' || resourceType === "images") {
+        if (
+          (resourceType === "image" && type === "upload") ||
+          resourceType === "images"
+        ) {
           resourceType = null;
           type = null;
         } else {
           throw new Error("Root path only supported for image/upload");
         }
       }
-      if (shorten && resourceType === 'image' && type === 'upload') {
-        resourceType = 'iu';
+      if (shorten && resourceType === "image" && type === "upload") {
+        resourceType = "iu";
         type = null;
       }
       return [resourceType, type].join("/");
     };
 
-    absolutize = function(url) {
+    absolutize = function (url) {
       var prefix;
       if (!url.match(/^https?:\//)) {
-        prefix = document.location.protocol + '//' + document.location.host;
-        if (url[0] === '?') {
+        prefix = document.location.protocol + "//" + document.location.host;
+        if (url[0] === "?") {
           prefix += document.location.pathname;
-        } else if (url[0] !== '/') {
-          prefix += document.location.pathname.replace(/\/[^\/]*$/, '/');
+        } else if (url[0] !== "/") {
+          prefix += document.location.pathname.replace(/\/[^\/]*$/, "/");
         }
         url = prefix + url;
       }
       return url;
     };
-
 
     /**
      * Generate an resource URL.
@@ -3717,8 +4061,16 @@ var slice = [].slice,
      * @return {string} The resource URL
      */
 
-    Cloudinary.prototype.url = function(publicId, options) {
-      var error, error1, prefix, ref, resourceTypeAndType, transformation, transformationString, url, version;
+    Cloudinary.prototype.url = function (publicId, options) {
+      var error,
+        error1,
+        prefix,
+        ref,
+        resourceTypeAndType,
+        transformation,
+        transformationString,
+        url,
+        version;
       if (options == null) {
         options = {};
       }
@@ -3728,24 +4080,36 @@ var slice = [].slice,
       if (options instanceof Transformation) {
         options = options.toOptions();
       }
-      options = Util.defaults({}, options, this.config(), Cloudinary.DEFAULT_IMAGE_PARAMS);
-      if (options.type === 'fetch') {
+      options = Util.defaults(
+        {},
+        options,
+        this.config(),
+        Cloudinary.DEFAULT_IMAGE_PARAMS
+      );
+      if (options.type === "fetch") {
         options.fetch_format = options.fetch_format || options.format;
         publicId = absolutize(publicId);
       }
       transformation = new Transformation(options);
       transformationString = transformation.serialize();
       if (!options.cloud_name) {
-        throw 'Unknown cloud_name';
+        throw "Unknown cloud_name";
       }
-      if (publicId.search('/') >= 0 && !publicId.match(/^v[0-9]+/) && !publicId.match(/^https?:\//) && !((ref = options.version) != null ? ref.toString() : void 0)) {
+      if (
+        publicId.search("/") >= 0 &&
+        !publicId.match(/^v[0-9]+/) &&
+        !publicId.match(/^https?:\//) &&
+        !((ref = options.version) != null ? ref.toString() : void 0)
+      ) {
         options.version = 1;
       }
       if (publicId.match(/^https?:/)) {
-        if (options.type === 'upload' || options.type === 'asset') {
+        if (options.type === "upload" || options.type === "asset") {
           url = publicId;
         } else {
-          publicId = encodeURIComponent(publicId).replace(/%3A/g, ':').replace(/%2F/g, '/');
+          publicId = encodeURIComponent(publicId)
+            .replace(/%3A/g, ":")
+            .replace(/%2F/g, "/");
         }
       } else {
         try {
@@ -3753,26 +4117,44 @@ var slice = [].slice,
         } catch (error1) {
           error = error1;
         }
-        publicId = encodeURIComponent(publicId).replace(/%3A/g, ':').replace(/%2F/g, '/');
+        publicId = encodeURIComponent(publicId)
+          .replace(/%3A/g, ":")
+          .replace(/%2F/g, "/");
         if (options.url_suffix) {
           if (options.url_suffix.match(/[\.\/]/)) {
-            throw 'url_suffix should not include . or /';
+            throw "url_suffix should not include . or /";
           }
-          publicId = publicId + '/' + options.url_suffix;
+          publicId = publicId + "/" + options.url_suffix;
         }
         if (options.format) {
           if (!options.trust_public_id) {
-            publicId = publicId.replace(/\.(jpg|png|gif|webp)$/, '');
+            publicId = publicId.replace(/\.(jpg|png|gif|webp)$/, "");
           }
-          publicId = publicId + '.' + options.format;
+          publicId = publicId + "." + options.format;
         }
       }
       prefix = cloudinaryUrlPrefix(publicId, options);
-      resourceTypeAndType = finalizeResourceType(options.resource_type, options.type, options.url_suffix, options.use_root_path, options.shorten);
-      version = options.version ? 'v' + options.version : '';
-      return url || Util.compact([prefix, resourceTypeAndType, transformationString, version, publicId]).join('/').replace(/([^:])\/+/g, '$1/');
+      resourceTypeAndType = finalizeResourceType(
+        options.resource_type,
+        options.type,
+        options.url_suffix,
+        options.use_root_path,
+        options.shorten
+      );
+      version = options.version ? "v" + options.version : "";
+      return (
+        url ||
+        Util.compact([
+          prefix,
+          resourceTypeAndType,
+          transformationString,
+          version,
+          publicId,
+        ])
+          .join("/")
+          .replace(/([^:])\/+/g, "$1/")
+      );
     };
-
 
     /**
      * Generate an video resource URL.
@@ -3784,13 +4166,15 @@ var slice = [].slice,
      * @return {string} The video URL
      */
 
-    Cloudinary.prototype.video_url = function(publicId, options) {
-      options = Util.assign({
-        resource_type: 'video'
-      }, options);
+    Cloudinary.prototype.video_url = function (publicId, options) {
+      options = Util.assign(
+        {
+          resource_type: "video",
+        },
+        options
+      );
       return this.url(publicId, options);
     };
-
 
     /**
      * Generate an video thumbnail URL.
@@ -3802,11 +4186,10 @@ var slice = [].slice,
      * @return {string} The video thumbnail URL
      */
 
-    Cloudinary.prototype.video_thumbnail_url = function(publicId, options) {
+    Cloudinary.prototype.video_thumbnail_url = function (publicId, options) {
       options = Util.assign({}, DEFAULT_POSTER_OPTIONS, options);
       return this.url(publicId, options);
     };
-
 
     /**
      * Generate a string representation of the provided transformation options.
@@ -3815,10 +4198,9 @@ var slice = [].slice,
      * @returns {string} The transformation string
      */
 
-    Cloudinary.prototype.transformation_string = function(options) {
+    Cloudinary.prototype.transformation_string = function (options) {
       return new Transformation(options).serialize();
     };
-
 
     /**
      * Generate an image tag.
@@ -3828,24 +4210,29 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.image = function(publicId, options) {
+    Cloudinary.prototype.image = function (publicId, options) {
       var client_hints, img, ref, ref1;
       if (options == null) {
         options = {};
       }
       img = this.imageTag(publicId, options);
-      client_hints = (ref = (ref1 = options.client_hints) != null ? ref1 : this.config('client_hints')) != null ? ref : false;
-      if (!((options.src != null) || client_hints)) {
-        img.setAttr("src", '');
+      client_hints =
+        (ref =
+          (ref1 = options.client_hints) != null
+            ? ref1
+            : this.config("client_hints")) != null
+          ? ref
+          : false;
+      if (!(options.src != null || client_hints)) {
+        img.setAttr("src", "");
       }
       img = img.toDOM();
       if (!client_hints) {
-        Util.setData(img, 'src-cache', this.url(publicId, options));
+        Util.setData(img, "src-cache", this.url(publicId, options));
         this.cloudinary_update(img, options);
       }
       return img;
     };
-
 
     /**
      * Creates a new ImageTag instance, configured using this own's configuration.
@@ -3855,13 +4242,12 @@ var slice = [].slice,
      * @return {ImageTag} An ImageTag that is attached (chained) to this Cloudinary instance
      */
 
-    Cloudinary.prototype.imageTag = function(publicId, options) {
+    Cloudinary.prototype.imageTag = function (publicId, options) {
       var tag;
       tag = new ImageTag(publicId, this.config());
       tag.transformation().fromOptions(options);
       return tag;
     };
-
 
     /**
      * Generate an image tag for the video thumbnail.
@@ -3871,10 +4257,12 @@ var slice = [].slice,
      * @return {HTMLImageElement} An image tag element
      */
 
-    Cloudinary.prototype.video_thumbnail = function(publicId, options) {
-      return this.image(publicId, Util.merge({}, DEFAULT_POSTER_OPTIONS, options));
+    Cloudinary.prototype.video_thumbnail = function (publicId, options) {
+      return this.image(
+        publicId,
+        Util.merge({}, DEFAULT_POSTER_OPTIONS, options)
+      );
     };
-
 
     /**
      * @function Cloudinary#facebook_profile_image
@@ -3883,12 +4271,17 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.facebook_profile_image = function(publicId, options) {
-      return this.image(publicId, Util.assign({
-        type: 'facebook'
-      }, options));
+    Cloudinary.prototype.facebook_profile_image = function (publicId, options) {
+      return this.image(
+        publicId,
+        Util.assign(
+          {
+            type: "facebook",
+          },
+          options
+        )
+      );
     };
-
 
     /**
      * @function Cloudinary#twitter_profile_image
@@ -3897,12 +4290,17 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.twitter_profile_image = function(publicId, options) {
-      return this.image(publicId, Util.assign({
-        type: 'twitter'
-      }, options));
+    Cloudinary.prototype.twitter_profile_image = function (publicId, options) {
+      return this.image(
+        publicId,
+        Util.assign(
+          {
+            type: "twitter",
+          },
+          options
+        )
+      );
     };
-
 
     /**
      * @function Cloudinary#twitter_name_profile_image
@@ -3911,12 +4309,20 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.twitter_name_profile_image = function(publicId, options) {
-      return this.image(publicId, Util.assign({
-        type: 'twitter_name'
-      }, options));
+    Cloudinary.prototype.twitter_name_profile_image = function (
+      publicId,
+      options
+    ) {
+      return this.image(
+        publicId,
+        Util.assign(
+          {
+            type: "twitter_name",
+          },
+          options
+        )
+      );
     };
-
 
     /**
      * @function Cloudinary#gravatar_image
@@ -3925,12 +4331,17 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.gravatar_image = function(publicId, options) {
-      return this.image(publicId, Util.assign({
-        type: 'gravatar'
-      }, options));
+    Cloudinary.prototype.gravatar_image = function (publicId, options) {
+      return this.image(
+        publicId,
+        Util.assign(
+          {
+            type: "gravatar",
+          },
+          options
+        )
+      );
     };
-
 
     /**
      * @function Cloudinary#fetch_image
@@ -3939,12 +4350,17 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.fetch_image = function(publicId, options) {
-      return this.image(publicId, Util.assign({
-        type: 'fetch'
-      }, options));
+    Cloudinary.prototype.fetch_image = function (publicId, options) {
+      return this.image(
+        publicId,
+        Util.assign(
+          {
+            type: "fetch",
+          },
+          options
+        )
+      );
     };
-
 
     /**
      * @function Cloudinary#video
@@ -3953,13 +4369,12 @@ var slice = [].slice,
      * @return {HTMLImageElement} an image tag element
      */
 
-    Cloudinary.prototype.video = function(publicId, options) {
+    Cloudinary.prototype.video = function (publicId, options) {
       if (options == null) {
         options = {};
       }
       return this.videoTag(publicId, options).toHtml();
     };
-
 
     /**
      * Creates a new VideoTag instance, configured using this own's configuration.
@@ -3969,87 +4384,112 @@ var slice = [].slice,
      * @return {VideoTag} A VideoTag that is attached (chained) to this Cloudinary instance
      */
 
-    Cloudinary.prototype.videoTag = function(publicId, options) {
+    Cloudinary.prototype.videoTag = function (publicId, options) {
       options = Util.defaults({}, options, this.config());
       return new VideoTag(publicId, options);
     };
-
 
     /**
      * Generate the URL of the sprite image
      * @function Cloudinary#sprite_css
      * @param {string} publicId - the public ID of the resource
      * @param {Object} [options] - options for the tag and transformations
-     * @see {@link http://cloudinary.com/documentation/sprite_generation Sprite generation}
+     * @see {@link https://cloudinary.com/documentation/sprite_generation Sprite generation}
      */
 
-    Cloudinary.prototype.sprite_css = function(publicId, options) {
-      options = Util.assign({
-        type: 'sprite'
-      }, options);
+    Cloudinary.prototype.sprite_css = function (publicId, options) {
+      options = Util.assign(
+        {
+          type: "sprite",
+        },
+        options
+      );
       if (!publicId.match(/.css$/)) {
-        options.format = 'css';
+        options.format = "css";
       }
       return this.url(publicId, options);
     };
 
-
     /**
-    * Initialize the responsive behaviour.<br>
-    * Calls {@link Cloudinary#cloudinary_update} to modify image tags.
+     * Initialize the responsive behaviour.<br>
+     * Calls {@link Cloudinary#cloudinary_update} to modify image tags.
      * @function Cloudinary#responsive
-    * @param {Object} options
-    * @param {String} [options.responsive_class='cld-responsive'] - provide an alternative class used to locate img tags
-    * @param {number} [options.responsive_debounce=100] - the debounce interval in milliseconds.
-    * @param {boolean} [bootstrap=true] if true processes the img tags by calling cloudinary_update. When false the tags will be processed only after a resize event.
-    * @see {@link Cloudinary#cloudinary_update} for additional configuration parameters
+     * @param {Object} options
+     * @param {String} [options.responsive_class='cld-responsive'] - provide an alternative class used to locate img tags
+     * @param {number} [options.responsive_debounce=100] - the debounce interval in milliseconds.
+     * @param {boolean} [bootstrap=true] if true processes the img tags by calling cloudinary_update. When false the tags will be processed only after a resize event.
+     * @see {@link Cloudinary#cloudinary_update} for additional configuration parameters
      */
 
-    Cloudinary.prototype.responsive = function(options, bootstrap) {
+    Cloudinary.prototype.responsive = function (options, bootstrap) {
       var ref, ref1, ref2, responsiveClass, responsiveResize, timeout;
       if (bootstrap == null) {
         bootstrap = true;
       }
       this.responsiveConfig = Util.merge(this.responsiveConfig || {}, options);
-      responsiveClass = (ref = this.responsiveConfig['responsive_class']) != null ? ref : this.config('responsive_class');
+      responsiveClass =
+        (ref = this.responsiveConfig["responsive_class"]) != null
+          ? ref
+          : this.config("responsive_class");
       if (bootstrap) {
-        this.cloudinary_update("img." + responsiveClass + ", img.cld-hidpi", this.responsiveConfig);
+        this.cloudinary_update(
+          "img." + responsiveClass + ", img.cld-hidpi",
+          this.responsiveConfig
+        );
       }
-      responsiveResize = (ref1 = (ref2 = this.responsiveConfig['responsive_resize']) != null ? ref2 : this.config('responsive_resize')) != null ? ref1 : true;
+      responsiveResize =
+        (ref1 =
+          (ref2 = this.responsiveConfig["responsive_resize"]) != null
+            ? ref2
+            : this.config("responsive_resize")) != null
+          ? ref1
+          : true;
       if (responsiveResize && !this.responsiveResizeInitialized) {
-        this.responsiveConfig.resizing = this.responsiveResizeInitialized = true;
+        this.responsiveConfig.resizing =
+          this.responsiveResizeInitialized = true;
         timeout = null;
-        return window.addEventListener('resize', (function(_this) {
-          return function() {
-            var debounce, ref3, ref4, reset, run, wait, waitFunc;
-            debounce = (ref3 = (ref4 = _this.responsiveConfig['responsive_debounce']) != null ? ref4 : _this.config('responsive_debounce')) != null ? ref3 : 100;
-            reset = function() {
-              if (timeout) {
-                clearTimeout(timeout);
-                return timeout = null;
+        return window.addEventListener(
+          "resize",
+          (function (_this) {
+            return function () {
+              var debounce, ref3, ref4, reset, run, wait, waitFunc;
+              debounce =
+                (ref3 =
+                  (ref4 = _this.responsiveConfig["responsive_debounce"]) != null
+                    ? ref4
+                    : _this.config("responsive_debounce")) != null
+                  ? ref3
+                  : 100;
+              reset = function () {
+                if (timeout) {
+                  clearTimeout(timeout);
+                  return (timeout = null);
+                }
+              };
+              run = function () {
+                return _this.cloudinary_update(
+                  "img." + responsiveClass,
+                  _this.responsiveConfig
+                );
+              };
+              waitFunc = function () {
+                reset();
+                return run();
+              };
+              wait = function () {
+                reset();
+                return (timeout = setTimeout(waitFunc, debounce));
+              };
+              if (debounce) {
+                return wait();
+              } else {
+                return run();
               }
             };
-            run = function() {
-              return _this.cloudinary_update("img." + responsiveClass, _this.responsiveConfig);
-            };
-            waitFunc = function() {
-              reset();
-              return run();
-            };
-            wait = function() {
-              reset();
-              return timeout = setTimeout(waitFunc, debounce);
-            };
-            if (debounce) {
-              return wait();
-            } else {
-              return run();
-            }
-          };
-        })(this));
+          })(this)
+        );
       }
     };
-
 
     /**
      * @function Cloudinary#calc_breakpoint
@@ -4057,30 +4497,34 @@ var slice = [].slice,
      * @ignore
      */
 
-    Cloudinary.prototype.calc_breakpoint = function(element, width, steps) {
+    Cloudinary.prototype.calc_breakpoint = function (element, width, steps) {
       var breakpoints, point;
-      breakpoints = Util.getData(element, 'breakpoints') || Util.getData(element, 'stoppoints') || this.config('breakpoints') || this.config('stoppoints') || defaultBreakpoints;
+      breakpoints =
+        Util.getData(element, "breakpoints") ||
+        Util.getData(element, "stoppoints") ||
+        this.config("breakpoints") ||
+        this.config("stoppoints") ||
+        defaultBreakpoints;
       if (Util.isFunction(breakpoints)) {
         return breakpoints(width, steps);
       } else {
         if (Util.isString(breakpoints)) {
-          breakpoints = ((function() {
+          breakpoints = (function () {
             var j, len, ref, results;
-            ref = breakpoints.split(',');
+            ref = breakpoints.split(",");
             results = [];
             for (j = 0, len = ref.length; j < len; j++) {
               point = ref[j];
               results.push(parseInt(point));
             }
             return results;
-          })()).sort(function(a, b) {
+          })().sort(function (a, b) {
             return a - b;
           });
         }
         return closestAbove(breakpoints, width);
       }
     };
-
 
     /**
      * @function Cloudinary#calc_stoppoint
@@ -4091,18 +4535,20 @@ var slice = [].slice,
 
     Cloudinary.prototype.calc_stoppoint = Cloudinary.prototype.calc_breakpoint;
 
-
     /**
      * @function Cloudinary#device_pixel_ratio
      * @private
      */
 
-    Cloudinary.prototype.device_pixel_ratio = function(roundDpr) {
+    Cloudinary.prototype.device_pixel_ratio = function (roundDpr) {
       var dpr, dprString;
       if (roundDpr == null) {
         roundDpr = true;
       }
-      dpr = (typeof window !== "undefined" && window !== null ? window.devicePixelRatio : void 0) || 1;
+      dpr =
+        (typeof window !== "undefined" && window !== null
+          ? window.devicePixelRatio
+          : void 0) || 1;
       if (roundDpr) {
         dpr = Math.ceil(dpr);
       }
@@ -4111,19 +4557,19 @@ var slice = [].slice,
       }
       dprString = dpr.toString();
       if (dprString.match(/^\d+$/)) {
-        dprString += '.0';
+        dprString += ".0";
       }
       return dprString;
     };
 
-    defaultBreakpoints = function(width, steps) {
+    defaultBreakpoints = function (width, steps) {
       if (steps == null) {
         steps = 100;
       }
       return steps * Math.ceil(width / steps);
     };
 
-    closestAbove = function(list, value) {
+    closestAbove = function (list, value) {
       var i;
       i = list.length - 2;
       while (i >= 0 && list[i] >= value) {
@@ -4132,22 +4578,24 @@ var slice = [].slice,
       return list[i + 1];
     };
 
-    cdnSubdomainNumber = function(publicId) {
-      return crc32(publicId) % 5 + 1;
+    cdnSubdomainNumber = function (publicId) {
+      return (crc32(publicId) % 5) + 1;
     };
 
-    cloudinaryUrlPrefix = function(publicId, options) {
+    cloudinaryUrlPrefix = function (publicId, options) {
       var cdnPart, host, path, protocol, ref, subdomain;
-      if (((ref = options.cloud_name) != null ? ref.indexOf("/") : void 0) === 0) {
-        return '/res' + options.cloud_name;
+      if (
+        ((ref = options.cloud_name) != null ? ref.indexOf("/") : void 0) === 0
+      ) {
+        return "/res" + options.cloud_name;
       }
-      protocol = "http://";
+      protocol = "https://";
       cdnPart = "";
       subdomain = "res";
       host = ".cloudinary.com";
       path = "/" + options.cloud_name;
       if (options.protocol) {
-        protocol = options.protocol + '//';
+        protocol = options.protocol + "//";
       }
       if (options.private_cdn) {
         cdnPart = options.cloud_name + "-";
@@ -4161,29 +4609,34 @@ var slice = [].slice,
         if (options.secure_cdn_subdomain === false) {
           subdomain = "res";
         }
-        if ((options.secure_distribution != null) && options.secure_distribution !== OLD_AKAMAI_SHARED_CDN && options.secure_distribution !== SHARED_CDN) {
+        if (
+          options.secure_distribution != null &&
+          options.secure_distribution !== OLD_AKAMAI_SHARED_CDN &&
+          options.secure_distribution !== SHARED_CDN
+        ) {
           cdnPart = "";
           subdomain = "";
           host = options.secure_distribution;
         }
       } else if (options.cname) {
-        protocol = "http://";
+        protocol = "https://";
         cdnPart = "";
-        subdomain = options.cdn_subdomain ? 'a' + ((crc32(publicId) % 5) + 1) + '.' : '';
+        subdomain = options.cdn_subdomain
+          ? "a" + ((crc32(publicId) % 5) + 1) + "."
+          : "";
         host = options.cname;
       }
       return [protocol, cdnPart, subdomain, host, path].join("");
     };
 
-
     /**
-    * Finds all `img` tags under each node and sets it up to provide the image through Cloudinary
-    * @param {Element[]} nodes the parent nodes to search for img under
-    * @param {Object} [options={}] options and transformations params
-    * @function Cloudinary#processImageTags
+     * Finds all `img` tags under each node and sets it up to provide the image through Cloudinary
+     * @param {Element[]} nodes the parent nodes to search for img under
+     * @param {Object} [options={}] options and transformations params
+     * @function Cloudinary#processImageTags
      */
 
-    Cloudinary.prototype.processImageTags = function(nodes, options) {
+    Cloudinary.prototype.processImageTags = function (nodes, options) {
       var images, imgOptions, node, publicId, url;
       if (options == null) {
         options = {};
@@ -4192,49 +4645,73 @@ var slice = [].slice,
         return this;
       }
       options = Util.defaults({}, options, this.config());
-      images = (function() {
+      images = function () {
         var j, len, ref, results;
         results = [];
         for (j = 0, len = nodes.length; j < len; j++) {
           node = nodes[j];
-          if (!(((ref = node.tagName) != null ? ref.toUpperCase() : void 0) === 'IMG')) {
+          if (
+            !(
+              ((ref = node.tagName) != null ? ref.toUpperCase() : void 0) ===
+              "IMG"
+            )
+          ) {
             continue;
           }
-          imgOptions = Util.assign({
-            width: node.getAttribute('width'),
-            height: node.getAttribute('height'),
-            src: node.getAttribute('src')
-          }, options);
-          publicId = imgOptions['source'] || imgOptions['src'];
-          delete imgOptions['source'];
-          delete imgOptions['src'];
+          imgOptions = Util.assign(
+            {
+              width: node.getAttribute("width"),
+              height: node.getAttribute("height"),
+              src: node.getAttribute("src"),
+            },
+            options
+          );
+          publicId = imgOptions["source"] || imgOptions["src"];
+          delete imgOptions["source"];
+          delete imgOptions["src"];
           url = this.url(publicId, imgOptions);
           imgOptions = new Transformation(imgOptions).toHtmlAttributes();
-          Util.setData(node, 'src-cache', url);
-          node.setAttribute('width', imgOptions.width);
-          node.setAttribute('height', imgOptions.height);
+          Util.setData(node, "src-cache", url);
+          node.setAttribute("width", imgOptions.width);
+          node.setAttribute("height", imgOptions.height);
           results.push(node);
         }
         return results;
-      }).call(this);
+      }.call(this);
       this.cloudinary_update(images, options);
       return this;
     };
 
-    applyBreakpoints = function(tag, width, steps, options) {
+    applyBreakpoints = function (tag, width, steps, options) {
       var ref, ref1, ref2, responsive_use_breakpoints;
-      responsive_use_breakpoints = (ref = (ref1 = (ref2 = options['responsive_use_breakpoints']) != null ? ref2 : options['responsive_use_stoppoints']) != null ? ref1 : this.config('responsive_use_breakpoints')) != null ? ref : this.config('responsive_use_stoppoints');
-      if ((!responsive_use_breakpoints) || (responsive_use_breakpoints === 'resize' && !options.resizing)) {
+      responsive_use_breakpoints =
+        (ref =
+          (ref1 =
+            (ref2 = options["responsive_use_breakpoints"]) != null
+              ? ref2
+              : options["responsive_use_stoppoints"]) != null
+            ? ref1
+            : this.config("responsive_use_breakpoints")) != null
+          ? ref
+          : this.config("responsive_use_stoppoints");
+      if (
+        !responsive_use_breakpoints ||
+        (responsive_use_breakpoints === "resize" && !options.resizing)
+      ) {
         return width;
       } else {
         return this.calc_breakpoint(tag, width, steps);
       }
     };
 
-    findContainerWidth = function(element) {
+    findContainerWidth = function (element) {
       var containerWidth, style;
       containerWidth = 0;
-      while (((element = element != null ? element.parentNode : void 0) instanceof Element) && !containerWidth) {
+      while (
+        (element = element != null ? element.parentNode : void 0) instanceof
+          Element &&
+        !containerWidth
+      ) {
         style = window.getComputedStyle(element);
         if (!/^inline/.test(style.display)) {
           containerWidth = Util.width(element);
@@ -4243,46 +4720,70 @@ var slice = [].slice,
       return containerWidth;
     };
 
-    updateDpr = function(dataSrc, roundDpr) {
-      return dataSrc.replace(/\bdpr_(1\.0|auto)\b/g, 'dpr_' + this.device_pixel_ratio(roundDpr));
+    updateDpr = function (dataSrc, roundDpr) {
+      return dataSrc.replace(
+        /\bdpr_(1\.0|auto)\b/g,
+        "dpr_" + this.device_pixel_ratio(roundDpr)
+      );
     };
 
-    maxWidth = function(requiredWidth, tag) {
+    maxWidth = function (requiredWidth, tag) {
       var imageWidth;
-      imageWidth = Util.getData(tag, 'width') || 0;
+      imageWidth = Util.getData(tag, "width") || 0;
       if (requiredWidth > imageWidth) {
         imageWidth = requiredWidth;
-        Util.setData(tag, 'width', requiredWidth);
+        Util.setData(tag, "width", requiredWidth);
       }
       return imageWidth;
     };
 
-
     /**
-    * Update hidpi (dpr_auto) and responsive (w_auto) fields according to the current container size and the device pixel ratio.
-    * Only images marked with the cld-responsive class have w_auto updated.
-    * @function Cloudinary#cloudinary_update
-    * @param {(Array|string|NodeList)} elements - the elements to modify
-    * @param {Object} options
-    * @param {boolean|string} [options.responsive_use_breakpoints=true]
-    *  - when `true`, always use breakpoints for width
-    * - when `"resize"` use exact width on first render and breakpoints on resize
-    * - when `false` always use exact width
-    * @param {boolean} [options.responsive] - if `true`, enable responsive on this element. Can be done by adding cld-responsive.
-    * @param {boolean} [options.responsive_preserve_height] - if set to true, original css height is preserved.
-    *   Should only be used if the transformation supports different aspect ratios.
+     * Update hidpi (dpr_auto) and responsive (w_auto) fields according to the current container size and the device pixel ratio.
+     * Only images marked with the cld-responsive class have w_auto updated.
+     * @function Cloudinary#cloudinary_update
+     * @param {(Array|string|NodeList)} elements - the elements to modify
+     * @param {Object} options
+     * @param {boolean|string} [options.responsive_use_breakpoints=true]
+     *  - when `true`, always use breakpoints for width
+     * - when `"resize"` use exact width on first render and breakpoints on resize
+     * - when `false` always use exact width
+     * @param {boolean} [options.responsive] - if `true`, enable responsive on this element. Can be done by adding cld-responsive.
+     * @param {boolean} [options.responsive_preserve_height] - if set to true, original css height is preserved.
+     *   Should only be used if the transformation supports different aspect ratios.
      */
 
-    Cloudinary.prototype.cloudinary_update = function(elements, options) {
-      var containerWidth, dataSrc, j, len, match, ref, ref1, ref2, ref3, ref4, ref5, requiredWidth, responsive, responsiveClass, roundDpr, setUrl, tag;
+    Cloudinary.prototype.cloudinary_update = function (elements, options) {
+      var containerWidth,
+        dataSrc,
+        j,
+        len,
+        match,
+        ref,
+        ref1,
+        ref2,
+        ref3,
+        ref4,
+        ref5,
+        requiredWidth,
+        responsive,
+        responsiveClass,
+        roundDpr,
+        setUrl,
+        tag;
       if (options == null) {
         options = {};
       }
       if (elements === null) {
         return this;
       }
-      responsive = (ref = (ref1 = options.responsive) != null ? ref1 : this.config('responsive')) != null ? ref : false;
-      elements = (function() {
+      responsive =
+        (ref =
+          (ref1 = options.responsive) != null
+            ? ref1
+            : this.config("responsive")) != null
+          ? ref
+          : false;
+      elements = (function () {
         switch (false) {
           case !Util.isArray(elements):
             return elements;
@@ -4294,8 +4795,15 @@ var slice = [].slice,
             return [elements];
         }
       })();
-      responsiveClass = (ref2 = (ref3 = this.responsiveConfig['responsive_class']) != null ? ref3 : options['responsive_class']) != null ? ref2 : this.config('responsive_class');
-      roundDpr = (ref4 = options['round_dpr']) != null ? ref4 : this.config('round_dpr');
+      responsiveClass =
+        (ref2 =
+          (ref3 = this.responsiveConfig["responsive_class"]) != null
+            ? ref3
+            : options["responsive_class"]) != null
+          ? ref2
+          : this.config("responsive_class");
+      roundDpr =
+        (ref4 = options["round_dpr"]) != null ? ref4 : this.config("round_dpr");
       for (j = 0, len = elements.length; j < len; j++) {
         tag = elements[j];
         if (!((ref5 = tag.tagName) != null ? ref5.match(/img/i) : void 0)) {
@@ -4305,7 +4813,7 @@ var slice = [].slice,
         if (responsive) {
           Util.addClass(tag, responsiveClass);
         }
-        dataSrc = Util.getData(tag, 'src-cache') || Util.getData(tag, 'src');
+        dataSrc = Util.getData(tag, "src-cache") || Util.getData(tag, "src");
         if (!Util.isEmpty(dataSrc)) {
           dataSrc = updateDpr.call(this, dataSrc, roundDpr);
           if (HtmlTag.isResponsive(tag, responsiveClass)) {
@@ -4315,36 +4823,47 @@ var slice = [].slice,
                 case !/w_auto:breakpoints/.test(dataSrc):
                   requiredWidth = maxWidth(containerWidth, tag);
                   if (requiredWidth) {
-                    dataSrc = dataSrc.replace(/w_auto:breakpoints([_0-9]*)(:[0-9]+)?/, "w_auto:breakpoints$1:" + requiredWidth);
+                    dataSrc = dataSrc.replace(
+                      /w_auto:breakpoints([_0-9]*)(:[0-9]+)?/,
+                      "w_auto:breakpoints$1:" + requiredWidth
+                    );
                   } else {
                     setUrl = false;
                   }
                   break;
                 case !(match = /w_auto(:(\d+))?/.exec(dataSrc)):
-                  requiredWidth = applyBreakpoints.call(this, tag, containerWidth, match[2], options);
+                  requiredWidth = applyBreakpoints.call(
+                    this,
+                    tag,
+                    containerWidth,
+                    match[2],
+                    options
+                  );
                   requiredWidth = maxWidth(requiredWidth, tag);
                   if (requiredWidth) {
-                    dataSrc = dataSrc.replace(/w_auto[^,\/]*/g, "w_" + requiredWidth);
+                    dataSrc = dataSrc.replace(
+                      /w_auto[^,\/]*/g,
+                      "w_" + requiredWidth
+                    );
                   } else {
                     setUrl = false;
                   }
               }
-              Util.removeAttribute(tag, 'width');
+              Util.removeAttribute(tag, "width");
               if (!options.responsive_preserve_height) {
-                Util.removeAttribute(tag, 'height');
+                Util.removeAttribute(tag, "height");
               }
             } else {
               setUrl = false;
             }
           }
           if (setUrl) {
-            Util.setAttribute(tag, 'src', dataSrc);
+            Util.setAttribute(tag, "src", dataSrc);
           }
         }
       }
       return this;
     };
-
 
     /**
      * Provide a transformation object, initialized with own's options, for chaining purposes.
@@ -4353,21 +4872,21 @@ var slice = [].slice,
      * @return {Transformation}
      */
 
-    Cloudinary.prototype.transformation = function(options) {
-      return Transformation["new"](this.config()).fromOptions(options).setParent(this);
+    Cloudinary.prototype.transformation = function (options) {
+      return Transformation["new"](this.config())
+        .fromOptions(options)
+        .setParent(this);
     };
 
     return Cloudinary;
-
   })();
 
   /**
    * Cloudinary jQuery plugin
    * Depends on 'jquery', 'util', 'transformation', 'cloudinary'
    */
-  CloudinaryJQuery = (function(superClass) {
+  CloudinaryJQuery = (function (superClass) {
     extend(CloudinaryJQuery, superClass);
-
 
     /**
      * Cloudinary class with jQuery support
@@ -4379,74 +4898,108 @@ var slice = [].slice,
       CloudinaryJQuery.__super__.constructor.call(this, options);
     }
 
-
     /**
      * @override
      */
 
-    CloudinaryJQuery.prototype.image = function(publicId, options) {
+    CloudinaryJQuery.prototype.image = function (publicId, options) {
       var client_hints, img, ref, ref1;
       if (options == null) {
         options = {};
       }
       img = this.imageTag(publicId, options);
-      client_hints = (ref = (ref1 = options.client_hints) != null ? ref1 : this.config('client_hints')) != null ? ref : false;
-      if (!((options.src != null) || client_hints)) {
-        img.setAttr("src", '');
+      client_hints =
+        (ref =
+          (ref1 = options.client_hints) != null
+            ? ref1
+            : this.config("client_hints")) != null
+          ? ref
+          : false;
+      if (!(options.src != null || client_hints)) {
+        img.setAttr("src", "");
       }
       img = jQuery(img.toHtml());
       if (!client_hints) {
-        img.data('src-cache', this.url(publicId, options)).cloudinary_update(options);
+        img
+          .data("src-cache", this.url(publicId, options))
+          .cloudinary_update(options);
       }
       return img;
     };
-
 
     /**
      * @override
      */
 
-    CloudinaryJQuery.prototype.responsive = function(options) {
-      var ref, ref1, ref2, responsiveClass, responsiveConfig, responsiveResizeInitialized, responsive_resize, timeout;
+    CloudinaryJQuery.prototype.responsive = function (options) {
+      var ref,
+        ref1,
+        ref2,
+        responsiveClass,
+        responsiveConfig,
+        responsiveResizeInitialized,
+        responsive_resize,
+        timeout;
       responsiveConfig = jQuery.extend(responsiveConfig || {}, options);
-      responsiveClass = (ref = this.responsiveConfig['responsive_class']) != null ? ref : this.config('responsive_class');
-      jQuery("img." + responsiveClass + ", img.cld-hidpi").cloudinary_update(responsiveConfig);
-      responsive_resize = (ref1 = (ref2 = responsiveConfig['responsive_resize']) != null ? ref2 : this.config('responsive_resize')) != null ? ref1 : true;
+      responsiveClass =
+        (ref = this.responsiveConfig["responsive_class"]) != null
+          ? ref
+          : this.config("responsive_class");
+      jQuery("img." + responsiveClass + ", img.cld-hidpi").cloudinary_update(
+        responsiveConfig
+      );
+      responsive_resize =
+        (ref1 =
+          (ref2 = responsiveConfig["responsive_resize"]) != null
+            ? ref2
+            : this.config("responsive_resize")) != null
+          ? ref1
+          : true;
       if (responsive_resize && !responsiveResizeInitialized) {
         responsiveConfig.resizing = responsiveResizeInitialized = true;
         timeout = null;
-        return jQuery(window).on('resize', (function(_this) {
-          return function() {
-            var debounce, ref3, ref4, reset, run, wait;
-            debounce = (ref3 = (ref4 = responsiveConfig['responsive_debounce']) != null ? ref4 : _this.config('responsive_debounce')) != null ? ref3 : 100;
-            reset = function() {
-              if (timeout) {
-                clearTimeout(timeout);
-                return timeout = null;
+        return jQuery(window).on(
+          "resize",
+          (function (_this) {
+            return function () {
+              var debounce, ref3, ref4, reset, run, wait;
+              debounce =
+                (ref3 =
+                  (ref4 = responsiveConfig["responsive_debounce"]) != null
+                    ? ref4
+                    : _this.config("responsive_debounce")) != null
+                  ? ref3
+                  : 100;
+              reset = function () {
+                if (timeout) {
+                  clearTimeout(timeout);
+                  return (timeout = null);
+                }
+              };
+              run = function () {
+                return jQuery("img." + responsiveClass).cloudinary_update(
+                  responsiveConfig
+                );
+              };
+              wait = function () {
+                reset();
+                return setTimeout(function () {
+                  reset();
+                  return run();
+                }, debounce);
+              };
+              if (debounce) {
+                return wait();
+              } else {
+                return run();
               }
             };
-            run = function() {
-              return jQuery("img." + responsiveClass).cloudinary_update(responsiveConfig);
-            };
-            wait = function() {
-              reset();
-              return setTimeout((function() {
-                reset();
-                return run();
-              }), debounce);
-            };
-            if (debounce) {
-              return wait();
-            } else {
-              return run();
-            }
-          };
-        })(this));
+          })(this)
+        );
       }
     };
 
     return CloudinaryJQuery;
-
   })(Cloudinary);
 
   /**
@@ -4460,24 +5013,30 @@ var slice = [].slice,
    * @param {Object} [options] - options for the tag and transformations
    * @returns {jQuery}
    */
-  jQuery.fn.cloudinary = function(options) {
-    this.filter('img').each(function() {
-      var img_options, public_id, url;
-      img_options = jQuery.extend({
-        width: jQuery(this).attr('width'),
-        height: jQuery(this).attr('height'),
-        src: jQuery(this).attr('src')
-      }, jQuery(this).data(), options);
-      public_id = img_options.source || img_options.src;
-      delete img_options.source;
-      delete img_options.src;
-      url = jQuery.cloudinary.url(public_id, img_options);
-      img_options = new Transformation(img_options).toHtmlAttributes();
-      return jQuery(this).data('src-cache', url).attr({
-        width: img_options.width,
-        height: img_options.height
-      });
-    }).cloudinary_update(options);
+  jQuery.fn.cloudinary = function (options) {
+    this.filter("img")
+      .each(function () {
+        var img_options, public_id, url;
+        img_options = jQuery.extend(
+          {
+            width: jQuery(this).attr("width"),
+            height: jQuery(this).attr("height"),
+            src: jQuery(this).attr("src"),
+          },
+          jQuery(this).data(),
+          options
+        );
+        public_id = img_options.source || img_options.src;
+        delete img_options.source;
+        delete img_options.src;
+        url = jQuery.cloudinary.url(public_id, img_options);
+        img_options = new Transformation(img_options).toHtmlAttributes();
+        return jQuery(this).data("src-cache", url).attr({
+          width: img_options.width,
+          height: img_options.height,
+        });
+      })
+      .cloudinary_update(options);
     return this;
   };
 
@@ -4494,11 +5053,11 @@ var slice = [].slice,
    *            Note that jQuery.cloudinary.responsive() should be called once on the page.
    * - responsive_preserve_height: if set to true, original css height is perserved. Should only be used if the transformation supports different aspect ratios.
    */
-  jQuery.fn.cloudinary_update = function(options) {
+  jQuery.fn.cloudinary_update = function (options) {
     if (options == null) {
       options = {};
     }
-    jQuery.cloudinary.cloudinary_update(this.filter('img').toArray(), options);
+    jQuery.cloudinary.cloudinary_update(this.filter("img").toArray(), options);
     return this;
   };
   webp = null;
@@ -4506,7 +5065,7 @@ var slice = [].slice,
   /**
    * @function jQuery#webpify
    */
-  jQuery.fn.webpify = function(options, webp_options) {
+  jQuery.fn.webpify = function (options, webp_options) {
     var that, webp_canary;
     if (options == null) {
       options = {};
@@ -4515,26 +5074,33 @@ var slice = [].slice,
     webp_options = webp_options != null ? webp_options : options;
     if (!webp) {
       webp = jQuery.Deferred();
-      webp_canary = new Image;
+      webp_canary = new Image();
       webp_canary.onerror = webp.reject;
       webp_canary.onload = webp.resolve;
-      webp_canary.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wAiMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
+      webp_canary.src =
+        "data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wAiMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA";
     }
-    jQuery(function() {
-      return webp.done(function() {
-        return jQuery(that).cloudinary(jQuery.extend({}, webp_options, {
-          format: 'webp'
-        }));
-      }).fail(function() {
-        return jQuery(that).cloudinary(options);
-      });
+    jQuery(function () {
+      return webp
+        .done(function () {
+          return jQuery(that).cloudinary(
+            jQuery.extend({}, webp_options, {
+              format: "webp",
+            })
+          );
+        })
+        .fail(function () {
+          return jQuery(that).cloudinary(options);
+        });
     });
     return this;
   };
-  jQuery.fn.fetchify = function(options) {
-    return this.cloudinary(jQuery.extend(options, {
-      'type': 'fetch'
-    }));
+  jQuery.fn.fetchify = function (options) {
+    return this.cloudinary(
+      jQuery.extend(options, {
+        type: "fetch",
+      })
+    );
   };
   jQuery.cloudinary = new CloudinaryJQuery();
   jQuery.cloudinary.fromDocument();
@@ -4552,25 +5118,29 @@ var slice = [].slice,
    * @param {string} [options.url] - an alternative URL to use for the API
    * @param {string} [options.cloud_name] - an alternative cloud_name to use. This parameter is ignored if `options.url` is provided.
    */
-  CloudinaryJQuery.prototype.delete_by_token = function(delete_token, options) {
+  CloudinaryJQuery.prototype.delete_by_token = function (
+    delete_token,
+    options
+  ) {
     var cloud_name, dataType, url;
     options = options || {};
     url = options.url;
     if (!url) {
       cloud_name = options.cloud_name || jQuery.cloudinary.config().cloud_name;
-      url = 'https://api.cloudinary.com/v1_1/' + cloud_name + '/delete_by_token';
+      url =
+        "https://api.cloudinary.com/v1_1/" + cloud_name + "/delete_by_token";
     }
-    dataType = jQuery.support.xhrFileUpload ? 'json' : 'iframe json';
+    dataType = jQuery.support.xhrFileUpload ? "json" : "iframe json";
     return jQuery.ajax({
       url: url,
-      method: 'POST',
+      method: "POST",
       data: {
-        token: delete_token
+        token: delete_token,
       },
       headers: {
-        'X-Requested-With': 'XMLHttpRequest'
+        "X-Requested-With": "XMLHttpRequest",
       },
-      dataType: dataType
+      dataType: dataType,
     });
   };
 
@@ -4579,11 +5149,17 @@ var slice = [].slice,
    * @function CloudinaryJQuery#unsigned_upload_tag
    * @param {string}
    */
-  CloudinaryJQuery.prototype.unsigned_upload_tag = function(upload_preset, upload_params, options) {
-    return jQuery('<input/>').attr({
-      type: 'file',
-      name: 'file'
-    }).unsigned_cloudinary_upload(upload_preset, upload_params, options);
+  CloudinaryJQuery.prototype.unsigned_upload_tag = function (
+    upload_preset,
+    upload_params,
+    options
+  ) {
+    return jQuery("<input/>")
+      .attr({
+        type: "file",
+        name: "file",
+      })
+      .unsigned_cloudinary_upload(upload_preset, upload_params, options);
   };
 
   /**
@@ -4592,42 +5168,63 @@ var slice = [].slice,
    * @param {Object} options
    * @returns {jQuery}
    */
-  jQuery.fn.cloudinary_fileupload = function(options) {
+  jQuery.fn.cloudinary_fileupload = function (options) {
     var cloud_name, initializing, resource_type, type, upload_url;
     if (!Util.isFunction(jQuery.fn.fileupload)) {
       return this;
     }
-    initializing = !this.data('blueimpFileupload');
+    initializing = !this.data("blueimpFileupload");
     if (initializing) {
-      options = jQuery.extend({
-        maxFileSize: 20000000,
-        dataType: 'json',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      }, options);
+      options = jQuery.extend(
+        {
+          maxFileSize: 20000000,
+          dataType: "json",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        },
+        options
+      );
     }
     this.fileupload(options);
     if (initializing) {
-      this.bind('fileuploaddone', function(e, data) {
+      this.bind("fileuploaddone", function (e, data) {
         var add_field, field, multiple, upload_info;
         if (data.result.error) {
           return;
         }
-        data.result.path = ['v', data.result.version, '/', data.result.public_id, data.result.format ? '.' + data.result.format : ''].join('');
+        data.result.path = [
+          "v",
+          data.result.version,
+          "/",
+          data.result.public_id,
+          data.result.format ? "." + data.result.format : "",
+        ].join("");
         if (data.cloudinaryField && data.form.length > 0) {
-          upload_info = [data.result.resource_type, data.result.type, data.result.path].join('/') + '#' + data.result.signature;
-          multiple = jQuery(e.target).prop('multiple');
-          add_field = function() {
-            return jQuery('<input/>').attr({
-              type: 'hidden',
-              name: data.cloudinaryField
-            }).val(upload_info).appendTo(data.form);
+          upload_info =
+            [
+              data.result.resource_type,
+              data.result.type,
+              data.result.path,
+            ].join("/") +
+            "#" +
+            data.result.signature;
+          multiple = jQuery(e.target).prop("multiple");
+          add_field = function () {
+            return jQuery("<input/>")
+              .attr({
+                type: "hidden",
+                name: data.cloudinaryField,
+              })
+              .val(upload_info)
+              .appendTo(data.form);
           };
           if (multiple) {
             add_field();
           } else {
-            field = jQuery(data.form).find('input[name="' + data.cloudinaryField + '"]');
+            field = jQuery(data.form).find(
+              'input[name="' + data.cloudinaryField + '"]'
+            );
             if (field.length > 0) {
               field.val(upload_info);
             } else {
@@ -4635,38 +5232,45 @@ var slice = [].slice,
             }
           }
         }
-        return jQuery(e.target).trigger('cloudinarydone', data);
+        return jQuery(e.target).trigger("cloudinarydone", data);
       });
-      this.bind('fileuploadsend', function(e, data) {
+      this.bind("fileuploadsend", function (e, data) {
         data.headers = jQuery.extend({}, data.headers, {
-          'X-Unique-Upload-Id': (Math.random() * 10000000000).toString(16)
+          "X-Unique-Upload-Id": (Math.random() * 10000000000).toString(16),
         });
         return true;
       });
-      this.bind('fileuploadstart', function(e) {
-        return jQuery(e.target).trigger('cloudinarystart');
+      this.bind("fileuploadstart", function (e) {
+        return jQuery(e.target).trigger("cloudinarystart");
       });
-      this.bind('fileuploadstop', function(e) {
-        return jQuery(e.target).trigger('cloudinarystop');
+      this.bind("fileuploadstop", function (e) {
+        return jQuery(e.target).trigger("cloudinarystop");
       });
-      this.bind('fileuploadprogress', function(e, data) {
-        return jQuery(e.target).trigger('cloudinaryprogress', data);
+      this.bind("fileuploadprogress", function (e, data) {
+        return jQuery(e.target).trigger("cloudinaryprogress", data);
       });
-      this.bind('fileuploadprogressall', function(e, data) {
-        return jQuery(e.target).trigger('cloudinaryprogressall', data);
+      this.bind("fileuploadprogressall", function (e, data) {
+        return jQuery(e.target).trigger("cloudinaryprogressall", data);
       });
-      this.bind('fileuploadfail', function(e, data) {
-        return jQuery(e.target).trigger('cloudinaryfail', data);
+      this.bind("fileuploadfail", function (e, data) {
+        return jQuery(e.target).trigger("cloudinaryfail", data);
       });
-      this.bind('fileuploadalways', function(e, data) {
-        return jQuery(e.target).trigger('cloudinaryalways', data);
+      this.bind("fileuploadalways", function (e, data) {
+        return jQuery(e.target).trigger("cloudinaryalways", data);
       });
-      if (!this.fileupload('option').url) {
-        cloud_name = options.cloud_name || jQuery.cloudinary.config().cloud_name;
-        resource_type = options.resource_type || 'auto';
-        type = options.type || 'upload';
-        upload_url = 'https://api.cloudinary.com/v1_1/' + cloud_name + '/' + resource_type + '/' + type;
-        this.fileupload('option', 'url', upload_url);
+      if (!this.fileupload("option").url) {
+        cloud_name =
+          options.cloud_name || jQuery.cloudinary.config().cloud_name;
+        resource_type = options.resource_type || "auto";
+        type = options.type || "upload";
+        upload_url =
+          "https://api.cloudinary.com/v1_1/" +
+          cloud_name +
+          "/" +
+          resource_type +
+          "/" +
+          type;
+        this.fileupload("option", "url", upload_url);
       }
     }
     return this;
@@ -4678,15 +5282,15 @@ var slice = [].slice,
    * @param {string} remote_url - the url to add
    * @returns {jQuery}
    */
-  jQuery.fn.cloudinary_upload_url = function(remote_url) {
+  jQuery.fn.cloudinary_upload_url = function (remote_url) {
     if (!Util.isFunction(jQuery.fn.fileupload)) {
       return this;
     }
-    this.fileupload('option', 'formData').file = remote_url;
-    this.fileupload('add', {
-      files: [remote_url]
+    this.fileupload("option", "formData").file = remote_url;
+    this.fileupload("add", {
+      files: [remote_url],
     });
-    delete this.fileupload('option', 'formData').file;
+    delete this.fileupload("option", "formData").file;
     return this;
   };
 
@@ -4698,7 +5302,11 @@ var slice = [].slice,
    * @param {Object} [options]
    * @returns {jQuery}
    */
-  jQuery.fn.unsigned_cloudinary_upload = function(upload_preset, upload_params, options) {
+  jQuery.fn.unsigned_cloudinary_upload = function (
+    upload_preset,
+    upload_params,
+    options
+  ) {
     var attr, attrs_to_move, html_options, i, key, value;
     if (upload_params == null) {
       upload_params = {};
@@ -4708,7 +5316,7 @@ var slice = [].slice,
     }
     upload_params = Util.cloneDeep(upload_params);
     options = Util.cloneDeep(options);
-    attrs_to_move = ['cloud_name', 'resource_type', 'type'];
+    attrs_to_move = ["cloud_name", "resource_type", "type"];
     i = 0;
     while (i < attrs_to_move.length) {
       attr = attrs_to_move[i];
@@ -4721,24 +5329,28 @@ var slice = [].slice,
     for (key in upload_params) {
       value = upload_params[key];
       if (Util.isPlainObject(value)) {
-        upload_params[key] = jQuery.map(value, function(v, k) {
-          if (Util.isString(v)) {
-            v = v.replace(/[\|=]/g, "\\$&");
-          }
-          return k + '=' + v;
-        }).join('|');
+        upload_params[key] = jQuery
+          .map(value, function (v, k) {
+            if (Util.isString(v)) {
+              v = v.replace(/[\|=]/g, "\\$&");
+            }
+            return k + "=" + v;
+          })
+          .join("|");
       } else if (Util.isArray(value)) {
         if (value.length > 0 && Array.isArray(value[0])) {
-          upload_params[key] = jQuery.map(value, function(array_value) {
-            return array_value.join(',');
-          }).join('|');
+          upload_params[key] = jQuery
+            .map(value, function (array_value) {
+              return array_value.join(",");
+            })
+            .join("|");
         } else {
-          upload_params[key] = value.join(',');
+          upload_params[key] = value.join(",");
         }
       }
     }
     if (!upload_params.callback) {
-      upload_params.callback = '/cloudinary_cors.html';
+      upload_params.callback = "/cloudinary_cors.html";
     }
     upload_params.upload_preset = upload_preset;
     options.formData = upload_params;
@@ -4747,7 +5359,9 @@ var slice = [].slice,
       delete options.cloudinary_field;
     }
     html_options = options.html || {};
-    html_options["class"] = Util.trim("cloudinary_fileupload " + (html_options["class"] || ''));
+    html_options["class"] = Util.trim(
+      "cloudinary_fileupload " + (html_options["class"] || "")
+    );
     if (options.multiple) {
       html_options.multiple = true;
     }
@@ -4772,9 +5386,7 @@ var slice = [].slice,
     SubtitlesLayer: SubtitlesLayer,
     Cloudinary: Cloudinary,
     VERSION: "2.5.0",
-    CloudinaryJQuery: CloudinaryJQuery
+    CloudinaryJQuery: CloudinaryJQuery,
   };
   return cloudinary;
 });
-
-
