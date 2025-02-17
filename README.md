@@ -1,13 +1,12 @@
 # Introduction and Project Goals
 
-- The API is hosted at E-Pics back-end. [Heroku-back-end](https://my-e-pics-d3d3d941434e.herokuapp.com/).
-- You can find the back-end code for this API on GitHub. [Github back-end](https://github.com/SamGree/e-pics).
-- The API is hosted at E-Pics live link.[E-pics](https://last-epics-76629a697a31.herokuapp.com/).
-- You can find the front-end code for this API on GitHub.[Github frond-end](https://github.com/SamGree/last).
 - This platform provides all the necessary functionality for users to carry out CRUD operations on the back-end.
   E-Pics is a photo-sharing platform where users can upload and share images with others.
   All uploaded photos are freely available for download, fostering a collaborative and sharing community.
   Users can create accounts to engage in various interactions, such as uploading and downloading images, liking, commenting, and saving images to albums within their profile.
+- E-Pics live link.[E-pics](https://last-epics-76629a697a31.herokuapp.com/).
+- E-Pics back-end. [Heroku-back-end](https://my-e-pics-d3d3d941434e.herokuapp.com/).
+- front-end API on GitHub.[Github frond-end](https://github.com/SamGree/last).
 
 ---
 
@@ -192,9 +191,59 @@ Model inherits fields from AbstractUser
 - By importing the Postman collection, you can seamlessly access and test the API endpoints of the E-PICS Task Management System for functionality.
 - I have thoroughly tested all my apps using Postman to ensure that the CRUD operations function correctly.
 
+### Authentication Test by postman:
+
+- Show all posts
+  - GET /posts/ work
+- Get specific post
+  - GET /posts/< post number> work
+- Download post (img)
+  - GET /posts/< post number>/download work
+- Users
+  - POST /usres/login/ work
+  - POST /users/register/ work
+  - POST /users/Logout/ work
+  - PATCH /users/profile/update work
+- Write a comment
+  - POST /comments/post work
+- Update comment
+  - PATCH /comments/< comments number > work
+- View all commente
+  - GET /comments/post/ work
+- like a comment
+  - POST /comment-like/ work
+- Create album
+  - POST /albums/ work
+- View the album
+  - GET /albums/< album number > work
+- Add post to album
+  - POST /albums/< album number>/add-post/< post number> work
+- Delete album
+  - DELETE /albums/< album number> work
+- Example
+- ![postman](/readme.img/postman.png)
+
 ---
 
 ## Deployment
+
+- Local Deployment
+
+1. Clone the git repository
+2. Navigate into your local project folder
+3. pip Install
+4. Install the dependencies with < pip install -r requirements.txt.>
+5. Create a local env.py file and set the following environment variables inside it:
+   - ALLOWED_HOST
+   - CLIENT_ORIGIN
+   - CLIENT_ORIGIN_DEV
+   - DATABASE_URL
+   - SECRET_KEY
+   - CSRF_TRUSTED_ORIGINS
+   - CORS_ALLOWED_ORIGIN_REGEX
+   - CSRF_TRUSTED_ORIGINS
+   - CLOUDINARY_URL
+6. Command to run the project loacaly < python manage.py runserver>
 
 - E-pics is deployed on Heroku using Heroku PostgreSQL as the database
 

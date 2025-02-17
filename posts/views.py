@@ -68,7 +68,7 @@ class PostDetailView(APIView):
             post = Post.objects.get(id=post_id)
             post_serializer = PostSerializer(
                  post, context={'request': request})
-            print(post_serializer.data)
+            # print(post_serializer.data)
             comments = Comment.objects.filter(post=post)
             comment_serializer = CommentSerializer(
                 comments, many=True, context={'request': request})
@@ -78,7 +78,7 @@ class PostDetailView(APIView):
                 album_serializer = AlbumSerializer(user_albums, many=True)
             else:
                 album_serializer = AlbumSerializer([], many=True)
-                print('Post Data:', post_serializer.data)
+                # print('Post Data:', post_serializer.data)
             return Response({
                 'post': post_serializer.data,
                 'comments': comment_serializer.data,
