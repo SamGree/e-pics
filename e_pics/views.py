@@ -6,5 +6,5 @@ from rest_framework.response import Response
 def root_route(request):
     return Response({
         'message':
-        'Welcome to my webside, for my photo sharing website, E-pices.'
+        'Welcome to my E-pices.'
     })

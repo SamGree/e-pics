@@ -247,13 +247,12 @@ Model inherits fields from AbstractUser
 
 - E-pics is deployed on Heroku using Heroku PostgreSQL as the database
 
-1. Create a Heroku account and install the Heroku CLI.
+1. Create a Heroku account.
 2. Log in to Heroku CLI (heroku login) and create a new Heroku app (heroku create).
-3. Set up Heroku PostgreSQL as the database (in settings Config Vars).
-4. Push your code to the Heroku remote (git push heroku master).
-5. Run migrations and set up the database (heroku run python manage.py migrate).
-6. Your E-pics application should now be deployed and accessible via the provided Heroku app URL.
-7. Your app should now be deployed and accessible via the provided Heroku URL.
+3. Setting: Set up Heroku PostgreSQL as the database and other global variables you have in env.py file (in settings Config Vars).
+4. Deploy: Connect Github Repository to the app you just create it.
+5. Deploy: Deploy Branch.
+6. Your App application should now be deployed and accessible via the provided Heroku app URL.
 
 ---
 
@@ -266,7 +265,6 @@ Model inherits fields from AbstractUser
 - **Authentication & Security**
   - dj-rest-auth – Provides authentication endpoints.
   - django-allauth – Handles social authentication.
-  - djangorestframework-simplejwt – JWT authentication.
   - django-cors-headers – Manages CORS policies.
 - **Database & ORM**
   - PostgreSQL – Database management system.
