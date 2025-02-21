@@ -180,6 +180,10 @@ Model inherits fields from AbstractUser
 
 ## Postman
 
+- Tool Used: Postman
+- Base URL: https://8000-samgree-epics-fgd5nk4tk9n.ws.codeinstitute-ide.net/
+- Authentication: Token-based authentication used for secured endpoints.
+
 - The Postman collection file for this project is located at [postman](https://github.com/SamGree/e-pics/blob/main/postman/postman.json) .
 - You can import this file into Postman to access the collection of API endpoints and test them.
 - Import from postman
@@ -193,33 +197,37 @@ Model inherits fields from AbstractUser
 
 ### Authentication Test by postman:
 
-- Show all posts
-  - GET /posts/ work
-- Get specific post
-  - GET /posts/< post number> work
-- Download post (img)
-  - GET /posts/< post number>/download work
-- Users
-  - POST /usres/login/ work
-  - POST /users/register/ work
-  - POST /users/Logout/ work
-  - PATCH /users/profile/update work
-- Write a comment
-  - POST /comments/post work
-- Update comment
-  - PATCH /comments/< comments number > work
-- View all commente
-  - GET /comments/post/ work
-- like a comment
-  - POST /comment-like/ work
-- Create album
-  - POST /albums/ work
-- View the album
-  - GET /albums/< album number > work
-- Add post to album
-  - POST /albums/< album number>/add-post/< post number> work
-- Delete album
-  - DELETE /albums/< album number> work
+- Manual Testing
+  - User Registration
+    - Endpoint: POST /users/register/
+    - Result: Registration successful.
+  - User Login
+    - Endpoint: POST /users/login/
+    - Result: Token received with OK response.
+  - View All Posts
+    - Endpoint: GET /posts/
+    - Result: Posts successfully.
+  - Retrieve Specific Post
+    - Endpoint: GET /posts/46
+    - Result: Post details retrieved successfully.
+  - Create Album
+    - Endpoint: POST /albums/
+    - Result: Album created successfully.
+  - Add Post to Album
+    - Endpoint: POST /albums/39/add-post/46
+    - Result: Post successfully added to album.
+  - Delete Album
+    - Endpoint: DELETE /albums/39
+    - Result: Album deleted successfully.
+  - Write a Comment
+    - Endpoint: POST /comments/46/post
+    - Result: Comment added successfully.
+  - Update a Comment
+    - Endpoint: PATCH /comments/54
+    - Result: Comment updated successfully.
+  - Like a Comment
+    - Endpoint: POST /comment-like/55
+    - Result: Comment liked successfully.
 - Example
 - ![postman](/readme.img/postman.png)
 
