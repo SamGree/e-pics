@@ -23,6 +23,7 @@
   - [users](#users)
 - [Unit Tests](#unit-tests)
 - [Postman](#postman)
+- [Manual Testing](#manual-testing)
 - [Deployment](#deployment)
 - [Technologies Used](#technologies-used)
 - [Validation](#validation)
@@ -197,37 +198,38 @@ Model inherits fields from AbstractUser
 
 ### Authentication Test by postman:
 
-- Manual Testing
-  - User Registration
-    - Endpoint: POST /users/register/
-    - Result: Registration successful.
-  - User Login
-    - Endpoint: POST /users/login/
-    - Result: Token received with OK response.
-  - View All Posts
-    - Endpoint: GET /posts/
-    - Result: Posts successfully.
-  - Retrieve Specific Post
-    - Endpoint: GET /posts/46
-    - Result: Post details retrieved successfully.
-  - Create Album
-    - Endpoint: POST /albums/
-    - Result: Album created successfully.
-  - Add Post to Album
-    - Endpoint: POST /albums/39/add-post/46
-    - Result: Post successfully added to album.
-  - Delete Album
-    - Endpoint: DELETE /albums/39
-    - Result: Album deleted successfully.
-  - Write a Comment
-    - Endpoint: POST /comments/46/post
-    - Result: Comment added successfully.
-  - Update a Comment
-    - Endpoint: PATCH /comments/54
-    - Result: Comment updated successfully.
-  - Like a Comment
-    - Endpoint: POST /comment-like/55
-    - Result: Comment liked successfully.
+### Manual Testing
+
+- User Registration
+  - Endpoint: POST /users/register/
+  - Result: Registration successful.
+- User Login
+  - Endpoint: POST /users/login/
+  - Result: Token received with OK response.
+- View All Posts
+  - Endpoint: GET /posts/
+  - Result: Posts successfully.
+- Retrieve Specific Post
+  - Endpoint: GET /posts/46
+  - Result: Post details retrieved successfully.
+- Create Album
+  - Endpoint: POST /albums/
+  - Result: Album created successfully.
+- Add Post to Album
+  - Endpoint: POST /albums/39/add-post/46
+  - Result: Post successfully added to album.
+- Delete Album
+  - Endpoint: DELETE /albums/39
+  - Result: Album deleted successfully.
+- Write a Comment
+  - Endpoint: POST /comments/46/post
+  - Result: Comment added successfully.
+- Update a Comment
+  - Endpoint: PATCH /comments/54
+  - Result: Comment updated successfully.
+- Like a Comment
+  - Endpoint: POST /comment-like/55
+  - Result: Comment liked successfully.
 - Example
 - ![postman](/readme.img/postman.png)
 
@@ -322,3 +324,7 @@ Model inherits fields from AbstractUser
 ---
 
 ## Credits
+
+- I would like to express my sincere gratitude to Code Institute for providing me with the education and guidance needed to complete this project. I am especially thankful for their understanding and support in granting me extra time to work on the project during my health-related challenges. Their compassion and flexibility truly made a difference in helping me reach this milestone.
+- I would also like to extend my heartfelt thanks to my mentor, Luke Buchanan, for his valuable ideas, guidance, and continuous support throughout the development of this project.
+- Thanks to Code Institute Slack Community and Stack Overflow for problem-solving support.
