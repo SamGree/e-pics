@@ -326,5 +326,5 @@ Model inherits fields from AbstractUser
 ## Credits
 
 - I would like to express my sincere gratitude to Code Institute for providing me with the education and guidance needed to complete this project. I am especially thankful for their understanding and support in granting me extra time to work on the project during my health-related challenges. Their compassion and flexibility truly made a difference in helping me reach this milestone.
-- I would also like to extend my heartfelt thanks to my mentor, Luke Buchanan, for his valuable ideas, guidance, and continuous support throughout the development of this project.
+- I would also like to extend my heartfelt thanks to my mentor, Luke Buchanan.
 - Thanks to Code Institute Slack Community and Stack Overflow for problem-solving support.
