@@ -51,7 +51,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "// {\r\n//     \"username\":\"Sam\",\r\n//     \"password\":\"qweqwe123\"\r\n// }",
+              "raw": "// {\r\n//     \"username\":\"Sam\",\r\n//     \"password\":\"---------\"\r\n// }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -85,7 +85,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"username\": \"ernesto3\",\r\n    \"password\": \"qweqwe123\"\r\n\r\n}",
+              "raw": "{\r\n    \"username\": \"ernesto3\",\r\n    \"password\": \"---------\"\r\n\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -107,7 +107,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"username\": \"erik\",\r\n    \"password\": \"qazqaz123\",\r\n    \"password_again\": \"qazqaz123\"\r\n}",
+              "raw": "{\r\n    \"username\": \"erik\",\r\n    \"password\": \"---------\",\r\n    \"password_again\": \"---------\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
