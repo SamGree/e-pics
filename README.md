@@ -6,7 +6,7 @@
   Users can create accounts to engage in various interactions, such as uploading and downloading images, liking, commenting, and saving images to albums within their profile.
 - E-Pics live link.[E-pics](https://last-epics-76629a697a31.herokuapp.com/).
 - E-Pics back-end. [Heroku-back-end](https://my-e-pics-d3d3d941434e.herokuapp.com/).
-- front-end API on GitHub.[Github frond-end](https://github.com/SamGree/last).
+- front-end GitHub.[Github frond-end](https://github.com/SamGree/last).
 
 ---
 
