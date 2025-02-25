@@ -5,7 +5,14 @@
   All uploaded photos are freely available for download, fostering a collaborative and sharing community.
   Users can create accounts to engage in various interactions, such as uploading and downloading images, liking, commenting, and saving images to albums within their profile.
 - E-Pics live link.[E-pics](https://last-epics-76629a697a31.herokuapp.com/).
+
+---
+
 - E-Pics back-end. [Heroku-back-end](https://my-e-pics-d3d3d941434e.herokuapp.com/).
+- If you logged in as admin you should see a welcome message otherwise (Authentication credentials were not provided).
+
+---
+
 - front-end GitHub.[Github frond-end](https://github.com/SamGree/last).
 
 ---
