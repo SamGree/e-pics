@@ -78,7 +78,7 @@ class PostCommentsView(APIView):
 
     def get(self, request, post_id):
         comments = Comment.objects.filter(
-            id=post_id).order_by('-created_at')
+            post_id=post_id).order_by('-created_at')
         if comments.exists():
             serializer = CommentSerializer(comments, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
