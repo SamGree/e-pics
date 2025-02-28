@@ -213,7 +213,7 @@ Model inherits fields from AbstractUser
 - Import from postman
 - Open Postman.
 - Dropdown three dots next to you app name.
-  ![postman](/readme.img/postmanj.png)
+  ![postman](/readme.img/postmanj.png).
 - Click on export.
 - This will direct you to your computer files where you can choose to locate your postman file.
 - By importing the Postman collection, you can seamlessly access and test the API endpoints of the E-PICS Task Management System for functionality.
